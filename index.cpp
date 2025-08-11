@@ -1,81 +1,3 @@
-/* linear search in 2d array
-
-#include<iostream>
-using namespace std;
-bool sear(int mat[][3],int row,int col,int key){
-
-for(int i=0;i<row;i++){
-    for(int j=0;j<col;j++){
-    if (mat[i][j]==key)
-        {
-            return true;
-        }
-
-    }
-
-}
-
-return false;
-}
-
-int main(){
-int mat[4][3]={{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
-int row=4;
-int col=3;
-cout<< sear( mat,row,col, 12);
-
-    return 0;
-}
-    */
-/* code for maximum row sum
-    #include<iostream>
-    using namespace std;
-    int sear(int mat[][3],int row,int col){
-        int maxrowsum=INT8_MIN;
-    for(int i=0;i<row;i++){
-        int rowsum=0;
-        for(int j=0;j<col;j++){
-        rowsum+=mat[i][j];
-        }
-        maxrowsum=max(maxrowsum,rowsum);
-    }
-    return maxrowsum;
-    }
-
-    int main(){
-        int mat[4][3]={{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
-        int row=4;
-        int col=3;
-        cout<< sear( mat,row,col);
-
-            return 0;
-    }
-            */
-
-/*
-#include<iostream>
-using namespace std;
- int diagonalsum(int mat[][4],int n){
- int sum=0;
- for(int i=0;i<n;i++){
-  sum += mat[i][i];
-  if (i  != n-i-1)
-  {
-     sum+=mat[i][n-i-1];
-  }
-
- }
- return sum;
- }
-
- int main(){
-  int mat[4][4]={{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
-  int n=4;
-     cout<< diagonalsum( mat,n);
-
-         return 0;
- }
- */
 /*
 power exoponential problem
 #include<iostream>
@@ -389,6 +311,85 @@ int main()
  return 0;
 }
  */
+/* linear search in 2d array
+
+#include<iostream>
+using namespace std;
+bool sear(int mat[][3],int row,int col,int key){
+
+for(int i=0;i<row;i++){
+    for(int j=0;j<col;j++){
+    if (mat[i][j]==key)
+        {
+            return true;
+        }
+
+    }
+
+}
+
+return false;
+}
+
+int main(){
+int mat[4][3]={{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
+int row=4;
+int col=3;
+cout<< sear( mat,row,col, 12);
+
+    return 0;
+}
+    */
+/* code for maximum row sum
+    #include<iostream>
+    using namespace std;
+    int sear(int mat[][3],int row,int col){
+        int maxrowsum=INT8_MIN;
+    for(int i=0;i<row;i++){
+        int rowsum=0;
+        for(int j=0;j<col;j++){
+        rowsum+=mat[i][j];
+        }
+        maxrowsum=max(maxrowsum,rowsum);
+    }
+    return maxrowsum;
+    }
+
+    int main(){
+        int mat[4][3]={{1,2,3},{4,5,6},{7,8,9},{10,11,12}};
+        int row=4;
+        int col=3;
+        cout<< sear( mat,row,col);
+
+            return 0;
+    }
+            */
+
+/*
+Diagonal sum in 2d array
+#include<iostream>
+using namespace std;
+ int diagonalsum(int mat[][4],int n){
+ int sum=0;
+ for(int i=0;i<n;i++){
+  sum += mat[i][i];
+  if (i  != n-i-1)
+  {
+     sum+=mat[i][n-i-1];
+  }
+
+ }
+ return sum;
+ }
+
+ int main(){
+  int mat[4][4]={{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+  int n=4;
+     cout<< diagonalsum( mat,n);
+
+         return 0;
+ }
+ */
 
  /* 
  recursion use to print N to 1 
@@ -427,6 +428,7 @@ int main()
     return 0;
 }
     */
+   
    /*
    n to 1 by backtraking
    #include <iostream>
