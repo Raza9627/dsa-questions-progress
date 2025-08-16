@@ -391,60 +391,236 @@ using namespace std;
  }
  */
 
- /* 
- recursion use to print N to 1 
+/*
+recursion use to print N to 1
 #include <iostream>
 using namespace std;
 void f(int n){
-    if(n<1) return;
-    cout<<n<<endl;
-    f(n-1);
+   if(n<1) return;
+   cout<<n<<endl;
+   f(n-1);
 }
 int main()
 {
-    int n;
-    cin>>n;
-  f(n);
+   int n;
+   cin>>n;
+ f(n);
 
-    return 0;
+   return 0;
 }
-    */
-   /*
-   print 1 to n using recursion backtraking
+   */
+/*
+print 1 to n using recursion backtraking
 
 #include <iostream>
 using namespace std;
 void f(int i,int n){
-    if(i<1) return;
-    f(i-1,n);
-    cout<<i<<endl;
+ if(i<1) return;
+ f(i-1,n);
+ cout<<i<<endl;
 }
 int main()
 {
-    int n;
-    cin>>n;
-  f(n,n);
+ int n;
+ cin>>n;
+f(n,n);
+
+ return 0;
+}
+ */
+
+/*
+n to 1 by backtraking
+#include <iostream>
+using namespace std;
+
+void f(int i, int n) {
+ if (i > n) return;     // base case
+ f(i + 1, n);           // go deeper first
+ cout << i << endl;     // print while coming back
+}
+
+int main() {
+ int n;
+ cin >> n;
+ f(1, n);
+ return 0;
+}
+
+*/
+
+/*
+Sum of first N numbers using parametarised way
+
+#include <iostream>
+using namespace std;
+void f(int i, int sum) {
+ if (i < 1){
+     cout <<sum;
+      return;
+ }
+ f(i - 1, sum + i);
+}
+
+int main() {
+ int i;
+ cout<<"enter i"<<endl;
+ cin >> i;
+ f(i, 0);
+ return 0;
+}
+ */
+/*
+Sum of first N numbers using functional way
+ #include <iostream>
+using namespace std;
+int f(int n) {
+ if (n==0) return 0;
+ return n + f(n - 1);
+}
+
+int main() {
+ int n=5;
+ cout<<f(n) << endl; // Output: 15
+ return 0;
+}
+ */
+/*
+factorial of a number using functional way
+ #include <iostream>
+using namespace std;
+int f(int n) {
+ if (n==1) return 1;
+ return n * f(n - 1);
+}
+
+int main() {
+ int n=5;
+ cout<<f(n) << endl; // Output: 120
+ return 0;
+}
+ */
+/*
+Reverse an array using recursion with two pointers
+#include <iostream>
+using namespace std;
+
+void f(int arr[], int l, int r)
+{
+    if (l >= r)
+        return;
+    swap(arr[l], arr[r]);
+    f(arr, l + 1, r - 1);
+}
+
+int main()
+{
+    int arr[] = {4, 2, 5, 4, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    f(arr, 0, n - 1);
+
+    // Print reversed array
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " "; output: 5 4 5 2 4
+    }
+    cout << endl;
 
     return 0;
 }
     */
-   
-   /*
-   n to 1 by backtraking
-   #include <iostream>
+/*
+Reverse an array using recursion with one pointer
+#include <iostream>
 using namespace std;
 
-void f(int i, int n) {
-    if (i > n) return;     // base case
-    f(i + 1, n);           // go deeper first
-    cout << i << endl;     // print while coming back
+void f(int arr[], int i, int n) {
+    if (i >= n/2) return;
+    swap(arr[i], arr[n-i-1]);
+    f(arr,i+1,n);
 }
 
 int main() {
-    int n;
-    cin >> n;
-    f(1, n);
+  int n;
+  cout<<"enter array size :";
+  cin>>n;
+  int arr[n];
+  for(int i=0;i<n;i++) cin>>arr[i];
+  f(arr,0,n);
+   for(int i=0;i<n;i++) cout<<arr[i]; // input: 1 2 3 4 5 output: 5 4 3 2 1
     return 0;
 }
+    */
+/*
+Check if a string is a palindrome using recursion
+#include <iostream>
+#include <string>
+using namespace std;
+bool f(int i,string &s){
+ if(i>=s.size()/2) return true;
+ if(s[i]!=s[s.size()-i-1]) return false;
+ return f(i+1,s);
+}
+int main() {
+string s="madam";  //output: true
+cout<<f(0,s);
 
-   */
+ return 0;
+}
+ */
+ /*
+Check if a number is a palindrome using recursion
+#include <iostream>
+using namespace std;
+int reverseNumber(int num, int rev = 0)
+{
+
+    if (num == 0)
+        return rev;
+
+    return reverseNumber(num / 10, rev * 10 + num % 10);
+}
+
+bool isPalindrome(int num)
+{
+    if (num < 0)
+        return false;
+    return num == reverseNumber(num);
+}
+
+int main()
+{
+    int n;
+    cout << "Enter a number: ";
+    cin >> n;
+    if (isPalindrome(n))
+        cout << n << " is a palindrome\n";
+    else
+        cout << n << " is not a palindrome\n";
+    return 0;
+}
+*/
+/*
+Check if a number is an Armstrong number
+#include <iostream>
+using namespace std;
+int main(){
+    int num = 123;
+    int sum = 0;
+    int original=num;
+    while(num!=0){
+        int digit =num % 10;
+        int cube = digit * digit * digit;
+         sum += cube;
+        num /= 10;
+    }
+    if(original==sum) {
+        cout << "Armstrong number" << endl;
+    } else {
+        cout << "Not an Armstrong number" << endl;
+    }
+    return 0;
+}
+    */
+  
