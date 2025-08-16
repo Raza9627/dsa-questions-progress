@@ -569,36 +569,36 @@ cout<<f(0,s);
  return 0;
 }
  */
- /*
+/*
 Check if a number is a palindrome using recursion
 #include <iostream>
 using namespace std;
 int reverseNumber(int num, int rev = 0)
 {
 
-    if (num == 0)
-        return rev;
+   if (num == 0)
+       return rev;
 
-    return reverseNumber(num / 10, rev * 10 + num % 10);
+   return reverseNumber(num / 10, rev * 10 + num % 10);
 }
 
 bool isPalindrome(int num)
 {
-    if (num < 0)
-        return false;
-    return num == reverseNumber(num);
+   if (num < 0)
+       return false;
+   return num == reverseNumber(num);
 }
 
 int main()
 {
-    int n;
-    cout << "Enter a number: ";
-    cin >> n;
-    if (isPalindrome(n))
-        cout << n << " is a palindrome\n";
-    else
-        cout << n << " is not a palindrome\n";
-    return 0;
+   int n;
+   cout << "Enter a number: ";
+   cin >> n;
+   if (isPalindrome(n))
+       cout << n << " is a palindrome\n";
+   else
+       cout << n << " is not a palindrome\n";
+   return 0;
 }
 */
 /*
@@ -623,4 +623,25 @@ int main(){
     return 0;
 }
     */
-  
+/*
+ nth fibonacci number
+#include <iostream>
+using namespace std;
+int f(int n)
+{
+    if (n <= 1)
+    {
+        return n;
+    }
+    int last = f(n - 1);
+    int slast = f(n - 2);
+    return last + slast;
+}
+int main()
+{
+    int n = 4;
+    cout << f(n) << endl;
+
+    return 0;
+}
+    */
