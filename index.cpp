@@ -1553,6 +1553,138 @@ int main() {
 }
 */
 /*
+TC-O(n^3)
+TC-O(n)
+brute force for 3 sum
+#include <bits/stdc++.h>
+using namespace std;
+vector<vector<int>> threesum(vector<int> arr)
+{
+    set<vector<int>> st;
+    for (int i = 0; i < arr.size(); i++)
+    {
+        for (int j = i+1; j < arr.size(); j++)
+        {
+            for (int k = j+1; k < arr.size(); k++)
+            {
+                if (arr[i] + arr[j] + arr[k] == 0)
+                {
+                    vector<int> ls={arr[i],arr[j],arr[k]};
+                    sort(ls.begin(),ls.end());
+                    st.insert(ls);
+                }
+            }
+        }
+    }
+     vector<vector<int>> ans(st.begin(),st.end());
+     return ans;
+}
+int main()
+{
+     vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+ vector<vector<int>> ans = threesum(arr);
+
+ for (auto triplet : ans) {
+     for (auto num : triplet) {
+         cout << num << " ";
+     }
+     cout << endl;
+ }
+
+ return 0;
+}
+    */
+/*
+TC-O(n^2)
+TC-O(n)
+better approach for 3 sum
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> threesum(vector<int> arr, int n) {
+ set<vector<int>> st;
+
+ for (int i = 0; i < n; i++) {
+     set<int> hashset;
+     for (int j = i + 1; j < n; j++) {
+         int third = -(arr[i] + arr[j]);
+         if (hashset.find(third) != hashset.end()) {
+             vector<int> temp = {arr[i], arr[j], third};
+             sort(temp.begin(), temp.end());
+             st.insert(temp);
+         }
+         hashset.insert(arr[j]);
+     }
+ }
+
+ vector<vector<int>> ans(st.begin(), st.end());
+ return ans;
+}
+
+int main() {
+ vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+ int n = arr.size();
+ vector<vector<int>> ans = threesum(arr, n);
+
+ for (auto triplet : ans) {
+     for (auto num : triplet) {
+         cout << num << " ";
+     }
+     cout << endl;
+ }
+
+ return 0;
+}
+*/
+/*
+TC-O(n^2)
+TC-O(n)
+Optimal approach for 3 sum
+#include <bits/stdc++.h>
+using namespace std;
+vector<vector<int>> threesum(vector<int> arr, int n) {
+vector<vector<int>> ans;
+sort(arr.begin(),arr.end());
+for(int i=0;i<n;i++){
+    if(i>0 && arr[i]==arr[i-1]) continue;
+    int j=i+1;
+    int k=n-1;
+    while(j<k){
+        int sum=arr[i]+arr[j]+arr[k];
+        if(sum<0){
+            j++;
+        }
+        else if(sum>0){
+            k--;
+        }
+        else {
+            vector<int> temp={arr[i],arr[j],arr[k]};
+            ans.push_back(temp);
+            j++;
+            k--;
+            while(j<k && arr[j]==arr[j-1]) j++;
+            while(j<k && arr[k]==arr[k+1]) k--;
+         }
+    } 
+}
+return ans;
+}
+int main(){
+ vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+ int n = arr.size();
+ vector<vector<int>> ans = threesum(arr, n);
+
+ for (auto triplet : ans) {
+     for (auto num : triplet) {
+         cout << num << " ";
+     }
+     cout << endl;
+ }
+
+ return 0;
+}
+ */
+/*
 power exoponential problem
 #include<iostream>
 using namespace std;
