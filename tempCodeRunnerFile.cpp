@@ -1,1 +1,1 @@
-int ans=0;
+return;

@@ -6681,6 +6681,10 @@ int main() {
     return 0;
 }
     */
+/*
+brute force for generating strings
+TC-O(2^n * O(N))
+SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
 vector<string> generatebinarystrings(int n){
@@ -6710,4 +6714,119 @@ int main(){
         cout<<ans[i]<<" ";
     }
     return 0;
+}
+    */
+   /*
+optimal using recursion
+#include <bits/stdc++.h>
+using namespace std;
+void generatebinarystrings(int n,string s,vector<string> &ans){
+if(s.length()==n){
+    ans.push_back(s);
+    return;
+}
+generatebinarystrings(n,s+'0',ans);
+
+if(s.empty() || s.back()!='1'){
+    generatebinarystrings(n,s+'1',ans);
+}
+}
+int main(){
+    int n=3;
+    vector<string> ans;
+    generatebinarystrings(n,"",ans);
+    for(string x:ans){
+        cout<<x<<endl;
+    }
+    return 0;
+}
+    */
+/*
+power set problem using recursion
+#include <bits/stdc++.h>
+using namespace std;
+void solve(string s,string output,int index,vector<string> &ans){
+if(index >= s.length()){
+    if(output.size()>0){
+        ans.push_back(output);
+    }
+    return;
+}
+    //exclude
+    solve(s,output,index+1,ans);
+    //include
+    char element=s[index];
+    output.push_back(element);
+   solve(s,output,index+1,ans);
+
+}
+vector<string> getsubsequences(string s){
+string output="";
+vector<string> ans;
+int index=0;
+solve(s,output,index,ans);
+return ans;
+}
+int main(){
+string s="aa";
+vector<string> ans=getsubsequences(s);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+TC-O(2^(2n) * n)
+SC-O(n)
+brute force for generatung the paranthesis
+#include <bits/stdc++.h>
+using namespace std;
+void generateparanthesis(int n, string s,vector<string>&ans){
+if(s.length()==2*n){
+    int cnt=0;
+    for(int i=0;i<2*n;i++){
+     if(s[i]=='(') cnt++;
+     else cnt--;
+     if(cnt<0) return;
+    }
+    if(cnt==0) ans.push_back(s);;
+    return;
+}
+generateparanthesis(n,s+'(',ans);
+generateparanthesis(n,s+')',ans);
+}
+int main(){
+int n=3;
+vector<string> ans;
+generateparanthesis(n,"",ans);
+for(string x:ans){
+    cout<<x<<" ";
+}
+return 0;
+}
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+void generateparanthesis(int n, string s,vector<string>&ans,int close,int open){
+if(s.length()==2*n){
+    ans.push_back(s);;
+    return;
+}
+if(open<n){
+generateparanthesis(n,s+'(',ans,close,open+1);
+}
+if(close<open){
+generateparanthesis(n,s+')',ans,close+1,open); 
+}
+}
+int main(){
+int n=2;
+vector<string> ans;
+generateparanthesis(n,"",ans,0,0);
+for(string x:ans){
+    cout<<x<<" ";
+}
+return 0;
 }
