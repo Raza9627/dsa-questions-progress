@@ -6,11 +6,11 @@ int main(){
  int lar=INT32_MIN;
  int seclar=INT32_MIN;
  int n=8;
- int arr[]={1,4,2,5,6,7,3,10};
+ int candidates[]={1,4,2,5,6,7,3,10};
  for(int i=0;i<n;i++){
-    if (lar<arr[i])
+    if (lar candidates[i])
     {
-     lar=arr[i];
+     lar candidates[i];
     }
 
  }
@@ -27,12 +27,12 @@ int main(){
 int lar=INT32_MIN;
 int seclar=INT32_MIN;
 int n=8;
-int arr[]={1,4,2,5,6,7,3,10};
+int candidates[]={1,4,2,5,6,7,3,10};
 for(int i=0;i<n;i++){
- if (lar<arr[i])
+ if (lar candidates[i])
  {
   seclar=lar;
-  lar=arr[i];
+  lar candidates[i];
  }
 
 }
@@ -44,10 +44,10 @@ return 0;
 check if the array sorted
 #include <iostream>
 using namespace std;
-bool sorted(int arr[],int n){
+bool sorted(int candidates[],int n){
     for (int i = 1; i < n; i++)
     {
-        if(arr[i]>=arr[i-1]){
+        if candidates[i]> candidates[i-1]){
 
         }
         else{
@@ -59,9 +59,9 @@ bool sorted(int arr[],int n){
 }
 int main()
 {
-    int arr[] ={3,4,5,1,2};
+    int candidates[] ={3,4,5,1,2};
     int n=5;
-    cout<<sorted(arr,n);
+    cout<<sorted candidates,n);
     return 0;
 }
 */
@@ -71,11 +71,11 @@ int main()
 #include <iostream>
 #include<vector>
 using namespace std;
-int removeduplicates(vector<int> &arr,int n){
+int removeduplicates(vector<int>  candidates,int n){
     int i=0;
     for(int j=1;j<n;j++){
-        if(arr[i]!=arr[j]){
-            arr[i+1]=arr[j];
+        if candidates[i]! candidates[j]){
+         candidates[i+1] candidates[j];
             i++;
         }
     }
@@ -83,11 +83,11 @@ int removeduplicates(vector<int> &arr,int n){
 }
 int main()
 {
-    vector<int> arr ={1,1,2,2,3,4,5};
+    vector<int> candidates ={1,1,2,2,3,4,5};
     int n=7;
-    removeduplicates(arr,n);
+    removeduplicates candidates,n);
     for(int i=0;i<5;i++){
-        cout<<arr[i]<<" ";
+        cout< candidates[i]<<" ";
     }
     return 0;
 }
@@ -97,19 +97,19 @@ left rotate array by first place
 #include <iostream>
 #include<vector>
 using namespace std;
-int removeduplicat(vector<int> &arr,int n){
- int temp=arr[0];
+int removeduplicat(vector<int>  candidates,int n){
+ int temp candidates[0];
  for(int i=1;i<n;i++){
-   arr[i-1]=arr[i];
+ candidates[i-1] candidates[i];
    }
-   arr[n-1]=temp;
+ candidates[n-1]=temp;
  }
 int main(){
- vector<int> arr={1,2,3,4,5};
- int n=arr.size();
- removeduplicat(arr,n);
+ vector<int> candidates={1,2,3,4,5};
+ int n candidates.size();
+ removeduplicat candidates,n);
  for(int i=0;i<n;i++){
-     cout<<arr[i]<<" ";
+     cout< candidates[i]<<" ";
  }
 }
  */
@@ -122,31 +122,31 @@ SC-O(d)
 #include<iostream>
 #include<vector>
 using namespace std;
-void leftrotate(int arr[],int n,int d){
+void leftrotate(int candidates[],int n,int d){
  d=d%n;
  int temp[d];
  for(int i=0;i<d;i++){
-     temp[i]=arr[i];
+     temp[i] candidates[i];
  }
  for(int i=d;i<n;i++){
-     arr[i-d]=arr[i];
+     candidates[i-d] candidates[i];
  }
  for(int i=n-d;i<n;i++){
-     arr[i]=temp[i-(n-d)];
+     candidates[i]=temp[i-(n-d)];
  }
 }
 int main(){
 int n;
 cin>>n;
-int arr[n];
+int candidates[n];
 for(int i=0;i<n;i++){
- cin>>arr[i];
+ cin> candidates[i];
 }
 int d;
 cin>>d;
-leftrotate(arr,n,d);
+leftrotate candidates,n,d);
 for(int i=0;i<n;i++){
- cout<<arr[i]<<" ";
+ cout< candidates[i]<<" ";
 }
  return 0;
 }
@@ -158,27 +158,27 @@ SC-O(1)
 #include <iostream>
 #include <algorithm>
 using namespace std;
-void leftrotate(int arr[], int n, int d)
+void leftrotate(int candidates[], int n, int d)
 {
-    reverse(arr, arr + d);
-    reverse(arr + d, arr + n);
-    reverse(arr, arr + n);
+    reverse candidates, candidates + d);
+    reverse candidates + d, candidates + n);
+    reverse candidates, candidates + n);
 }
 int main()
 {
     int n;
     cin >> n;
-    int arr[n];
+    int candidates[n];
     for (int i = 0; i < n; i++)
     {
-        cin >> arr[i];
+        cin >> candidates[i];
     }
     int d;
     cin >> d;
-    leftrotate(arr, n, d);
+    leftrotate candidates, n, d);
     for (int i = 0; i < n; i++)
     {
-        cout << arr[i] << " ";
+        cout << candidates[i] << " ";
     }
     return 0;
 }
@@ -260,12 +260,12 @@ SC-O(1)
 #include<vector>
 using namespace std;
 int main(){
-    int arr[]={1,2,3,4,5,6,7,8,9,10,11,13};
+    int candidates[]={1,2,3,4,5,6,7,8,9,10,11,13};
     int n=13;
     for(int i=0;i<n;i++){
         int flag=0;
         for(int j=0;j<n-1;j++){
-            if(arr[j]==i){
+            if candidates[j]==i){
                 flag=1;
                 break;
             }
@@ -333,12 +333,12 @@ TC-O(n^2)
 SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
-int findMaxConsecutiveOnes(vector<int> arr, int k){
+int findMaxConsecutiveOnes(vector<int> candidates, int k){
     int maxi = 0;
-    for (int i = 0; i < arr.size(); i++){
+    for (int i = 0; i < candidates.size(); i++){
         int zeros = 0;
-        for (int j = i; j < arr.size(); j++){
-            if (arr[j] == 0){
+        for (int j = i; j < candidates.size(); j++){
+            if  candidates[j] == 0){
                 zeros++;
             }
             if(zeros>k){
@@ -351,9 +351,9 @@ int findMaxConsecutiveOnes(vector<int> arr, int k){
 }
 int main()
 {
-    vector<int> arr = {0,1,1,1,0,0,0,1,1,1,1};
+    vector<int> candidates = {0,1,1,1,0,0,0,1,1,1,1};
     int k=2;
-    cout << findMaxConsecutiveOnes(arr,k);
+    cout << findMaxConsecutiveOnes candidates,k);
     return 0;
 }
     */
@@ -363,16 +363,16 @@ TC-O(n)
 SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
-int findMaxConsecutiveOnes(vector<int> arr, int k){
+int findMaxConsecutiveOnes(vector<int> candidates, int k){
 int maxi=0;
 int zeros=0;
 int left=0;
-for(int right=0;right<arr.size();right++){
- if(arr[right]==0){
+for(int right=0;right candidates.size();right++){
+ if candidates[right]==0){
      zeros++;
  }
     while(zeros>k){
-   if(arr[left]==0){
+   if candidates[left]==0){
              zeros--;
          }
          left++;
@@ -385,9 +385,9 @@ return maxi;
 }
 int main()
 {
- vector<int> arr = {0,1,1,1,0,0,0,1,1,1,1};
+ vector<int> candidates = {0,1,1,1,0,0,0,1,1,1,1};
  int k=2;
- cout << findMaxConsecutiveOnes(arr,k);
+ cout << findMaxConsecutiveOnes candidates,k);
  return 0;
 }
  */
@@ -398,16 +398,16 @@ SC-O(1)
 #include<iostream>
 #include<vector>
 using namespace std;
-int singlenumber(vector<int>&arr){
+int singlenumber(vector<int> candidates){
  int xorr=0;
- for(int i=0;i<arr.size();i++){
-     xorr=xorr^arr[i];
+ for(int i=0;i candidates.size();i++){
+     xorr=xorr candidates[i];
  }
  return xorr;
 }
 int main(){
- vector<int> arr={1,1,2,3,3,4,4};
- cout<<singlenumber(arr);
+ vector<int> candidates={1,1,2,3,3,4,4};
+ cout<<singlenumber candidates);
  return 0;
 }
  */
@@ -448,12 +448,12 @@ brute force for check element frequency
 #include<iostream>
 using namespace std;
 int main(){
-    int arr[]={1,2,1,3,2,1,1,1,1,1,1};
+    int candidates[]={1,2,1,3,2,1,1,1,1,1,1};
     int num = 1;
     int n=11;
     int count =0;
     for(int i=0;i<n;i++){
-        if(num==arr[i]){
+        if(num= candidates[i]){
             count++;
         }
     }
@@ -470,14 +470,14 @@ int main()
  int n;
  cout<<"enter size of array"<<endl;
  cin>>n;
- int arr[n];
+ int candidates[n];
  for(int i=0;i<n;i++){
-     cin>>arr[i];
+     cin> candidates[i];
 
  }
  int hash[13]={0};
  for(int i=0;i<n;i++){
-     hash[arr[i]] += 1;
+     hash candidates[i]] += 1;
  }
  int q;
  cin>>q;
@@ -556,15 +556,15 @@ int main()
 {
  int n;
  cin >> n;
- int arr[n];
+ int candidates[n];
  for (int i = 0; i < n; i++)
  {
-     cin >> arr[i];
+     cin >> candidates[i];
  }
  map<int, int> mpp;
  for (int i = 0; i < n; i++)
  {
-     mpp[arr[i]]++;
+     mpp candidates[i]]++;
  }
  for(auto it : mpp){
     cout<<it.first<<"->"<<it.second<<endl;
@@ -615,11 +615,11 @@ find highest/lowest frequency element
 using namespace std;
 
 int main() {
-    int arr[] = {1,1,1,1,2,2,3,3,3,3,3,5};
+    int candidates[] = {1,1,1,1,2,2,3,3,3,3,3,5};
     map<int,int> mpp;
 
     for(int i=0;i<12;i++){
-        mpp[arr[i]]++;
+        mpp candidates[i]]++;
     }
 
     int lar = INT_MIN;
@@ -681,13 +681,13 @@ two pointer approach for 2 sum problem
 #include <vector>
 #include <algorithm>
 using namespace std;
-vector<int> twosum(vector<int> &arr, int target)
+vector<int> twosum(vector<int>  candidates, int target)
 {
- sort(arr.begin(), arr.end());
- int i = 0, j = arr.size() - 1;
+ sort candidates.begin(), candidates.end());
+ int i = 0, j = candidates.size() - 1;
  while (i < j)
  {
-     int sum = arr[i] + arr[j];
+     int sum = candidates[i] + candidates[j];
      if (sum == target) return {i, j};
      else if(sum<target) i++;
      else j--;
@@ -696,9 +696,9 @@ vector<int> twosum(vector<int> &arr, int target)
 }
 int main()
 {
- vector<int> arr = {7, 5, 2, 11};
+ vector<int> candidates = {7, 5, 2, 11};
  int target = 9;
- vector<int> ans = twosum(arr, target);
+ vector<int> ans = twosum candidates, target);
  cout << ans[0] << " " << ans[1];
  return 0;
 }
@@ -711,22 +711,22 @@ sort an array of 0's 1's 2's better approach
 #include <iostream>
 #include<vector>
 using namespace std;
-void sortarrays(vector<int> &arr){
-    int count0=0,count1=0,count2=0,n=arr.size();
+void sortarrays(vector<int>  candidates){
+    int count0=0,count1=0,count2=0,n candidates.size();
     for(int i=0;i<n;i++){
-        if(arr[i]==0) count0++;
-        else if(arr[i]==1) count1++;
+        if candidates[i]==0) count0++;
+        else if candidates[i]==1) count1++;
         else count2++;
     }
-    for(int i=0;i<count0;i++) arr[i]=0;
-    for(int i=count0;i<count0+count1;i++) arr[i]=1;
-    for(int i=count0+count1;i<n;i++) arr[i]=2;
+    for(int i=0;i<count0;i++) candidates[i]=0;
+    for(int i=count0;i<count0+count1;i++) candidates[i]=1;
+    for(int i=count0+count1;i<n;i++) candidates[i]=2;
 }
 int main(){
-    vector<int> arr={0,1,0,1,1,2,1,2,0,0};
-    sortarrays(arr);
-    for(int i=0;i<arr.size();i++){
-        cout<<arr[i]<<" ";
+    vector<int> candidates={0,1,0,1,1,2,1,2,0,0};
+    sortarrays candidates);
+    for(int i=0;i candidates.size();i++){
+        cout< candidates[i]<<" ";
     }
 }
     */
@@ -737,27 +737,27 @@ sort an array of 0's 1's 2's optimal approach DNF algo
 #include<iostream>
 #include<vector>
 using namespace std;
-void sortarray(vector<int>& arr,int n){
+void sortarray(vector<int>& candidates,int n){
  int low=0,mid=0,high=n-1;
  while(mid<=high){
-     if(arr[mid]==0){
-         swap(arr[low],arr[mid]);
+     if candidates[mid]==0){
+         swap candidates[low] candidates[mid]);
          low++;
          mid++;
      }
-     else if(arr[mid]==1) mid++;
+     else if candidates[mid]==1) mid++;
      else {
-         swap(arr[mid],arr[high]);
+         swap candidates[mid] candidates[high]);
          high--;
      }
  }
 }
 int main(){
- vector<int> arr={0,1,2,1,2,0,2,1,0,1};
- int n=arr.size();
- sortarray(arr,n);
+ vector<int> candidates={0,1,2,1,2,0,2,1,0,1};
+ int n candidates.size();
+ sortarray candidates,n);
  for(int i=0;i<n;i++){
-     cout<<arr[i]<<" ";
+     cout< candidates[i]<<" ";
  }
 }
  */
@@ -768,19 +768,19 @@ majority element > n/2 brute force
 #include<iostream>
 #include<vector>
 using namespace std;
-int majorityelement(vector<int>& arr){
-    for(int i=0;i<arr.size();i++){
+int majorityelement(vector<int>& candidates){
+    for(int i=0;i candidates.size();i++){
         int count=0;
-          for(int j=0;j<arr.size();j++){
-            if(arr[j]==arr[i]) count++;
-            if(count>arr.size()/2) return arr[i];
+          for(int j=0;j candidates.size();j++){
+            if candidates[j]= candidates[i]) count++;
+            if(count candidates.size()/2) return candidates[i];
           }
     }
     return -1;
 }
 int main(){
-    vector<int> arr={1,1,1,1,1,2,2,2,0};
-    cout<<majorityelement(arr);
+    vector<int> candidates={1,1,1,1,1,2,2,2,0};
+    cout<<majorityelement candidates);
     return 0;
 }
     */
@@ -792,24 +792,24 @@ majority element > n/2 better approach hashing
 #include <vector>
 #include <map>
 using namespace std;
-int majorityelement(vector<int> &arr)
+int majorityelement(vector<int>  candidates)
 {
  map<int, int> mpp;
- for (int i = 0; i < arr.size(); i++)
+ for (int i = 0; i < candidates.size(); i++)
  {
-     mpp[arr[i]]++;
+     mpp candidates[i]]++;
  }
  for (auto it : mpp)
  {
-     if (it.second > (arr.size() / 2))
+     if (it.second >  candidates.size() / 2))
          return it.first;
  }
  return -1;
 }
 int main()
 {
- vector<int> arr = {2, 2, 2, 2, 1, 1, 0};
- cout << majorityelement(arr);
+ vector<int> candidates = {2, 2, 2, 2, 1, 1, 0};
+ cout << majorityelement candidates);
  return 0;
 }
 */
@@ -820,65 +820,64 @@ majority element > n/2 optimal approach moores voting algorithem
 #include<iostream>
 #include<vector>
 using namespace std;
-int majorityelement(vector<int>& arr){
+int majorityelement(vector<int>& candidates){
     int cnt=0;
     int el;
-    for(int i=0;i<arr.size();i++){
+    for(int i=0;i candidates.size();i++){
         if(cnt==0){
             cnt=1;
-            el=arr[i];
+            el candidates[i];
         }
-        else if(arr[i]==el) cnt++;
+        else if candidates[i]==el) cnt++;
         else cnt--;
         int cnt1=0;
-        for(int i=0;i<arr.size();i++){
-            if(arr[i]==el) cnt1++;
+        for(int i=0;i candidates.size();i++){
+            if candidates[i]==el) cnt1++;
         }
-        if(cnt1>(arr.size()/2)) return el;
+        if(cnt1> candidates.size()/2)) return el;
     }
     return -1;
 }
 int main(){
-     vector<int> arr = {1,2,4,7,5,4,4,4,4,4};
-     cout<<majorityelement(arr);
+     vector<int> candidates = {1,2,4,7,5,4,4,4,4,4};
+     cout<<majorityelement candidates);
     return 0;
 }
     */
-   //till this 
 /*
 better approach for maxsubarray sum
 TC-O(n^2)
 SC-O(1)
 #include<bits/stdc++.h>
 using namespace std;
-int maxsubarraysum(int arr[],int n){
+int maxsubarraysum(int candidates[],int n){
  int maxi=INT_MIN;
  for(int i=0;i<n;i++){
      int sum =0;
      for(int j=i;j<n;j++){
-         sum+=arr[j];
+         sum+ candidates[j];
          maxi=max(sum,maxi);
      }
  }
  return maxi;
 }
 int main(){
- int arr[]={-2,-3,4,-1,-2,1,5,-3};
+ int candidates[]={-2,-3,4,-1,-2,1,5,-3};
  int n=8;
- cout<<maxsubarraysum(arr,n);
+ cout<<maxsubarraysum candidates,n);
  return 0;
 }
- */
+*/
 /*
-TC-O(n^2)
+TC-O(n)
 SC-O(1)
 optimal approach for maxsubarraysum using kadanes algorithem
 #include <bits/stdc++.h>
 using namespace std;
-long long maxsubarraysum(int arr[],int n){
+long long maxsubarraysum(int candidates[],int n){
     long long sum=0,maxi=LONG_MIN;
     for(int i=0;i<n;i++){
-        sum+=arr[i];
+        sum+ candidates[i];
        if(sum>maxi){
         maxi=sum;
        }
@@ -887,9 +886,9 @@ long long maxsubarraysum(int arr[],int n){
     return maxi;
 }
 int main(){
- int arr[]={-2,-3,4,-1,-2,1,5,-3};
+ int candidates[]={-2,-3,4,-1,-2,1,5,-3};
  int n=8;
- cout<<maxsubarraysum(arr,n);
+ cout<<maxsubarraysum candidates,n);
  return 0;
 }
  */
@@ -916,6 +915,7 @@ int main(){
     return 0;
 }
     */
+
 /*
 TC-O(nlogn)
 TC-O(n)
@@ -1042,14 +1042,14 @@ int main(){
 better approach for next permutation problem using stl
 #include <bits/stdc++.h>
 using namespace std;
- vector<int> nextpermutation(vector<int> &arr){
-    next_permutation(arr.begin(),arr.end());
-    return arr;
+ vector<int> nextpermutation(vector<int>  candidates){
+    next_permutation candidates.begin() candidates.end());
+    return candidates;
  }
 int main(){
- vector<int> arr={2,1,5,4,3,0,0};
- vector<int> ans=nextpermutation(arr);
- for(int i=0;i<arr.size();i++){
+ vector<int> candidates={2,1,5,4,3,0,0};
+ vector<int> ans=nextpermutation candidates);
+ for(int i=0;i candidates.size();i++){
     cout<<ans[i]<<" ";
  }
     return 0;
@@ -1084,9 +1084,9 @@ vector<int> nextpermutation(vector<int> &a){
  return a;
 }
 int main(){
-vector<int> arr={2,1,5,4,3,0,0};
-vector<int> ans=nextpermutation(arr);
-for(int i=0;i<arr.size();i++){
+vector<int> candidates={2,1,5,4,3,0,0};
+vector<int> ans=nextpermutation candidates);
+for(int i=0;i candidates.size();i++){
  cout<<ans[i]<<" ";
 }
  return 0;
@@ -1098,25 +1098,25 @@ TC-O(1)
 longest consuctive sequence better approach
 #include <bits/stdc++.h>
 using namespace std;
-int longestconsuctiveseq(vector<int>& arr){
-    sort(arr.begin(),arr.end());
+int longestconsuctiveseq(vector<int>& candidates){
+    sort candidates.begin() candidates.end());
     int longest=1,count=0,lastsmall=INT_MIN;
-    for(int i=0;i<arr.size();i++){
-        if(arr[i]-1==lastsmall){
+    for(int i=0;i candidates.size();i++){
+        if candidates[i]-1==lastsmall){
           count++;
-          lastsmall=arr[i];
+          lastsmall candidates[i];
         }
-        else if(arr[i]!=lastsmall){
+        else if candidates[i]!=lastsmall){
             count=1;
-            lastsmall=arr[i];
+            lastsmall candidates[i];
         }
         longest=max(longest,count);
     }
     return longest;
 }
 int main(){
-  vector<int>arr={102,100,1,101,2,1,1,1,2};
-  cout<<longestconsuctiveseq(arr);
+  vector<int candidates={102,100,1,101,2,1,1,1,2};
+  cout<<longestconsuctiveseq candidates);
     return 0;
 }
     */
@@ -1126,13 +1126,13 @@ TC-O(1)
 longest consuctive sequence optimal approach
 #include <bits/stdc++.h>
 using namespace std;
-int longestconsuctiveseq(vector<int>& arr){
-  int n=arr.size();
+int longestconsuctiveseq(vector<int>& candidates){
+  int n candidates.size();
   if(n==0) return 0;
   int longest =1;
   unordered_set<int> st;
   for(int i=0;i<n;i++){
-    st.insert(arr[i]);
+    st.insert candidates[i]);
   }
   for(auto it:st){
     if(st.find(it-1)==st.end()){
@@ -1148,11 +1148,12 @@ int longestconsuctiveseq(vector<int>& arr){
   return longest;
 }
 int main(){
-    vector<int> arr={102,1,2,103,104,3,4,100,5};
-    cout<<longestconsuctiveseq(arr);
+    vector<int> candidates={102,1,2,103,104,3,4,100,5};
+    cout<<longestconsuctiveseq candidates);
     return 0;
 }
     */
+// till this
 /*
 set matrix zeros optimal solution
 TC-O(n*m)
@@ -1343,12 +1344,12 @@ TC-O(n^2)
 TC-O(n)
 #include <bits/stdc++.h>
 using namespace std;
-int subarraysequalstok(vector<int> &arr,int k){
+int subarraysequalstok(vector<int>  candidates,int k){
     int count=0;
-    for(int i=0;i<arr.size();i++){
+    for(int i=0;i candidates.size();i++){
         int sum=0;
-        for(int j=i;j<arr.size();j++){
-            sum+=arr[j];
+        for(int j=i;j candidates.size();j++){
+            sum+ candidates[j];
             if(sum==k){
                 count++;
             }
@@ -1357,9 +1358,9 @@ int subarraysequalstok(vector<int> &arr,int k){
     return count;
 }
 int main(){
-    vector<int> arr={1,2,3,-3,1,1,1,4,2,-3};
+    vector<int> candidates={1,2,3,-3,1,1,1,4,2,-3};
     int k=3;
-    cout<<subarraysequalstok(arr,k);
+    cout<<subarraysequalstok candidates,k);
     return 0;
 }
     */
@@ -1369,13 +1370,13 @@ TC-O(n)
 TC-O(n)
 #include <bits/stdc++.h>
 using namespace std;
-int subarraysequalstok(vector<int> &arr, int k)
+int subarraysequalstok(vector<int>  candidates, int k)
 {
  unordered_map<int,int> mpp;
  mpp[0]=1;
  int presum=0,count=0;
- for(int i=0;i<arr.size();i++){
-     presum+=arr[i];
+ for(int i=0;i candidates.size();i++){
+     presum+ candidates[i];
      int remove=presum-k;
      count+=mpp[remove];
      mpp[presum]+=1;
@@ -1383,9 +1384,9 @@ int subarraysequalstok(vector<int> &arr, int k)
  return count;
 }
 int main(){
- vector<int> arr={1,2,3,-3,1,1,1,4,2,-3};
+ vector<int> candidates={1,2,3,-3,1,1,1,4,2,-3};
  int k=3;
- cout<<subarraysequalstok(arr,k);
+ cout<<subarraysequalstok candidates,k);
  return 0;
 }
  */
@@ -1487,9 +1488,9 @@ TC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> majorityElement(vector<int> arr) {
+vector<int> majorityElement(vector<int> candidates) {
     vector<int> ans;
-    int n = arr.size();
+    int n = candidates.size();
 
     for (int i = 0; i < n; i++) {
         int count = 0;
@@ -1497,30 +1498,30 @@ vector<int> majorityElement(vector<int> arr) {
         // skip already processed elements
         bool already = false;
         for (int x : ans) {
-            if (x == arr[i]) {
+            if (x == candidates[i]) {
                 already = true;
                 break;
             }
         }
         if (already) continue;
 
-        // count frequency of arr[i]
+        // count frequency of candidates[i]
         for (int j = 0; j < n; j++) {
-            if (arr[i] == arr[j])
+            if  candidates[i] == candidates[j])
                 count++;
         }
 
         // check if it appears more than n/3 times
         if (count > n / 3)
-            ans.push_back(arr[i]);
+            ans.push_back candidates[i]);
     }
 
     return ans;
 }
 
 int main() {
-    vector<int> arr = {1,1, 1, 1,1, 2,2,2, 4, 2, 2, 5, 7};
-    vector<int> res = majorityElement(arr);
+    vector<int> candidates = {1,1, 1, 1,1, 2,2,2, 4, 2, 2, 5, 7};
+    vector<int> res = majorityElement candidates);
 
     if (res.empty()) cout << "No majority element";
     else {
@@ -1538,13 +1539,13 @@ TC-O(n)
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> majorityElement(vector<int> &arr) {
+vector<int> majorityElement(vector<int>  candidates) {
     unordered_map<int, int> freq;
     vector<int> ans;
-    int n = arr.size();
+    int n = candidates.size();
 
     // Count how many times each element appears
-    for (int x : arr)
+    for (int x : candidates)
         freq[x]++;
 
     // Check which elements appear more than n/3 times
@@ -1557,8 +1558,8 @@ vector<int> majorityElement(vector<int> &arr) {
 }
 
 int main() {
-    vector<int> arr = {1,1, 1, 1, 2, 4, 2, 2, 5, 7};
-    vector<int> res = majorityElement(arr);
+    vector<int> candidates = {1,1, 1, 1, 2, 4, 2, 2, 5, 7};
+    vector<int> res = majorityElement candidates);
 
     for (int x : res)
         cout << x << " ";
@@ -1611,8 +1612,8 @@ vector<int> majorityElement(vector<int>& nums) {
 }
 
 int main() {
- vector<int> arr = {1, 1, 1, 2, 4, 2, 2, 5, 7};
- vector<int> res = majorityElement(arr);
+ vector<int> candidates = {1, 1, 1, 2, 4, 2, 2, 5, 7};
+ vector<int> res = majorityElement candidates);
 
  for (int x : res)
      cout << x << " ";
@@ -1626,18 +1627,18 @@ TC-O(n)
 brute force for 3 sum
 #include <bits/stdc++.h>
 using namespace std;
-vector<vector<int>> threesum(vector<int> arr)
+vector<vector<int>> threesum(vector<int> candidates)
 {
     set<vector<int>> st;
-    for (int i = 0; i < arr.size(); i++)
+    for (int i = 0; i < candidates.size(); i++)
     {
-        for (int j = i+1; j < arr.size(); j++)
+        for (int j = i+1; j < candidates.size(); j++)
         {
-            for (int k = j+1; k < arr.size(); k++)
+            for (int k = j+1; k < candidates.size(); k++)
             {
-                if (arr[i] + arr[j] + arr[k] == 0)
+                if  candidates[i] + candidates[j] + candidates[k] == 0)
                 {
-                    vector<int> ls={arr[i],arr[j],arr[k]};
+                    vector<int> ls= candidates[i] candidates[j] candidates[k]};
                     sort(ls.begin(),ls.end());
                     st.insert(ls);
                 }
@@ -1649,8 +1650,8 @@ vector<vector<int>> threesum(vector<int> arr)
 }
 int main()
 {
-     vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
- vector<vector<int>> ans = threesum(arr);
+     vector<int> candidates = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+ vector<vector<int>> ans = threesum candidates);
 
  for (auto triplet : ans) {
      for (auto num : triplet) {
@@ -1669,19 +1670,19 @@ better approach for 3 sum
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<vector<int>> threesum(vector<int> arr, int n) {
+vector<vector<int>> threesum(vector<int> candidates, int n) {
  set<vector<int>> st;
 
  for (int i = 0; i < n; i++) {
      set<int> hashset;
      for (int j = i + 1; j < n; j++) {
-         int third = -(arr[i] + arr[j]);
+         int third = - candidates[i] + candidates[j]);
          if (hashset.find(third) != hashset.end()) {
-             vector<int> temp = {arr[i], arr[j], third};
+             vector<int> temp =  candidates[i], candidates[j], third};
              sort(temp.begin(), temp.end());
              st.insert(temp);
          }
-         hashset.insert(arr[j]);
+         hashset.insert candidates[j]);
      }
  }
 
@@ -1690,9 +1691,9 @@ vector<vector<int>> threesum(vector<int> arr, int n) {
 }
 
 int main() {
- vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
- int n = arr.size();
- vector<vector<int>> ans = threesum(arr, n);
+ vector<int> candidates = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+ int n = candidates.size();
+ vector<vector<int>> ans = threesum candidates, n);
 
  for (auto triplet : ans) {
      for (auto num : triplet) {
@@ -1710,15 +1711,15 @@ TC-O(n)
 Optimal approach for 3 sum
 #include <bits/stdc++.h>
 using namespace std;
-vector<vector<int>> threesum(vector<int> arr, int n) {
+vector<vector<int>> threesum(vector<int> candidates, int n) {
 vector<vector<int>> ans;
-sort(arr.begin(),arr.end());
+sort candidates.begin() candidates.end());
 for(int i=0;i<n;i++){
-    if(i>0 && arr[i]==arr[i-1]) continue;
+    if(i>0 && candidates[i]= candidates[i-1]) continue;
     int j=i+1;
     int k=n-1;
     while(j<k){
-        int sum=arr[i]+arr[j]+arr[k];
+        int sum candidates[i] candidates[j] candidates[k];
         if(sum<0){
             j++;
         }
@@ -1726,21 +1727,21 @@ for(int i=0;i<n;i++){
             k--;
         }
         else {
-            vector<int> temp={arr[i],arr[j],arr[k]};
+            vector<int> temp= candidates[i] candidates[j] candidates[k]};
             ans.push_back(temp);
             j++;
             k--;
-            while(j<k && arr[j]==arr[j-1]) j++;
-            while(j<k && arr[k]==arr[k+1]) k--;
+            while(j<k && candidates[j]= candidates[j-1]) j++;
+            while(j<k && candidates[k]= candidates[k+1]) k--;
          }
     }
 }
 return ans;
 }
 int main(){
- vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
- int n = arr.size();
- vector<vector<int>> ans = threesum(arr, n);
+ vector<int> candidates = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+ int n = candidates.size();
+ vector<vector<int>> ans = threesum candidates, n);
 
  for (auto triplet : ans) {
      for (auto num : triplet) {
@@ -1758,19 +1759,19 @@ TC-O(n^4)
 SC-O(n)
 #include <bits/stdc++.h>
 using namespace std;
-vector<vector<int>> foursum(vector<int> &arr, int target)
+vector<vector<int>> foursum(vector<int>  candidates, int target)
 {
-    int n = arr.size();
+    int n = candidates.size();
     set<vector<int>> st;
     for(int i=0;i<n;i++){
         for(int j=i+1;j<n;j++){
             for(int k=j+1;k<n;k++){
                 for(int l=k+1;l<n;l++){
-                    long long sum=arr[i]+arr[j];
-                    sum+=arr[k];
-                    sum+=arr[l];
+                    long long sum candidates[i] candidates[j];
+                    sum+ candidates[k];
+                    sum+ candidates[l];
                    if(sum==target){
-                    vector<int> temp={arr[i],arr[j],arr[k],arr[l]};
+                    vector<int> temp= candidates[i] candidates[j] candidates[k] candidates[l]};
                     sort(temp.begin(),temp.end());
                     st.insert(temp);
                    }
@@ -1783,9 +1784,9 @@ vector<vector<int>> foursum(vector<int> &arr, int target)
 }
 int main()
 {
- vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+ vector<int> candidates = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
  int target=0;
- vector<vector<int>> ans = foursum(arr, target);
+ vector<vector<int>> ans = foursum candidates, target);
  for (auto triplet : ans) {
      for (auto num : triplet) {
          cout << num << " ";
@@ -1830,9 +1831,9 @@ vector<vector<int>> foursum(vector<int> &nums, int target)
 }
 int main()
 {
- vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+ vector<int> candidates = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
  int target = 0;
- vector<vector<int>> ans = foursum(arr, target);
+ vector<vector<int>> ans = foursum candidates, target);
  for (auto triplet : ans)
  {
      for (auto num : triplet)
@@ -1850,35 +1851,35 @@ TC-O(n^3)
 SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
-vector<vector<int>> foursum(vector<int> &arr, int target)
+vector<vector<int>> foursum(vector<int>  candidates, int target)
 {
-    int n = arr.size();
-    sort(arr.begin(), arr.end());
+    int n = candidates.size();
+    sort candidates.begin(), candidates.end());
     vector<vector<int>> ans;
     for (int i = 0; i < n; i++)
     {
-        if (i > 0 && arr[i] == arr[i - 1])
+        if (i > 0 && candidates[i] == candidates[i - 1])
             continue;
         for (int j = i + 1; j < n; j++)
         {
-            if (j != (i + 1) && arr[j] == arr[j - 1])
+            if (j != (i + 1) && candidates[j] == candidates[j - 1])
                 continue;
             int k = j + 1;
             int l = n - 1;
             while (k < l)
             {
-                long long sum = arr[i] + arr[j];
-                sum += arr[k];
-                sum += arr[l];
+                long long sum = candidates[i] + candidates[j];
+                sum += candidates[k];
+                sum += candidates[l];
                 if (sum == target)
                 {
-                    vector<int> temp = {arr[i], arr[j], arr[k], arr[l]};
+                    vector<int> temp =  candidates[i], candidates[j], candidates[k], candidates[l]};
                     ans.push_back(temp);
                     k++;
                     l--;
-                    while (k < l && arr[k] == arr[k - 1])
+                    while (k < l && candidates[k] == candidates[k - 1])
                         k++;
-                    while (k < l && arr[l] == arr[l + 1])
+                    while (k < l && candidates[l] == candidates[l + 1])
                         l--;
                 }
                 else if (sum < target)
@@ -1894,9 +1895,9 @@ vector<vector<int>> foursum(vector<int> &arr, int target)
 }
 int main()
 {
-    vector<int> arr = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
+    vector<int> candidates = {-1, -2, 2, 5, 4, -4, -3, -4, 7, 8};
     int target =0;
-    vector<vector<int>> ans = foursum(arr, target);
+    vector<vector<int>> ans = foursum candidates, target);
     for (auto triplet : ans)
     {
         for (auto num : triplet)
@@ -2164,9 +2165,9 @@ while(low<=high){
 return low;
 }
 int main(){
- vector<int> arr={1,3,5,8};
+ vector<int> candidates={1,3,5,8};
  int target=5;
- cout<<lowerbound(arr,target);
+ cout<<lowerbound candidates,target);
  return 0;
 }
  */
@@ -2186,9 +2187,9 @@ while(low<=high){
 return low;
 }
 int main(){
- vector<int> arr={1,3,5,5,8};
+ vector<int> candidates={1,3,5,5,8};
  int target=5;
- cout<<lowerbound(arr,target);
+ cout<<lowerbound candidates,target);
  return 0;
 }
 */
@@ -2369,13 +2370,13 @@ TC-O(logn)
 SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
-int minimumelementinsorted(vector<int> &arr)
+int minimumelementinsorted(vector<int>  candidates)
 {
-    int low = 0, high = arr.size() - 1;
+    int low = 0, high = candidates.size() - 1;
     while (low < high)
     {
         int mid = low + (high - low) / 2;
-        if (arr[mid] > arr[high])
+        if  candidates[mid] > candidates[high])
         {
             low = mid + 1;
         }
@@ -2384,12 +2385,12 @@ int minimumelementinsorted(vector<int> &arr)
             high = mid;
         }
     }
-    return arr[low];
+    return candidates[low];
 }
 int main()
 {
-    vector<int> arr = {3, 4, 5, 6, 7, 1, 2};
-    cout << minimumelementinsorted(arr);
+    vector<int> candidates = {3, 4, 5, 6, 7, 1, 2};
+    cout << minimumelementinsorted candidates);
     return 0;
 }
     */
@@ -2400,13 +2401,13 @@ SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
 
- int findRotations(vector<int>& arr) {
+ int findRotations(vector<int>& candidates) {
      int low = 0;
-     int high = arr.size() - 1;
+     int high = candidates.size() - 1;
 
      while (low < high) {
          int mid = low + (high - low) / 2;
-         if (arr[mid] > arr[high]) {
+         if  candidates[mid] > candidates[high]) {
              low = mid + 1;
          } else {
              high = mid;
@@ -2418,9 +2419,9 @@ using namespace std;
 
 int main() {
 
- vector<int> arr = {4,5,6,7,0,1,2,3};
+ vector<int> candidates = {4,5,6,7,0,1,2,3};
 
- int rotations = findRotations(arr);
+ int rotations = findRotations candidates);
 
  cout << rotations << endl;
  return 0;
@@ -2436,18 +2437,18 @@ using namespace std;
 class Solution {
 public:
 
-int singleNonDuplicate(vector<int>& arr) {
+int singleNonDuplicate(vector<int>& candidates) {
     // Get the size of the array
-    int n = arr.size();
+    int n = candidates.size();
 
     // Edge case: only one element in the array
-    if (n == 1) return arr[0];
+    if (n == 1) return candidates[0];
 
     // Edge case: first element is the unique one
-    if (arr[0] != arr[1]) return arr[0];
+    if  candidates[0] != candidates[1]) return candidates[0];
 
     // Edge case: last element is the unique one
-    if (arr[n - 1] != arr[n - 2]) return arr[n - 1];
+    if  candidates[n - 1] != candidates[n - 2]) return candidates[n - 1];
 
     // Initialize binary search bounds (exclude first and last index)
     int low = 1, high = n - 2;
@@ -2458,13 +2459,13 @@ int singleNonDuplicate(vector<int>& arr) {
         int mid = (low + high) / 2;
 
         // Check if middle element is the unique one
-        if (arr[mid] != arr[mid + 1] && arr[mid] != arr[mid - 1]) {
-            return arr[mid];
+        if  candidates[mid] != candidates[mid + 1] && candidates[mid] != candidates[mid - 1]) {
+            return candidates[mid];
         }
 
         // If mid is in the left half (pairing is valid)
-        if ((mid % 2 == 1 && arr[mid] == arr[mid - 1]) ||
-            (mid % 2 == 0 && arr[mid] == arr[mid + 1])) {
+        if ((mid % 2 == 1 && candidates[mid] == candidates[mid - 1]) ||
+            (mid % 2 == 0 && candidates[mid] == candidates[mid + 1])) {
             // Move to the right half
             low = mid + 1;
         }
@@ -2482,12 +2483,12 @@ int singleNonDuplicate(vector<int>& arr) {
 
 int main() {
     // Input array with all elements appearing twice except one
-    vector<int> arr = {1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6};
+    vector<int> candidates = {1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6};
 
     // Call the function and store the result
     Solution obj;
 
-    int ans = obj.singleNonDuplicate(arr);
+    int ans = obj.singleNonDuplicate candidates);
 
     // Print the result
     cout << "The single element is: " << ans << "\n";
@@ -2722,12 +2723,12 @@ Min days to make m bouqetts brute
 TC-O(maxi-mini+1)*n
 #include <bits/stdc++.h>
 using namespace std;
-bool possible(vector<int> &arr, int day, int m, int k)
+bool possible(vector<int>  candidates, int day, int m, int k)
 {
     int cnt = 0, bouq = 0;
-    for (int i = 0; i < arr.size(); i++)
+    for (int i = 0; i < candidates.size(); i++)
     {
-        if (arr[i] <= day)
+        if  candidates[i] <= day)
         {
             cnt++;
         }
@@ -2741,15 +2742,15 @@ bool possible(vector<int> &arr, int day, int m, int k)
     if (bouq >= m) return true;
     else return false;
 }
-int minDays(vector<int> &arr, int m, int k)
+int minDays(vector<int>  candidates, int m, int k)
 {
-    if ((long long)m * k > arr.size())
+    if ((long long)m * k > candidates.size())
         return -1;
-    int mini = *min_element(arr.begin(), arr.end());
-    int maxi = *max_element(arr.begin(), arr.end());
+    int mini = *min_element candidates.begin(), candidates.end());
+    int maxi = *max_element candidates.begin(), candidates.end());
     for (int day = mini; day <= maxi; day++)
     {
-        if (possible(arr, day, m, k))
+        if (possible candidates, day, m, k))
             return day;
     }
     return -1;
@@ -2767,12 +2768,12 @@ Min days to make m bouqetts optimal
 TC-O(n*log(maxi-mini+1))
 #include <bits/stdc++.h>
 using namespace std;
-bool possible(vector<int> &arr, int day, int m, int k)
+bool possible(vector<int>  candidates, int day, int m, int k)
 {
     int cnt = 0, bouq = 0;
-    for (int i = 0; i < arr.size(); i++)
+    for (int i = 0; i < candidates.size(); i++)
     {
-        if (arr[i] <= day)
+        if  candidates[i] <= day)
         {
             cnt++;
         }
@@ -2786,7 +2787,7 @@ bool possible(vector<int> &arr, int day, int m, int k)
     if (bouq >= m) return true;
     else return false;
 }
-int minDays(vector<int> &arr, int m, int k)
+int minDays(vector<int>  candidates, int m, int k)
 {
 s
 }
@@ -2803,12 +2804,12 @@ finding the smallest divisor
 TC-O(n*maxi)
 #include <bits/stdc++.h>
 using namespace std;
- int smallestDivisor(vector<int> & arr,int thresold){
-    int maxi=*max_element(arr.begin(),arr.end());
+ int smallestDivisor(vector<int> & candidates,int thresold){
+    int maxi=*max_element candidates.begin() candidates.end());
     for(int d=1; d<=maxi; d++){
         int sum=0;
-       for(int i=0; i<arr.size();i++){
-        sum+=ceil((double)arr[i]/d);
+       for(int i=0; i candidates.size();i++){
+        sum+=ceil((double candidates[i]/d);
        }
        if(sum<=thresold){
         return d;
@@ -2817,9 +2818,9 @@ using namespace std;
     return -1;
  }
  int main(){
-    vector<int> arr={1,2,5,9};
+    vector<int> candidates={1,2,5,9};
     int thresold=6;
-    cout<<smallestDivisor(arr,thresold);
+    cout<<smallestDivisor candidates,thresold);
     return 0;
  }
     */
@@ -2827,19 +2828,19 @@ using namespace std;
 TC-O(n*log(maxi))
 #include <bits/stdc++.h>
 using namespace std;
-int possible(vector<int> &arr,int mid){
+int possible(vector<int>  candidates,int mid){
     int sum=0;
-     for(int i=0; i<arr.size();i++){
-        sum+=ceil((double)arr[i]/mid);
+     for(int i=0; i candidates.size();i++){
+        sum+=ceil((double candidates[i]/mid);
 }
  return sum;
 }
- int smallestDivisor(vector<int> & arr,int thresold){
+ int smallestDivisor(vector<int> & candidates,int thresold){
     int low=1;
-    int high=*max_element(arr.begin(),arr.end());
+    int high=*max_element candidates.begin() candidates.end());
     while(low<=high){
         int mid =(low+high)/2;
-        if(possible(arr,mid) <= thresold){
+        if(possible candidates,mid) <= thresold){
             high=mid-1;
         }
         else low=mid+1;
@@ -2847,9 +2848,9 @@ int possible(vector<int> &arr,int mid){
     return low;
  }
  int main(){
-    vector<int> arr={1,2,5};
+    vector<int> candidates={1,2,5};
     int thresold=6;
-    cout<<smallestDivisor(arr,thresold);
+    cout<<smallestDivisor candidates,thresold);
     return 0;
  }
     */
@@ -3085,33 +3086,33 @@ TC-O(high-low)+1 * O(N)
 SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
-int possible(vector<int>&arr,int pages){
+int possible(vector<int> candidates,int pages){
     int stu=1,pagesstudent=0;
-    for(int i=0;i<arr.size();i++){
-        if(pagesstudent + arr[i]<=pages){
-            pagesstudent+=arr[i];
+    for(int i=0;i candidates.size();i++){
+        if(pagesstudent + candidates[i]<=pages){
+            pagesstudent+ candidates[i];
         }
         else {
             stu++;
-            pagesstudent=arr[i];
+            pagesstudent candidates[i];
         }
     }
     return stu;
 }
-int bookallocation(vector<int> &arr, int students){
-    int low=*max_element(arr.begin(),arr.end());
-    int high =accumulate(arr.begin(),arr.end(),0);
+int bookallocation(vector<int>  candidates, int students){
+    int low=*max_element candidates.begin() candidates.end());
+    int high =accumulate candidates.begin() candidates.end(),0);
     for(int pages=low;pages<=high;pages++){
-       int capStudent= possible(arr,pages);
+       int capStudent= possible candidates,pages);
        if(capStudent==students){
        return pages;
        }
     }
 }
 int main(){
-    vector<int> arr={25,46,28,49,24};
+    vector<int> candidates={25,46,28,49,24};
     int students=4;
-    cout<<bookallocation(arr,students);
+    cout<<bookallocation candidates,students);
     return 0;
 }
     */
@@ -3121,30 +3122,30 @@ TC-O(log(high-low)+1) * O(N)
 SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
-int possible(vector<int> &arr, int pages)
+int possible(vector<int>  candidates, int pages)
 {
  int stu = 1, pagesstudent = 0;
- for (int i = 0; i < arr.size(); i++)
+ for (int i = 0; i < candidates.size(); i++)
  {
-     if (pagesstudent + arr[i] <= pages)
+     if (pagesstudent + candidates[i] <= pages)
      {
-         pagesstudent += arr[i];
+         pagesstudent += candidates[i];
      }
      else
      {
          stu++;
-         pagesstudent = arr[i];
+         pagesstudent = candidates[i];
      }
  }
  return stu;
 }
-int bookallocation(vector<int> &arr, int students){
-int low=*max_element(arr.begin(),arr.end());
- int high =accumulate(arr.begin(),arr.end(),0);
+int bookallocation(vector<int>  candidates, int students){
+int low=*max_element candidates.begin() candidates.end());
+ int high =accumulate candidates.begin() candidates.end(),0);
  while (low<=high)
  {
      int mid=(low+high)/2;
-     int capStudents=possible(arr,mid);
+     int capStudents=possible candidates,mid);
      if(capStudents > students){
          low=mid+1;
      }
@@ -3153,9 +3154,9 @@ int low=*max_element(arr.begin(),arr.end());
  return low;
 }
 int main(){
- vector<int> arr={25,46,28,49,24};
+ vector<int> candidates={25,46,28,49,24};
  int students=4;
- cout<<bookallocation(arr,students);
+ cout<<bookallocation candidates,students);
  return 0;
 }
  */
@@ -3698,14 +3699,14 @@ SC-O(n*m)
 #include <bits/stdc++.h>
 using namespace std;
 int medianmatrix(vector<vector<int>> mat,int m,int n){
-vector<int> arr;
+vector<int> candidates;
 for(int i=0;i<n;i++){
  for(int j=0; j<m;j++){
-  arr.push_back(mat[i][j]);
+ candidates.push_back(mat[i][j]);
  }
 }
-sort(arr.begin(),arr.end());
-return arr[arr.size()/2];
+sort candidates.begin() candidates.end());
+return candidates.size()/2];
 }
 int main(){
  vector<vector<int>> mat = {
@@ -3783,31 +3784,31 @@ Bubble sort O(n^2)
 #include <iostream>
 #include <vector>
 using namespace std;
-int bubblesort(int arr[], int n)
+int bubblesort(int candidates[], int n)
 {
 for (int i = 0; i < n - 1; i++)
 {
 for (int j = 0; j < n - i - 1; j++)
 {
-   if (arr[j] > arr[j + 1])
+   if  candidates[j] > candidates[j + 1])
    {
-       swap(arr[j], arr[j + 1]);
+       swap candidates[j], candidates[j + 1]);
    }
 }
 }
 }
-void print(int arr[],int n){
+void print(int candidates[],int n){
 for (int i = 0; i < n; i++)
 {
-cout<<arr[i]<<" ";
+cout< candidates[i]<<" ";
 }
 
 }
 int main(){
-int arr[]={4,1,2,3,5,5,4,7,8,9};
+int candidates[]={4,1,2,3,5,5,4,7,8,9};
 int n=10;
-bubblesort(arr,n);
-print(arr,n);
+bubblesort candidates,n);
+print candidates,n);
 return 0;
 }
 */
@@ -3815,34 +3816,34 @@ return 0;
 #include <iostream>
 #include <vector>
 using namespace std;
-int sesort(int arr[], int n)
+int sesort(int candidates[], int n)
 {
     for (int i = 0; i < n - 1; i++)
     {
         int small = i;
         for (int j = i + 1; j < n; j++)
         {
-            if (arr[j] < arr[small])
+            if  candidates[j] < candidates[small])
             {
                 small = j;
             }
         }
-        swap(arr[i], arr[small]);
+        swap candidates[i], candidates[small]);
     }
 }
-void print(int arr[], int n)
+void print(int candidates[], int n)
 {
     for (int i = 0; i < n; i++)
     {
-        cout << arr[i] << " ";
+        cout << candidates[i] << " ";
     }
 }
 int main()
 {
-    int arr[] = {4, 1, 2, 3, 5, 5, 4, 7, 8, 9};
+    int candidates[] = {4, 1, 2, 3, 5, 5, 4, 7, 8, 9};
     int n = 10;
-    sesort(arr, n);
-    print(arr, n);
+    sesort candidates, n);
+    print candidates, n);
     return 0;
 }
     */
@@ -3850,31 +3851,31 @@ int main()
 #include <iostream>
 #include <vector>
 using namespace std;
-void inssort(int arr[], int n){
+void inssort(int candidates[], int n){
  for(int i=1;i<n;i++){
-     int curr=arr[i];
+     int curr candidates[i];
      int prev=i-1;
-     while (prev>=0 && arr[prev]>curr)
+     while (prev>=0 && candidates[prev]>curr)
      {
-         arr[prev+1]=arr[prev];
+         candidates[prev+1] candidates[prev];
          prev--;
      }
-     arr[prev+1]=curr;
+     candidates[prev+1]=curr;
  }
 }
-void print(int arr[], int n)
+void print(int candidates[], int n)
 {
  for (int i = 0; i < n; i++)
  {
-     cout << arr[i] << " ";
+     cout << candidates[i] << " ";
  }
 }
 int main()
 {
- int arr[] = {4, 1, 2, 3, 5, 5, 4, 7, 8, 9};
+ int candidates[] = {4, 1, 2, 3, 5, 5, 4, 7, 8, 9};
  int n = 10;
- inssort(arr, n);
- print(arr, n);
+ inssort candidates, n);
+ print candidates, n);
  return 0;
 }
  */
@@ -3882,13 +3883,13 @@ int main()
 another code for insertion sort
     #include<iostream>
     using namespace std;
-    void bubb(int arr[],int n){
+    void bubb(int candidates[],int n){
         for(int i=0;i<=n-1;i++){
             int j=i;
-            while(j>0  &&  arr[j-1]>arr[j]){
-               int temp=arr[j-1];
-               arr[j-1]=arr[j];
-               arr[j]=temp;
+            while(j>0  &&  candidates[j-1] candidates[j]){
+               int temp candidates[j-1];
+             candidates[j-1] candidates[j];
+             candidates[j]=temp;
                 j--;
             }
 
@@ -3896,11 +3897,11 @@ another code for insertion sort
         }
     int main(){
          int n=6;
-         int arr[]={9,13,20,24,46,4};
-         bubb(arr,n);
+         int candidates[]={9,13,20,24,46,4};
+         bubb candidates,n);
          for (int i = 0; i < n; i++)
          {
-            cout<<arr[i]<<" ";
+            cout< candidates[i]<<" ";
          }
         return 0;
      }
@@ -3910,47 +3911,46 @@ quick sort algorithem
 #include <iostream>
 #include <vector>
 using namespace std;
-int partition(vector<int> &arr, int low, int high)
+int partition(vector<int>  candidates, int low, int high)
 {
-int pivot = arr[low];
+int pivot = candidates[low];
 int i = low;
 int j = high;
 while (i < j)
 {
-    while (arr[i] <= pivot && i <= high - 1)
+    while  candidates[i] <= pivot && i <= high - 1)
     {
         i++;
     }
-    while (arr[j] > pivot && j >= low + 1)
+    while  candidates[j] > pivot && j >= low + 1)
     {
         j--;
     }
-    if (i < j) swap(arr[i], arr[j]);
+    if (i < j) swap candidates[i], candidates[j]);
 }
-swap(arr[low], arr[j]);
+swap candidates[low], candidates[j]);
 return j;
 }
-void qs(vector<int> &arr, int low, int high)
+void qs(vector<int>  candidates, int low, int high)
 {
 if (low < high)
 {
-    int pindex = partition(arr, low, high);
-    qs(arr, low, pindex - 1);
-    qs(arr, pindex + 1, high);
+    int pindex = partition candidates, low, high);
+    qs candidates, low, pindex - 1);
+    qs candidates, pindex + 1, high);
 }
 }
-vector<int> quicksort(vector<int> arr)
+vector<int> quicksort(vector<int> candidates)
 {
-qs(arr, 0, arr.size() - 1);
-return arr;
+qs candidates, 0, candidates.size() - 1);
+return candidates;
 }
 int main()
 {
-vector<int> arr = {3, 4, 5, 6, 7, 8, 1};
-arr = quicksort(arr);
- for (int i = 0; i < arr.size(); i++)
+vector<int> candidates = {3, 4, 5, 6, 7, 8, 1}; candidates = quicksort candidates);
+ for (int i = 0; i < candidates.size(); i++)
 {
-    cout << arr[i] << " ";
+    cout << candidates[i] << " ";
 }
 }
 */
@@ -3959,19 +3959,19 @@ linear search in an array
 #include<iostream>
 #include<vector>
 using namespace std;
-int linearsearch(int n,int num,vector<int>& arr){
+int linearsearch(int n,int num,vector<int>& candidates){
     for(int i=0;i<num;i++){
-        if(arr[i]==num){
+        if candidates[i]==num){
             return i;
         }
     }
     return -1;
 }
 int main(){
-    vector<int> arr={2,3,4,5,7,8,9};
+    vector<int> candidates={2,3,4,5,7,8,9};
     int num=2;
-    int n=arr.size();
-    cout<<linearsearch(n,num,arr);
+    int n candidates.size();
+    cout<<linearsearch(n,num candidates);
     return 0;
 }
     */
@@ -4267,25 +4267,25 @@ Reverse an array using recursion with two pointers
 #include <iostream>
 using namespace std;
 
-void f(int arr[], int l, int r)
+void f(int candidates[], int l, int r)
 {
     if (l >= r)
         return;
-    swap(arr[l], arr[r]);
-    f(arr, l + 1, r - 1);
+    swap candidates[l], candidates[r]);
+    f candidates, l + 1, r - 1);
 }
 
 int main()
 {
-    int arr[] = {4, 2, 5, 4, 5};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    int candidates[] = {4, 2, 5, 4, 5};
+    int n = sizeof candidates) / sizeof candidates[0]);
 
-    f(arr, 0, n - 1);
+    f candidates, 0, n - 1);
 
     // Print reversed array
     for (int i = 0; i < n; i++)
     {
-        cout << arr[i] << " "; output: 5 4 5 2 4
+        cout << candidates[i] << " "; output: 5 4 5 2 4
     }
     cout << endl;
 
@@ -4297,20 +4297,20 @@ Reverse an array using recursion with one pointer
 #include <iostream>
 using namespace std;
 
-void f(int arr[], int i, int n) {
+void f(int candidates[], int i, int n) {
     if (i >= n/2) return;
-    swap(arr[i], arr[n-i-1]);
-    f(arr,i+1,n);
+    swap candidates[i], candidates[n-i-1]);
+    f candidates,i+1,n);
 }
 
 int main() {
   int n;
   cout<<"enter array size :";
   cin>>n;
-  int arr[n];
-  for(int i=0;i<n;i++) cin>>arr[i];
-  f(arr,0,n);
-   for(int i=0;i<n;i++) cout<<arr[i]; // input: 1 2 3 4 5 output: 5 4 3 2 1
+  int candidates[n];
+  for(int i=0;i<n;i++) cin> candidates[i];
+  f candidates,0,n);
+   for(int i=0;i<n;i++) cout< candidates[i]; // input: 1 2 3 4 5 output: 5 4 3 2 1
     return 0;
 }
     */
@@ -5071,19 +5071,19 @@ class Node{
         next=nullptr;
     }
 };
-Node* convertarr2ll(vector<int> &arr){
-Node* head=new Node(arr[0]);
+Node* convertarr2ll(vector<int>  candidates){
+Node* head=new Node candidates[0]);
 Node* mover=head;
-for(int i=1;i<arr.size();i++){
-    Node* temp= new Node(arr[i]);
+for(int i=1;i candidates.size();i++){
+    Node* temp= new Node candidates[i]);
     mover->next =temp;
     mover=temp;
 }
 return head;
 }
 int main(){
-   vector<int> arr={2,5,8,7};
-   Node* head = convertarr2ll(arr);
+   vector<int> candidates={2,5,8,7};
+   Node* head = convertarr2ll candidates);
    cout<<head->data;
     return 0;
 }
@@ -5108,19 +5108,19 @@ class Node{
      next=nullptr;
  }
 };
-Node* convertarr2ll(vector<int> &arr){
-Node* head=new Node(arr[0]);
+Node* convertarr2ll(vector<int>  candidates){
+Node* head=new Node candidates[0]);
 Node* mover=head;
-for(int i=1;i<arr.size();i++){
- Node* temp= new Node(arr[i]);
+for(int i=1;i candidates.size();i++){
+ Node* temp= new Node candidates[i]);
  mover->next =temp;
  mover=temp;
 }
 return head;
 }
 int main(){
-vector<int> arr={2,5,8,7};
-Node* head = convertarr2ll(arr);
+vector<int> candidates={2,5,8,7};
+Node* head = convertarr2ll candidates);
 Node* temp=head;
 while(temp != nullptr){
  cout<<temp->data<<" ";
@@ -5149,11 +5149,11 @@ class Node{
      next=nullptr;
  }
 };
-Node* convertarr2ll(vector<int> &arr){
-Node* head=new Node(arr[0]);
+Node* convertarr2ll(vector<int>  candidates){
+Node* head=new Node candidates[0]);
 Node* mover=head;
-for(int i=1;i<arr.size();i++){
- Node* temp= new Node(arr[i]);
+for(int i=1;i candidates.size();i++){
+ Node* temp= new Node candidates[i]);
  mover->next =temp;
  mover=temp;
 }
@@ -5169,8 +5169,8 @@ while(temp != nullptr){
 return cnt;
 }
 int main(){
-vector<int> arr={2,5,8,7};
-Node* head = convertarr2ll(arr);
+vector<int> candidates={2,5,8,7};
+Node* head = convertarr2ll candidates);
 cout<<lengthofll(head);
  return 0;
 }
@@ -5195,11 +5195,11 @@ class Node{
         next=nullptr;
     }
 };
-Node* convertarr2ll(vector<int> &arr){
-Node* head=new Node(arr[0]);
+Node* convertarr2ll(vector<int>  candidates){
+Node* head=new Node candidates[0]);
 Node* mover=head;
-for(int i=1;i<arr.size();i++){
-    Node* temp= new Node(arr[i]);
+for(int i=1;i candidates.size();i++){
+    Node* temp= new Node candidates[i]);
     mover->next =temp;
     mover=temp;
 }
@@ -5220,8 +5220,8 @@ Node* deletehead(Node* head){
     return head;
 }
 int main(){
-   vector<int> arr={2,5,8,7};
-   Node* head = convertarr2ll(arr);
+   vector<int> candidates={2,5,8,7};
+   Node* head = convertarr2ll candidates);
     head =deletehead(head);
     print(head);
     return 0;
@@ -5880,7 +5880,7 @@ Node* deleteMiddle(Node* head) {
  Node* sortList(Node* head) {
     if(head==NULL || head->next==NULL){
         return head;
-    }    
+    }
    vector<int> ans;
    Node* temp=head;
    while(temp!=NULL){
@@ -5970,7 +5970,7 @@ while(two>0){
 }
 return head;
 }
-//sort 0 1 2 optimal 
+//sort 0 1 2 optimal
 Node* sort1s2s0ss(Node* head){
     if(head==NULL || head->next==NULL){
         return head;
@@ -6033,7 +6033,7 @@ else if(oneHead!=NULL){
     return oneHead;
 }
 else return twoHead;
-}    
+}
 //intersection of two LL brute force
     Node* collison(Node* headA,Node* headB,int d){
         while(d){
@@ -6041,8 +6041,8 @@ else return twoHead;
         headA=headA->next;
         }
         while(headA!=headB){
-           headA=headA->next; 
-           headB=headB->next; 
+           headA=headA->next;
+           headB=headB->next;
         }
         return headA;
     }
@@ -6063,7 +6063,7 @@ else return twoHead;
         return collison(headA,headB,n-m);
     }
     else return collison(headB,headA,m-n);
-    }       
+    }
 //Add 1 to a number represented by LL O(N ) O(1)
 Node* reverse1(Node* head){
      Node *prev = NULL;
@@ -6118,9 +6118,9 @@ if(l2!=NULL) l2=l2->next;
 }
 if(carry){
     curr->next=new Node(carry);
-}  
+}
 return dummyNode->next;
-} 
+}
 //rotates ll k times
 Node* RotateLLktimes(Node* head,int k){
 if(head==NULL || head->next==NULL){
@@ -6203,11 +6203,11 @@ public:
         back=nullptr;
     }
 };
-Node* arraytoDll(vector<int>&arr){
-    Node* head=new Node(arr[0]);
+Node* arraytoDll(vector<int> candidates){
+    Node* head=new Node candidates[0]);
     Node* prev=head;
-    for(int i=1;i<arr.size();i++){
-        Node* temp=new Node(arr[i],nullptr,prev);
+    for(int i=1;i candidates.size();i++){
+        Node* temp=new Node candidates[i],nullptr,prev);
         prev->next=temp;
         prev=temp;
     }
@@ -6359,7 +6359,7 @@ void insertbeforenode(Node* node,int data){
     prev->next=newnode;
     node->back=newnode;
 }
-//delete all occurence of key TC-O(N) SC-O(1) 
+//delete all occurence of key TC-O(N) SC-O(1)
 Node* deleteoccurence(Node* head,int key){
 Node* temp=head;
 while(temp!=NULL){
@@ -6378,7 +6378,7 @@ else temp=temp->next;
 }
 return head;
 }
-//find the sum pairs TC-O(N) SC-O(1) 
+//find the sum pairs TC-O(N) SC-O(1)
 vector<pair<int,int>> pairsum(Node* head,int sum){
 vector<pair<int,int>> ans;
 Node* left=head;
@@ -6424,8 +6424,8 @@ delete prev;
 return head;
 }
 int main(){
-vector<int>  arr={1,2,2,4,5,8,7,7};
-Node* head=arraytoDll(arr);
+vector<int>  candidates={1,2,2,4,5,8,7,7};
+Node* head=arraytoDll candidates);
 head=removeduplicates(head);
 traverse(head);
     return 0;
@@ -6458,11 +6458,11 @@ public:
         back=nullptr;
     }
 };
-Node* arraytoDll(vector<int>&arr){
-    Node* head=new Node(arr[0]);
+Node* arraytoDll(vector<int> candidates){
+    Node* head=new Node candidates[0]);
     Node* prev=head;
-    for(int i=1;i<arr.size();i++){
-        Node* temp=new Node(arr[i],nullptr,prev);
+    for(int i=1;i candidates.size();i++){
+        Node* temp=new Node candidates[i],nullptr,prev);
         prev->next=temp;
         prev=temp;
     }
@@ -6507,8 +6507,8 @@ head=last->back;
 return head;
 }
 int main(){
-vector<int>  arr={1,2,4,7,8};
-Node* head=arraytoDll(arr);
+vector<int>  candidates={1,2,4,7,8};
+Node* head=arraytoDll candidates);
 head=reversethedll2(head);
 traverse(head);
     return 0;
@@ -6523,7 +6523,7 @@ const int INT_MIN_VAL = -2147483648;
 const int INT_MAX_VAL = 2147483647;
 int helper(const string &s, int i, long long num, int sign) {
     if (i >= s.size() || !isdigit(s[i]))
-       
+
     return (int)(sign * num);
     num = num * 10 + (s[i] - '0');
 
@@ -6592,7 +6592,7 @@ return power(x,N);
         long long odd=n/2;
         long long evenWays=power(5,even);
         long long oddWays=power(4,odd);
-        return (evenWays+oddWays)%MOD;    
+        return (evenWays+oddWays)%MOD;
     }
 
 int main() {
@@ -6641,7 +6641,7 @@ int main() {
     return 0;
 }
     */
-   /*
+/*
 TC-O(N^2)
 SC-O(N)
 reverse the stack using recursion
@@ -6649,8 +6649,8 @@ reverse the stack using recursion
 using namespace std;
 void insert(stack<int> st,int val){
 if(st.empty()){
-    st.push(val);
-    return;
+ st.push(val);
+ return;
 }
 int topval=st.top();
 st.pop();
@@ -6659,7 +6659,7 @@ st.push(topval);
 }
 void reverseStack(stack<int> st){
 if(st.empty()){
-    return;
+ return;
 }
 int topval=st.top();
 st.pop();
@@ -6668,19 +6668,19 @@ reverseStack(st);
 insert(st,topval);
 }
 int main() {
-    stack<int> st;
-    st.push(4);
-    st.push(3);
-    st.push(7);
-    st.push(1);
-   reverseStack(st);
-   while(!st.empty()){
-    cout<<st.top()<<" ";
-    st.pop();
-   }
-    return 0;
+ stack<int> st;
+ st.push(4);
+ st.push(3);
+ st.push(7);
+ st.push(1);
+reverseStack(st);
+while(!st.empty()){
+ cout<<st.top()<<" ";
+ st.pop();
 }
-    */
+ return 0;
+}
+ */
 /*
 brute force for generating strings
 TC-O(2^n * O(N))
@@ -6716,31 +6716,31 @@ int main(){
     return 0;
 }
     */
-   /*
+/*
 optimal using recursion
 #include <bits/stdc++.h>
 using namespace std;
 void generatebinarystrings(int n,string s,vector<string> &ans){
 if(s.length()==n){
-    ans.push_back(s);
-    return;
+ ans.push_back(s);
+ return;
 }
 generatebinarystrings(n,s+'0',ans);
 
 if(s.empty() || s.back()!='1'){
-    generatebinarystrings(n,s+'1',ans);
+ generatebinarystrings(n,s+'1',ans);
 }
 }
 int main(){
-    int n=3;
-    vector<string> ans;
-    generatebinarystrings(n,"",ans);
-    for(string x:ans){
-        cout<<x<<endl;
-    }
-    return 0;
+ int n=3;
+ vector<string> ans;
+ generatebinarystrings(n,"",ans);
+ for(string x:ans){
+     cout<<x<<endl;
+ }
+ return 0;
 }
-    */
+ */
 /*
 power set problem using recursion
 #include <bits/stdc++.h>
@@ -6806,7 +6806,10 @@ for(string x:ans){
 return 0;
 }
 */
-
+/*
+for parathesis generate recursion
+TC-O(2^N)
+SC-O(c*N)
 #include <bits/stdc++.h>
 using namespace std;
 void generateparanthesis(int n, string s,vector<string>&ans,int close,int open){
@@ -6818,7 +6821,7 @@ if(open<n){
 generateparanthesis(n,s+'(',ans,close,open+1);
 }
 if(close<open){
-generateparanthesis(n,s+')',ans,close+1,open); 
+generateparanthesis(n,s+')',ans,close+1,open);
 }
 }
 int main(){
@@ -6830,3 +6833,286 @@ for(string x:ans){
 }
 return 0;
 }
+*/
+/*
+TC-O(2^N)
+SC-O(N)
+subsequence sum equals to k
+#include<bits/stdc++.h>
+using namespace std;
+int countsubsum(int idx,vector<int>&nums,int sum,int k){
+if(idx==nums.size()){
+    if(sum==k){
+        return 1;
+    }
+    return 0;
+}
+int take=countsubsum(idx+1,nums,sum+nums[idx],k);
+
+int notTake=countsubsum(idx+1,nums,sum,k);
+return take+notTake;
+}
+int main() {
+    vector<int> nums = {1, 2, 3, 4, 5};
+    int k = 5;
+    cout << countsubsum(0,nums,0,k) << endl;
+    return 0;
+}
+    */
+/*
+check if there exist subsequence sum equals to k
+#include<bits/stdc++.h>
+using namespace std;
+bool countsubsum(int idx,vector<int>&nums,int sum,int k){
+if(idx==nums.size()){
+ return sum==k;
+}
+if(countsubsum(idx+1,nums,sum+nums[idx],k)) return true;
+if(countsubsum(idx+1,nums,sum,k)) return true;
+
+return false;
+}
+int main() {
+ vector<int> nums = {1, 2, 3, 4, 5};
+ int k = 19;
+ cout << countsubsum(0,nums,0,k) << endl;
+ return 0;
+}
+ */
+/*
+combination sum 1
+#include<bits/stdc++.h>
+using namespace std;
+void findcombinations(int idx,vector<int>& arr,int target,vector<vector<int>>&ans,vector<int> ds){
+ if(idx==arr.size()){
+     if(target==0){
+         ans.push_back(ds);
+     }
+     return;
+ }
+ if(arr[idx]<=target){
+     ds.push_back(arr[idx]);
+     findcombinations(idx,arr,target-arr[idx],ans,ds);
+     ds.pop_back();
+ }
+ findcombinations(idx+1,arr,target,ans,ds);
+ }
+public:
+ vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+ vector<vector<int>> ans;
+ vector<int> ds;
+ findcombinations(0,candidates,target,ans,ds);
+ return ans;
+ }
+ */
+/*
+combination sum 2
+#include <bits/stdc++.h>
+using namespace std;
+void findcombinations(int idx, vector<int> &candidates, int target, vector<vector<int>> &ans, vector<int>& res)
+{
+    if (target == 0)
+    {
+        ans.push_back(res);
+        return;
+    }
+    for (int i = idx; i < candidates.size(); i++)
+    {
+        if (i > idx && candidates[i] == candidates[i - 1])
+            continue;
+        if (candidates[i] > target)
+            break;
+
+        res.push_back(candidates[i]);
+        findcombinations(i + 1, candidates, target - candidates[i], ans, res);
+        res.pop_back();
+    }
+}
+vector<vector<int>> combinationsum2(vector<int> &candidates, int target)
+{
+    vector<vector<int>> ans;
+    vector<int> res;
+    sort(candidates.begin(), candidates.end());
+    findcombinations(0, candidates, target, ans, res);
+    return ans;
+}
+int main()
+{
+    vector<int> candidates = {1, 1, 1, 2, 2};
+    int target = 4;
+    vector<vector<int>> ans = combinationsum2(candidates, target);
+   for(auto &v:ans){
+    for(int x:v) cout<<x<<" ";
+    cout<<endl;
+   }
+    return 0;
+}
+    */
+/*
+subset sum 1
+#include <bits/stdc++.h>
+using namespace std;
+void solve(int idx,vector<int>&nums,vector<int>&res,int sum){
+if(idx>=nums.size()){
+    res.push_back(sum);
+    return;
+}
+
+solve(idx+1,nums,res,sum+nums[idx]);
+solve(idx+1,nums,res,sum);
+}
+vector<int> subseq(vector<int> &nums){
+vector<int> res;
+solve(0,nums,res,0);
+sort(res.begin(),res.end());
+return res;
+}
+int main()
+{
+    vector<int> candidates = {1,2,2};
+    vector<int> ans = subseq(candidates);
+   for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+   }
+    return 0;
+}
+    */
+/*
+subsets 2 where duplicates combination not allowed
+   #include <bits/stdc++.h>
+using namespace std;
+void solve(int idx,vector<int> nums,vector<int>&res,vector<vector<int>>&ans){
+    ans.push_back(res);
+  for (int i = idx; i < nums.size(); i++)
+    {
+        if (i > idx && nums[i] == nums[i - 1])
+            continue;
+        res.push_back(nums[i]);
+        solve(i + 1, nums, res,ans);
+        res.pop_back();
+    }
+}
+vector<vector<int>> subseq(vector<int> &nums){
+vector<int> res;
+vector<vector<int>>ans;
+
+solve(0,nums,res,ans);
+return ans;
+}
+int main()
+{
+    vector<int> candidates = {1,2,2};
+    vector<vector<int>> ans = subseq(candidates);
+    for(auto &v:ans){
+    for(int x:v) cout<<x<<" ";
+    cout<<endl;
+    }
+    return 0;
+}
+    */
+/*
+combination sum 3 recursion
+#include <bits/stdc++.h>
+using namespace std;
+void solve(int idx,int k,int target,vector<int>& ds, vector<vector<int>>& ans){
+if(ds.size()==k){
+    if(target==0) ans.push_back(ds);
+    return;
+}
+for(int i=idx;i<=9;i++){
+    ds.push_back(i);
+    solve(i+1,k,target-i,ds,ans);
+    ds.pop_back();
+}
+}
+vector<vector<int>> combinationSum3(int k, int n){
+    vector<vector<int>> ans;
+    vector<int> ds;
+    solve(1, k, n, ds, ans);
+    return ans;
+}
+int main()
+{
+    int k = 3;
+    int n = 9;
+    vector<vector<int>> ans = combinationSum3(k, n);
+    for (auto &v : ans)
+    {
+        for (int x : v)
+            cout << x << " ";
+        cout << endl;
+    }
+}
+    */
+/*
+letter combinations problem
+#include <bits/stdc++.h>
+using namespace std;
+void solve(int idx,string digits,string curr,vector<string>& ans,vector<string> keypad){
+if(idx>=digits.size()){
+ ans.push_back(curr);
+ return;
+}
+int digit=digits[idx]-'0';
+string letter=keypad[digit];
+for(int i=0;i<letter.size();i++){
+curr.push_back(letter[i]);
+solve(idx+1,digits,curr,ans,keypad);
+curr.pop_back();
+}
+}
+vector<string> letterCombinations(string digits) {
+ vector<string> ans;
+ vector<string> keypad={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+ string curr;
+ solve(0,digits,curr,ans,keypad);
+ return ans;
+ }
+int main(){
+ string digis="23";
+ vector<string> ans=letterCombinations(digis);
+ for(int i=0;i<ans.size();i++){
+     cout<<ans[i]<<" ";
+ }
+}
+ */
+/*
+palindrome partitioning
+#include <bits/stdc++.h>
+using namespace std;
+bool isPalindrome(string& s,int l,int r){
+while(l<r){
+    if(s[l]!=s[r]) return false;
+    l++;r--;
+}
+return true;
+}
+void solve(int idx,string s,vector<string> &curr,vector<vector<string>>&ans){
+    if(idx==s.size()){
+        ans.push_back(curr);
+        return;
+    }
+    for(int i=idx;i<s.size();i++){
+    if(isPalindrome(s,idx,i)){
+        curr.push_back(s.substr(idx,i-idx+1));
+        solve(i+1,s,curr,ans);
+        curr.pop_back();
+    }
+    }
+}
+vector<vector<string>> partition(string s){
+vector<vector<string>> ans;
+vector<string> curr;
+solve(0,s,curr,ans);
+return ans;
+}
+int main(){
+    string s = "aab";
+    vector<vector<string>> ans = partition(s);
+    for (auto &v : ans){
+        for (string x : v)
+            cout << x << " ";
+        cout << endl;
+    }
+}
+    */
