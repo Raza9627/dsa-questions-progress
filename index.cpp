@@ -3685,9 +3685,9 @@ int main(){
         {21, 30, 14},
         {7, 16, 32}};
 
-    vector<int> grid= findPeakGrid(mat);
+    vector<int> board= findPeakGrid(mat);
     for(int i=0;i<2;i++){
-     cout<<grid[i]<<" ";
+     cout<<board[i]<<" ";
     }
     return 0;
 }
@@ -5493,7 +5493,6 @@ Node *findmiddle(Node *head)
         }
         temp = temp->next;
     }
-    return temp;
 }
 // optimal for find middle node TC-O(N) SC-O(1)
 Node *findmiddleoptimal(Node *head)
@@ -5598,8 +5597,7 @@ Node *startingpointofloop(Node *head)
     {
         if (mpp.find(temp) != mpp.end())
         {
-            return temp;
-        }
+                }
         mpp[temp] = 1;
         temp = temp->next;
     }
@@ -7116,3 +7114,299 @@ int main(){
     }
 }
     */
+/*
+Word search in 2d recursion
+TC-O(N*M*3^L)
+SC-O(L)
+#include <bits/stdc++.h>
+using namespace std;
+bool helper(vector<vector<char>>& board, string word,int i,int j,int n,int m,int k){
+ if(k>=word.size()) return true;
+ if(i<0 || i>=n || j<0 || j>=m || board[i][j]=='.' || word[k]!=board[i][j]) return false;
+ if(word.size()==1 && word[k]==board[i][j]) return true
+ bool temp=false;
+ int x[4]={0,0,-1,1};
+ int y[4]={-1,1,0,0};
+ for(int index=0;index<4;index++){
+     temp=temp || helper(board,word,i+x[index],j+y[index],n,m,k+1);
+ }
+ board[i][j]=word[k];
+ return temp;
+}
+bool exist(vector<vector<char>>& board, string word) {
+ int n=board.size();
+ if(n==0) return false;
+ int m=board[0].size();
+ if(word.size()==0) return false;
+ for(int i=0;i<n;i++){
+     for(int j=0;j<m;j++){
+         if(word[0]==board[i][j]){
+             if(helper(board,word,i,j,n,m,0)) return true;
+         }
+     }
+ }
+ return false;
+ }
+int main(){
+ vector<vector<char>> board={
+     {'A','B','C','E'},
+     {'S','F','C','S'},
+     {'A','D','E','E'},
+ };
+ string word="ABCCED";
+ cout<<exist(board,word);
+ return 0;
+}
+ */
+/*
+N queen problem
+#include <bits/stdc++.h>
+using namespace std;
+bool isSafe(int row,int col,vector<string> board,int n){
+int duprow=row;
+int dupcol=col;
+while(row>=0 && col>=0){
+    if(board[row][col]=='Q') return false;
+    row--;
+    col--;
+}
+row=duprow;
+col=dupcol;
+while(col>=0){
+    if(board[row][col]=='Q') return false;
+    col--;
+}
+row=duprow;
+col=dupcol;
+
+while(row<n && col>=0){
+    if(board[row][col]=='Q') return false;
+    col--;
+    row++;
+}
+return true;
+}
+void solve(int col,vector<string>&board,vector<vector<string>>& ans,int n){
+    if(col==n){
+        ans.push_back(board);
+        return;
+    }
+    for(int row=0;row<n;row++){
+        if(isSafe(row,col,board,n)){
+            board[row][col]='Q';
+            solve(col+1,board,ans,n);
+            board[row][col]='.';
+        }
+    }
+}
+vector<vector<string>> solveNQueens(int n) {
+    vector<vector<string>> ans;
+    vector<string> board(n);
+    string s(n,'.');
+    for(int i=0;i<n;i++){
+        board[i]=s;
+    }
+    solve(0,board,ans,n);
+    return ans;
+    }
+    int main(){
+    int n=4;
+    vector<vector<string>> ans=solveNQueens(n);
+    for(auto &v:ans){
+        for(string x:v) cout<<x;
+        cout<<endl;
+    }
+    }
+    */
+/*
+Rat in a maze
+#include <bits/stdc++.h>
+using namespace std;
+void solve(int i,int j,string s,vector<string> &ans,int n,vector<vector<int>>& board,vector<vector<int>>&vis){
+if(i==n-1 && j==n-1){
+   ans.push_back(s);
+   return;
+}
+//down
+if(i+1<n && !vis[i+1][j] && board[i+1][j]==1){
+   vis[i][j]=1;
+   solve(i+1,j,s+'D',ans,n,board,vis);
+   vis[i][j]=0;
+}
+//left
+if(j-1>=0 && !vis[i][j-1] && board[i][j-1]==1){
+   vis[i][j]=1;
+   solve(i,j-1,s+'L',ans,n,board,vis);
+   vis[i][j]=0;
+}
+//right
+if(j+1<n && !vis[i][j+1] && board[i][j+1]==1){
+vis[i][j]=1;
+   solve(i,j+1,s+'R',ans,n,board,vis);
+   vis[i][j]=0;
+}
+//up
+if(i-1>=0 && !vis[i-1][j] && board[i-1][j]==1){
+    vis[i][j]=1;
+   solve(i-1,j,s+'U',ans,n,board,vis);
+   vis[i][j]=0;
+}
+}
+vector<string> ratinmaze(int n,vector<vector<int>>& board){
+vector<string> ans;
+vector<vector<int>> vis(n,vector<int>(n,0));
+if(board[0][0]==1) solve(0,0,"",ans,n,board,vis);
+return ans;
+}
+int main(){
+int n=4;
+vector<vector<int>>board={
+   {1,0,0,0},
+   {1,1,0,1},
+   {1,1,0,0},
+   {0,1,1,1}
+};
+vector<string> ans=ratinmaze(n,board);
+   for(int i=0;i<ans.size();i++){
+   cout<<ans[i]<<" ";
+   }
+
+}
+   */
+/*
+word break problem
+TC-O(N*2^N)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+bool solve(int idx,string s,unordered_set<string> st){
+ if(idx==s.size()) return true;
+ for(int end=idx;end<s.size();end++){
+ string substring=s.substr(idx,end-idx+1);
+ if(st.find(substring)!=st.end()){
+     if(solve(end+1,s,st)) return true;
+ }
+ }
+ return false;
+ }
+bool wordBreak(string s, vector<string>& wordDict) {
+     unordered_set<string> st(wordDict.begin(),wordDict.end());
+     if(solve(0,s,st)) return true;
+  return false;
+ }
+  */
+/*
+generating the permutaions of string or int
+#include <bits/stdc++.h>
+using namespace std;
+void solve(vector<int>& nums,vector<int>&res,vector<vector<int>>&ans,int mpp[]){
+   if(res.size()==nums.size()){
+       ans.push_back(res);
+       return;
+   }
+   for(int i=0;i<nums.size();i++){
+       if(!mpp[i]){
+       res.push_back(nums[i]);
+       mpp[i]=1;
+       solve(nums,res,ans,mpp);
+       res.pop_back();
+       mpp[i]=0;
+       }
+   }
+}
+vector<vector<int>> permute(vector<int>& nums) {
+    vector<int> res;
+    vector<vector<int>> ans;
+    int mpp[nums.size()]={0};
+    for(int i=0;i<nums.size();i++) mpp[i]=0;
+    solve(nums,res,ans,mpp);
+    return ans;
+   }
+   int main(){
+   vector<int> nums={1,2,3};
+   vector<vector<int>> ans=permute(nums);
+   for(auto &v:ans){
+       for( int x:v) cout<<x;
+       cout<<" ";
+   }
+   }
+   */
+/*
+kth permutaion brute force
+TC-O(n!*n)
+SC-O(n!*n)
+#include <bits/stdc++.h>
+using namespace std;
+void solve(int index,string s,vector<string>& ans){
+if(index==s.size()){
+   ans.push_back(s);
+   return;
+}
+for(int i=index;i<s.size();i++){
+   swap(s[index],s[i]);
+   solve(index+1,s,ans);
+   swap(s[index],s[i]);
+}
+}
+string getPermutation(int n, int k){
+vector<string> ans;
+string s="";
+for(int i=0;i<n;i++){
+   s+=to_string(i+1);
+}
+solve(0,s,ans);
+sort(ans.begin(),ans.end());
+return ans[k-1];
+}
+int main(){
+   int n = 3, k = 5;
+   cout<<getPermutation(n,k);
+   return 0;
+}
+   */
+/*
+optimal for kth permutation
+TC-O(n*n)
+SC-O(n)
+#include <bits/stdc++.h>
+using namespace std;
+string getPermutation(int n, int k){
+int fact=1;
+vector<int> num;
+for(int i=1;i<n;i++){
+ fact=fact*i;
+ num.push_back(i);
+}
+num.push_back(n);
+string ans="";
+k=k-1;
+while(true){
+ ans=ans+to_string(num[k/fact]);
+ num.erase(num.begin()+ k/fact);
+ if(num.size()==0){
+     break;
+ }
+ k=k%fact;
+ fact=fact/num.size();
+}
+return ans;
+}
+int main(){
+ int n = 3, k = 5;
+ cout<<getPermutation(n,k);
+ return 0;
+}
+ */
+#include <bits/stdc++.h>
+using namespace std;
+vector<string> addOperators(string num, int target) {
+        
+    }
+int main(){
+string num="123"; int target=6;
+vector<string> ans=addOperators(num,target);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
