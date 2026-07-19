@@ -1,3 +1,4 @@
+// till this phase1
 /*
 largest element in array
 #include<iostream>
@@ -1153,7 +1154,7 @@ int main(){
     return 0;
 }
     */
-// till this
+// till this phase 2
 /*
 set matrix zeros optimal solution
 TC-O(n*m)
@@ -2149,6 +2150,85 @@ int main(){
 }
     */
 /*
+count inversion brute force
+TC-O(N^2)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+vector<pair<int,int>> countinvrsions(vector<int>& arr){
+    vector<pair<int,int>> p;
+for(int i=0;i<arr.size();i++){
+    for(int j=i+1;j<arr.size();j++){
+        if(i<j && arr[i]>arr[j]){
+        p.push_back({arr[i],arr[j]});
+    }
+}
+}
+return p;
+}
+int main(){
+vector<int>arr={5,3,2,4,1};
+vector<pair<int,int>> ans=countinvrsions(arr);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i].first<<','<<ans[i].second<<" ";
+}
+}
+*/
+/*
+count inverions optimal
+TC-O(NlogN)
+SC-O(n)
+#include <bits/stdc++.h>
+using namespace std;
+int merge(vector<int>& arr,int low,int mid,int high){
+vector<int> temp;
+int left=low;
+int right=mid+1;
+int cnt=0;
+while(left<=mid && right<=high){
+if(arr[left]<=arr[right]){
+    temp.push_back(arr[left]);
+    left++;
+}
+else {
+    temp.push_back(arr[right]);
+    right++;
+    cnt+=(mid-left+1);
+}
+}
+while(left<=mid){
+temp.push_back(arr[left]);
+left++;
+}
+while(right<=high){
+    temp.push_back(arr[right]);
+    right++;
+}
+for(int i=low;i<=high;i++){
+    arr[i]=temp[i-low];
+}
+return cnt;
+}
+int mergeSort(vector<int>&arr,int low,int high){
+int cnt=0;
+if(low>=high) return cnt;
+int mid=(low+high)/2;
+cnt+=mergeSort(arr,low,mid);
+cnt+=mergeSort(arr,mid+1,high);
+cnt+=merge(arr,low,mid,high);
+return cnt;
+}
+int countinvrsions(vector<int>& arr){
+int n=arr.size();
+mergeSort(arr,0,n-1);
+}
+int main(){
+vector<int>arr={5,3,2,4,1};
+ cout<<countinvrsions(arr);
+return 0;
+}
+*/
+/*
 lower bound in sorted array
 TC-O(nlogn)
 SC-O(1)
@@ -2167,7 +2247,7 @@ return low;
 int main(){
  vector<int> candidates={1,3,5,8};
  int target=5;
- cout<<lowerbound candidates,target);
+ cout<<lowerbound, candidates,target);
  return 0;
 }
  */
@@ -7397,10 +7477,39 @@ int main(){
  return 0;
 }
  */
+/*
+add operator expression
 #include <bits/stdc++.h>
 using namespace std;
+vector<string> ans;
+void helper(string s,int target,int i,string path,int eval,int residue){
+if(i==s.size()){
+if(eval==target){
+    ans.push_back(path);
+    return;
+}
+}
+string currStr;
+long num=0;
+for(int j=i;j<s.size();j++){
+    if(j>i && s[i]==0){
+    return;
+}
+currStr+=s[j];
+num=num*10+s[j]-'0';
+if(i==0){
+    helper(s,target,j+1,path+currStr,num,num);
+}
+else {
+helper(s,target,j+1,path+"+"+currStr,eval+num,num);
+helper(s,target,j+1,path+"-"+currStr,eval-num,-num);
+helper(s,target,j+1,path+"*"+currStr,eval-residue+residue*num,residue*num);
+}
+}
+}
 vector<string> addOperators(string num, int target) {
-        
+helper(num,target,0,"",0,0);
+return ans;
     }
 int main(){
 string num="123"; int target=6;
@@ -7408,5 +7517,336 @@ vector<string> ans=addOperators(num,target);
 for(int i=0;i<ans.size();i++){
     cout<<ans[i]<<" ";
 }
+return 0;
+}
+ */
+// bit manipulation 15/07/2026
+/*
+Minimum bitflips to covert int
+TC-O(31)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int minBitFlips(int start, int goal){
+int ans=start^goal;
+int cnt=0;
+for(int i=0;i<31;i++){
+    if(ans & (1<<i)) cnt++;
+}
+return cnt;
+}
+int main(){
+int start=10;
+int goal=7;
+cout<<minBitFlips(start,goal);
+    return 0;
+}
+    */
+/*
+powerset using bit manipulation
+
+#include <bits/stdc++.h>
+using namespace std;
+vector<vector<int>> powerset(vector<int>&nums){
+ int n=nums.size();
+int subsets=1<<n;
+vector<vector<int>> ans;
+for(int num=0;num<subsets;num++){
+ vector<int> list;
+ for(int i=0;i<n;i++){
+     if(num & (1<<i)){
+         list.push_back(nums[i]);
+     }
+ }
+ ans.push_back(list);
+}
+return ans;
+}
+int main(){
+vector<int> nums={1,2,3};
+vector<vector<int>> ans=powerset(nums);
+for(auto &v:ans){
+for(int x:v) cout<<x;
+cout<<" ";
+}
+return 0;
+}
+*/
+/*
+brute force for XOR of range L to R
+TC-O(N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int XORfromLtoR(int L, int R){
+int ans=0;
+while(L<=R){
+ans^=L;
+L++;
+}
+return ans;
+}
+int main(){
+int L=1;
+int R=3;
+cout<<XORfromLtoR(L,R);
+    return 0;
+}
+    */
+/*
+optimal for XOR of range L to R
+TC-O(1)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int XORtillN(int n){
+if(n%4==1) return 1;
+if(n%4==2) return n+1;
+if(n%4==3) return 0;
+return n;
+}
+int XORfromLtoR(int L, int R){
+return XORtillN(L-1)^XORtillN(R);
+}
+int main(){
+int L=1;
+int R=3;
+cout<<XORfromLtoR(L,R);
+ return 0;
+}
+ */
+/*
+brute force for single number 2
+TC-O(n)
+SC-O(n)
+#include <bits/stdc++.h>
+using namespace std;
+int singleNum2(vector<int>& nums) {
+    unordered_map<int,int> freq;
+    for(int i=0;i<nums.size();i++){
+        freq[nums[i]]++;
+    }
+    for(auto it:freq){
+        if(it.second==1) return it.first;
+    }
+    return -1;
+}
+int main(){
+vector<int> nums={0,1,0,1,0,1,99};
+cout<<singleNum2(nums);
+ return 0;
+}
+ */
+/*
+better for single number 2
+TC-O(n*32)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int singleNum2(vector<int>& nums) {
+    int ans=0;
+for(int bitidx=0;bitidx<32;bitidx++){
+int cnt=0;
+for(int i=0;i<nums.size();i++){
+ if(nums[i] & (1<<bitidx)) cnt++;
+}
+if(cnt%3==1){
+ans=ans | (1<<bitidx);
+}
+}
+return ans;
+}
+int main(){
+vector<int> nums={0,1,0,1,0,1,99};
+cout<<singleNum2(nums);
+ return 0;
+}
+ */
+/*
+optimal for single number 2
+TC-O(n)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int singleNum2(vector<int>& nums) {
+int ones=0,twos=0;
+for(int i=0;i<nums.size();i++){
+    ones=(nums[i]^ones)& ~twos;
+    twos=(nums[i]^twos)& ~ones;
+}
+return ones;
+}
+int main(){
+vector<int> nums={0,1,0,1,0,1,99};
+cout<<singleNum2(nums);
+ return 0;
+}
+ */
+/*
+brute force for single number 3
+TC-O(Nlogn)*O(m)
+SC-O(M)
+#include <bits/stdc++.h>
+using namespace std;
+ vector<int> singleNum3(vector<int>& nums) {
+    unordered_map<int,int>mpp;
+    vector<int> list;
+    for(int i=0;i<nums.size();i++){
+        mpp[nums[i]]++;
+    } 
+    for(auto it:mpp){
+        if(it.second==1){
+        list.push_back(it.first);
+        }
+    }
+    return list;
+    }
+int main(){
+vector<int> nums={1,2,1,3,2,5};
+vector<int> ans=singleNum3(nums);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+ return 0;
+}
+*/
+/*
+optimal for single number 3
+TC-O(n)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+ vector<int> singleNum3(vector<int>& nums) {
+  int xr=0;
+   for(int num:nums){
+   xr^=num;
+   }
+  unsigned int mask=(unsigned int)xr & (-(unsigned int) xr);
+   int first=0;
+   int second=0;
+   for(int x:nums){
+   if(x & mask){
+    first^=x;
+   }
+   else second^=x;
+   }
+    return {first,second};
+    }
+int main(){
+vector<int> nums={1,2,1,3,2,5};
+vector<int> ans=singleNum3(nums);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+ return 0;
+}
+ */
+//Maths 
+/*
+finding all prime factors of a number
+TC-O(sqrt(n)*nlogn)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> oddnumtimes(int n){
+vector<int> ans;
+for(int i=2;i<sqrt(n);i++){
+    if(n%i==0){
+       ans.push_back(i);
+       while(n%i==0){
+        n=n/i;
+       }
+    }
+}
+if(n!=1) ans.push_back(n);
+return ans;
+}
+int main(){
+int n=60;
+vector<int> ans=oddnumtimes(n);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+diviosor of the numbers
+TC-O(sqrt(n))
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> divisorofnum(int n){
+vector<int> ans;
+for(int i=1;i<=sqrt(n);i++){
+    if(n%i==0){
+        ans.push_back(i);
+        if(n/i!=i){
+            ans.push_back(n/i);
+        }
+    }
+}
+return ans;
+}
+int main(){
+int n=60;
+vector<int> ans=divisorofnum(n);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+brute force for count primes
+TC-O(N*sqrtN)
+SC-(1)
+#include <bits/stdc++.h>
+using namespace std;
+bool isprime(int n){
+    if(n<=1) return false;
+    for(int i=2;i*i<=n;i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+int countprimes(int n){
+    int cnt=0;
+for(int i=2;i<=n;i++){
+    if(isprime(i)){
+        cnt++;
+    }
+    }
+
+return cnt;
+}
+int main(){
+int n=10;
+cout<<countprimes(n);
+return 0;
+}
+*/
+#include <bits/stdc++.h>
+using namespace std;
+bool isprime(int n){
+    if(n<=1) return false;
+    for(int i=2;i*i<=n;i++){
+        if(n%i==0) return false;
+    }
+    return true;
+}
+int countprimes(int n){
+    int cnt=0;
+for(int i=2;i<=n;i++){
+    if(isprime(i)){
+        cnt++;
+    }
+    }
+
+return cnt;
+}
+int main(){
+int n=10;
+cout<<countprimes(n);
 return 0;
 }
