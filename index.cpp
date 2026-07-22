@@ -7693,7 +7693,7 @@ using namespace std;
     vector<int> list;
     for(int i=0;i<nums.size();i++){
         mpp[nums[i]]++;
-    } 
+    }
     for(auto it:mpp){
         if(it.second==1){
         list.push_back(it.first);
@@ -7741,7 +7741,7 @@ for(int i=0;i<ans.size();i++){
  return 0;
 }
  */
-//Maths 
+// Maths
 /*
 finding all prime factors of a number
 TC-O(sqrt(n)*nlogn)
@@ -7826,6 +7826,10 @@ cout<<countprimes(n);
 return 0;
 }
 */
+/*
+sieve of erasthones
+TC-O(N)
+SC-O(1)
 #include <bits/stdc++.h>
 using namespace std;
 bool isprime(int n){
@@ -7837,16 +7841,287 @@ bool isprime(int n){
 }
 int countprimes(int n){
     int cnt=0;
+int prime[n+1];
 for(int i=2;i<=n;i++){
+prime[i]=1;
+}
+for(int i=2;i<=sqrt(n);i++){
     if(isprime(i)){
+        for(int j=i*i;j<=n;j+=i){
+            prime[j]=0;
+        }
+    }
+}
+for(int i=2;i<n;i++){
+    if(prime[i]==1){
         cnt++;
     }
-    }
-
+}
 return cnt;
 }
 int main(){
 int n=10;
 cout<<countprimes(n);
 return 0;
+}
+*/
+/*
+prime factorisation
+#include <bits/stdc++.h>
+using namespace std;
+    bool isprime(int n){
+        if(n<=1) return false;
+        for(int i=2;i<=sqrt(n);i++){
+            if(n%i==0) return false;
+        }
+        return true;
+    }
+        vector<vector<int>> primeFactors(vector<int>& queries){
+        vector<vector<int>> ans;
+        for(int i=0;i<queries.size();i++){
+            vector<int> list;
+            if(isprime(queries[i])){
+            list.push_back(queries[i]);
+            ans.push_back(list);
+            }
+            else{
+                int n=queries[i];
+                for(int i=2;i<=sqrt(n);i++){
+                    while(n%i==0){
+                        list.push_back(i);
+                        n/=i;
+                    }
+                }
+                if(n>1) list.push_back(n);
+                ans.push_back(list);
+            }
+        }
+        return ans;
+        }
+    int main(){
+    vector<int> queries={2,3,4,5,6};
+    vector<vector<int>> ans=primeFactors(queries);
+    for(auto &v:ans){
+        for(int x:v) cout<<x;
+        cout<<endl;
+    }
+    }
+    */
+// STACK and QUEUES 20/7/20206
+/*
+implement stack using arrays
+class{
+    int top=-1;
+    int st[10];
+ void push(int x){
+    if(top>=10) return;
+    top=top+1;
+    st[top]=x;
+ }
+ int top(){
+    if(top==-1) return -1;
+    return st[top];
+ }
+ void pop(){
+    if(top==-1) return -1;
+    top=top-1;
+ }
+ int size(){
+    return top+1;
+ }
+}
+ */
+/*
+implement queue using arrays
+class{
+    int start=-1;
+    int end=-1;
+    int size=10;
+    int q[10];
+    int canSize=0;
+ void push(int x){
+    if(canSize==size) return;
+    if(canSize==0){
+        start=0,end=0;
+    }
+    else{
+        end=(end+1)%size;
+        q[end]=x;
+        canSize++;
+    }
+ }
+ int top(){
+    if(canSize==0) return;
+    return q[start];
+ }
+ int pop(){
+    if(canSize==0) return;
+    int el=q[start];
+    if(canSize==1){
+        start=end=-1;
+    }
+    else{
+        start=(start+1)%size;
+        canSize--;
+    }
+    return el;
+ }
+ int size(){
+    return canSize;
+ }
+}
+ */
+/*
+implement stack using LL
+class{
+   Node* top;
+   int size=0;
+ void push(int x){
+    Node* temp= new Node(x);
+    temp->next=top;
+    top=temp;
+    size++;
+ }
+ int top(){
+  return top->data;
+ }
+ int pop(){
+ Node* temp=top;
+ top=top=>next;
+ delete temp;
+ size--;
+ }
+ int size(){
+  return size;
+ }
+}
+ */
+/*
+implement queue using LL
+class{
+   Node* start,end;
+   int size=0;
+ void push(int x){
+    Node* temp= new Node(x);
+    if(start==NULL){
+        start=end=temp;
+    }
+    else{
+    end->next=temp;
+    size++;
+    }
+ }
+ int top(){
+if(start==nullptr) return;
+return start->data;
+ }
+ int pop(){
+    if(start==NULL) return;
+ Node* temp=start;
+ start=start->next;
+ delete temp;
+ size--;
+ }
+ int size(){
+  return size;
+ }
+}
+ */
+/*
+implement stack using queue
+#include<bits/stdc++.h>
+using namespace std;
+class{
+  queue<int> q;
+ void push(int x){
+   int s=q.size();
+   q.push(x);
+   for(int i=1;i<=s;i++){
+    q.push(q.top());
+    q.pop();
+   }
+ }
+ int top(){
+return q.top();
+ }
+ int pop(){
+    q.pop();
+ }
+ int size(){
+  return q.size();
+ }
+}
+ */
+/*
+
+implement queue using stack
+#include<bits/stdc++.h>
+using namespace std;
+class{
+  stack<int> s1;
+  stack<int> s2;
+ void push(int x){
+ s1.push(x);
+ }
+ int top(){
+if(s2.empty()!=0) return s2.top();
+else{
+while(s1.size()){
+s2.push(s1.top());
+s2.pop();
+}
+return s2.top();
+}
+ }
+ int pop(){
+if(s2.empty()!=0) s2.pop();
+else{
+while(s1.size()){
+s2.push(s1.top())
+s1.pop();
+}
+s2.pop();
+}
+ }
+ int size(){
+  return s2.size();
+ }
+}
+*/
+/*
+valid paranthesis
+TC-O(N)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+ bool isValid(string s) {
+      stack<char> st;
+      for(int i=0;i<s.size();i++){
+        if(s[i]=='(' || s[i]=='[' || s[i]=='{'){
+            st.push(s[i]);
+        }
+        else {
+            if(st.empty()) return false;
+            char ch=st.top();
+            st.pop();
+            if((s[i]==')' && ch=='(') || (s[i]==']' && ch=='[') || (s[i]=='}' && ch=='{')){
+
+            }
+            else return false;
+        }
+      }
+      return st.empty();
+    }
+int main(){
+    string s="({[]})";
+    cout<<isValid(s);
+}
+    */
+   
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    string s="({[]})";
+    cout<<isValid(s);
 }
