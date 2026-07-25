@@ -8130,7 +8130,7 @@ else return -1;
 }
 string inftopost(string s){
 int n=s.size();
-stack<char> st; 
+stack<char> st;
 int i=0;
 string ans="";
 while(i<n){
@@ -8172,7 +8172,7 @@ else if(s[i]==')'){
     s[i]='(';
 }
 }
-stack<char> st; 
+stack<char> st;
 int i=0;
 string ans="";
 while(i<n){
@@ -8248,7 +8248,7 @@ string t2=st.top();
 st.pop();
 string con="("+t1+s[i]+t2+")";
 st.push(con);
-}  
+}
 i--;
 }
 return st.top();
@@ -8269,7 +8269,7 @@ else {
     st.pop();
     string con=s[i]+t2+t1;
     st.push(con);
-}  
+}
 i++;
 }
 return st.top();
@@ -8290,7 +8290,7 @@ string t2=st.top();
 st.pop();
 string con=t1+t2+s[i];
 st.push(con);
-}   
+}
 i--;
 }
 return st.top();
@@ -8301,5 +8301,389 @@ cout<<pretopost(s);
 return 0;
 }
 */
+/*
+brute force for next greater element
+TC-O(n*m)
+SC-O(1)
 #include<bits/stdc++.h>
 using namespace std;
+ vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+vector<int> ans;
+for(int i=0;i<nums1.size();i++){
+    for(int j=0;j<nums2.size();j++){
+        if(nums1[i]==nums2[j]){
+            bool found=false;
+            for(int k=j+1;k<nums2.size();k++){
+                if(nums2[k]>nums1[i]){
+                    ans.push_back(nums2[k]);
+                    found=true;
+                    break;
+                }
+            }
+            if(!found) ans.push_back(-1);
+            break;
+        }
+    }
+}
+return ans;
+    }
+    int main(){
+vector<int> nums1={4,1,2};
+vector<int> nums2={1,3,4,2};
+vector<int> ans=nextGreaterElement(nums1,nums2);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+    }
+*/
+/*
+optimal for next greater element
+TC-O(n+m)
+SC-O(n)
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int, int> mp; // stores next greater of each num in nums2
+        stack<int> st;
+
+        // traverse nums2 from right to left
+        for (int i = nums2.size() - 1; i >= 0; i--) {
+            while (!st.empty() && st.top() <= nums2[i])
+                st.pop();
+
+            mp[nums2[i]] = st.empty() ? -1 : st.top();
+            st.push(nums2[i]);
+        }
+
+        vector<int> ans;
+        for (int num : nums1)
+            ans.push_back(mp[num]);
+
+        return ans;
+    }
+    int main(){
+vector<int> nums1={4,1,2};
+vector<int> nums2={1,3,4,2};
+vector<int> ans=nextGreaterElement(nums1,nums2);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+    }
+*/
+/*
+TC-O(N^2)
+SC-O(1)
+brute force for next greater element 2
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> nextGreaterElements(vector<int>& nums) {
+vector<int> ans;
+for(int i=0;i<nums.size();i++){
+    bool found=false;
+    for(int j=i+1;j<nums.size();j++){
+        if(nums[j]>nums[i]){
+        ans.push_back(nums[j]);
+        found=true;
+        break;
+        }
+    }
+        if(!found){
+        for(int j=0;j<i;j++){
+          if(nums[j]>nums[i]){
+       ans.push_back(nums[j]);
+       found=true;
+       break;
+       }
+        }
+    }
+    if(!found) ans.push_back(-1);
+}
+return ans;
+}
+int main(){
+vector<int> nums={1,2,1};
+vector<int> ans=nextGreaterElements(nums);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+TC-O(2N)
+SC-O(N)
+optimal for next greater element 2
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> nextGreaterElements(vector<int>& nums) {
+    int n=nums.size();
+    int nge[n];
+stack<int> st;
+for(int i=2*n-1;i>=0;i--){
+while(!st.empty() && st.top()<=nums[i%n]){
+    st.pop();
+}
+nge[i%n]=st.empty()?-1:st.top();
+st.push(nums[i%n]);
+}
+vector<int> ans;
+for(int i=0;i<n;i++){
+ans.push_back(nge[i]);
+}
+return ans;
+}
+int main(){
+vector<int> nums={1,2,1};
+vector<int> ans=nextGreaterElements(nums);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+brute force for next smaller element
+TC-O(N^2)
+SC-O(1)
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> nextSmallerelement(vector<int>&arr){
+vector<int> ans;
+for(int i=0;i<arr.size();i++){
+    bool found=false;
+    for(int j=i+1;j<arr.size();j++){
+       if(arr[j]<arr[i]){
+        ans.push_back(arr[j]);
+        found=true;
+        break;
+       }
+    }
+if(!found) ans.push_back(-1);
+}
+return ans;
+}
+int main(){
+vector<int> arr={4,8,5,2,25};
+vector<int> ans=nextSmallerelement(arr);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+optimal for smaller element
+TC-O(2n)
+SC-O(n)
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> nextSmallerelement(vector<int>&arr){
+int n=arr.size();
+    int nge[n];
+    stack<int> st;
+for(int i=n-1;i>=0;i--){
+while(!st.empty() && st.top()>=arr[i]){
+    st.pop();
+}
+nge[i]=st.empty()?-1:st.top();
+st.push(arr[i]);
+}
+vector<int> ans;
+for(int i=0;i<n;i++){
+ans.push_back(nge[i]);
+}
+return ans;
+}
+int main(){
+vector<int> arr={10,9,8,7};
+vector<int> ans=nextSmallerelement(arr);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+Trapping Rain water brute
+TC-O(3N)
+SC-O(N)
+#include<bits/stdc++.h>
+using namespace std;
+int Trappingrainwater(vector<int> &arr){
+int total=0;
+int n=arr.size();
+int prefix[n];
+prefix[0]=arr[0];
+for(int i=1;i<n;i++){
+ prefix[i]=max(prefix[i-1],arr[i]);
+}
+int suffix[n];
+suffix[n-1]=arr[n-1];
+for(int i=n-2;i>=0;i--){
+suffix[i]=max(suffix[i+1],arr[i]);
+}
+for(int i=0;i<arr.size();i++){
+    int leftmax=prefix[i],rightmax=suffix[i];
+    if(arr[i]<leftmax && arr[i]<rightmax){
+
+        total+=min(leftmax,rightmax)-arr[i];
+    }
+}
+return total;
+}
+int main(){
+vector<int> arr={0,1,0,2,1,0,1,3,2,1,2,1};
+cout<<Trappingrainwater(arr);
+
+return 0;
+}
+*/
+/*
+Trapping Rain water optimal
+TC-O(N)
+SC-O(1)
+#include<bits/stdc++.h>
+using namespace std;
+int Trappingrainwater(vector<int> &arr){
+int total=0,leftmax=0,rightmax=0,left=0,right=arr.size()-1;
+while(left<right){
+if(arr[left]<=arr[right]){
+    if(leftmax>arr[left]){
+        total+=leftmax-arr[left];
+    }
+    else {
+        leftmax=arr[left];
+    }
+    left++;
+}
+else {
+    if(rightmax>arr[right]){
+        total+=rightmax-arr[right];
+    }
+    else {
+        rightmax=arr[right];
+    }
+    right--;
+}
+}
+return total;
+}
+int main(){
+vector<int> arr={0,1,0,2,1,0,1,3,2,1,2,1};
+cout<<Trappingrainwater(arr);
+
+return 0;
+}
+*/
+/*
+subarray minimum sum
+TC-O(n^2)
+TC-O(1)
+#include<bits/stdc++.h>
+using namespace std;
+const int MOD = 1e9 + 7;
+int sumSubarrayMins(vector<int>& arr) {
+    int sum=0;
+    for(int i=0;i<arr.size();i++){
+        int mini=INT_MAX;
+        for(int j=i;j<arr.size();j++){
+            mini=min(mini,arr[j]);
+            sum=(sum+mini)%MOD;
+        }
+    }
+        return sum%MOD;
+    }
+int main(){
+vector<int> arr={3,1,2,4};
+cout<<sumSubarrayMins(arr);
+return 0;
+}
+*/
+/*
+subarray minimum sum optimal
+TC-O(n)
+TC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+const int MOD = 1e9 + 7;
+vector<int> nse(vector<int> &arr){
+int n=arr.size();
+vector<int> nse(n);
+stack<int> st;
+for(int i=n-1;i>=0;i--){
+    while(!st.empty() && arr[st.top()]>=arr[i]){
+        st.pop();
+    }
+    nse[i]=st.empty()?n:st.top();
+    st.push(i);
+}
+return nse;
+}
+vector<int> pse(vector<int> &arr){
+int n=arr.size();
+vector<int> pse(n);
+stack<int> st;
+for(int i=0;i<n;i++){
+    while(!st.empty() && arr[st.top()]>arr[i]){
+        st.pop();
+    }
+    pse[i]=st.empty()?-1:st.top();
+    st.push(i);
+}
+return pse;
+}
+int sumSubarrayMins(vector<int> &arr){
+    long long ans=0;
+   vector<int> next= nse(arr);
+   vector<int> prev= pse(arr);
+for(int i=0;i<arr.size();i++){
+    int left=i-prev[i];
+    int right=next[i]-i;
+    ans=(ans+1LL*arr[i]*left*right)%MOD;
+}
+return ans;
+}
+int main(){
+    vector<int> arr = {3, 1, 2, 4};
+    cout << sumSubarrayMins(arr);
+    return 0;
+}
+    */
+/*
+Asteroid collison
+TC-O(N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> asteroidCollision(vector<int>& asteroids) {
+           vector<int> st;
+    int n=asteroids.size();
+    for(int i=0;i<n;i++){
+    if(asteroids[i]>0){
+    st.push_back(asteroids[i]);
+    }
+    else {
+        while(!st.empty() && st.back()>0 && st.back()<abs(asteroids[i])){
+            st.pop_back();
+        }
+        if(!st.empty() && st.back()==abs(asteroids[i])){
+            st.pop_back();
+        }
+        else if(st.empty() || st.back()<0){
+            st.push_back(asteroids[i]);
+        }
+    }
+    }
+    return st; 
+    }
+int main(){
+vector<int> asteroids={5,10,-5};
+vector<int> ans=asteroidCollision(asteroids);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+   }
+return 0;
+    }
+*/
