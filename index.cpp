@@ -8677,7 +8677,7 @@ vector<int> asteroidCollision(vector<int>& asteroids) {
         }
     }
     }
-    return st; 
+    return st;
     }
 int main(){
 vector<int> asteroids={5,10,-5};
@@ -8688,4 +8688,766 @@ for(int i=0;i<ans.size();i++){
 return 0;
     }
 */
+/*
+subarray ranges brute
+TC-O(N*N)
+TC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+long long subArrayRanges(vector<int>& nums) {
+    int sum=0;
+    for(int i=0;i<nums.size();i++){
+        int largest=nums[i];
+        int mini=nums[i];
+        for(int j=i;j<nums.size();j++){
+            largest=max(largest,nums[j]);
+            mini=min(mini,nums[j]);
+            sum+=(largest-mini);
+        }
+    }
+    return sum;
+    }
+int main(){
+    vector<int> nums={1,2,3};
+    cout<<subArrayRanges(nums);
+return 0;
+}
+*/
+/*
+subarray range large min optimal
+TC-O(N)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> nse(vector<int> &arr){
+int n=arr.size();
+vector<int> nse(n);
+stack<int> st;
+for(int i=n-1;i>=0;i--){
+    while(!st.empty() && arr[st.top()]>=arr[i]){
+        st.pop();
+    }
+    nse[i]=st.empty()?n:st.top();
+    st.push(i);
+}
+return nse;
+}
+vector<int> pse(vector<int> &arr){
+int n=arr.size();
+vector<int> pse(n);
+stack<int> st;
+for(int i=0;i<n;i++){
+    while(!st.empty() && arr[st.top()]>arr[i]){
+        st.pop();
+    }
+    pse[i]=st.empty()?-1:st.top();
+    st.push(i);
+}
+return pse;
+}
+int sumSubarrayMins(vector<int> &arr){
+    long long ans=0;
+   vector<int> next= nse(arr);
+   vector<int> prev= pse(arr);
+for(int i=0;i<arr.size();i++){
+    int left=i-prev[i];
+    int right=next[i]-i;
+    ans=(ans+1LL*arr[i]*left*right);
+}
+return ans;
+}
+vector<int> nge(vector<int> &arr) {
+    int n = arr.size();
+    vector<int> nge(n);
+    stack<int> st;
 
+    for (int i = n - 1; i >= 0; i--) {
+        while (!st.empty() && arr[st.top()] < arr[i]) {
+            st.pop();
+        }
+        nge[i] = st.empty() ? n : st.top();
+        st.push(i);
+    }
+    return nge;
+}
+
+vector<int> pge(vector<int> &arr) {
+    int n = arr.size();
+    vector<int> pge(n);
+    stack<int> st;
+
+    for (int i = 0; i < n; i++) {
+        while (!st.empty() && arr[st.top()] <= arr[i]) {
+            st.pop();
+        }
+        pge[i] = st.empty() ? -1 : st.top();
+        st.push(i);
+    }
+    return pge;
+}
+
+long long sumSubarrayMax(vector<int> &arr) {
+    long long ans = 0;
+
+    vector<int> next = nge(arr);
+    vector<int> prev = pge(arr);
+
+    for (int i = 0; i < arr.size(); i++) {
+        long long left = i - prev[i];
+        long long right = next[i] - i;
+        ans += 1LL * arr[i] * left * right;
+    }
+
+    return ans;
+}
+long long subArrayRanges(vector<int>& nums) {
+    long long maxi = sumSubarrayMax(nums);
+    long long mini = sumSubarrayMins(nums);
+    return maxi - mini;
+}
+int main(){
+    vector<int> nums={1,2,3};
+    cout<<subArrayRanges(nums);
+return 0;
+}
+*/
+/*
+largest rectangle in histogram brute force
+TC-O(5N)
+SC-O(2N)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> nextsmallerelement(vector<int> &heights){
+    int n=heights.size();
+    vector<int> nse(n);
+    stack<int> st;
+    for(int i=n-1;i>=0;i--){
+    while(!st.empty() && heights[st.top()]>=heights[i]){
+        st.pop();
+    }
+    nse[i]=st.empty()?n:st.top();
+    st.push(i);
+    }
+    return nse;
+}
+vector<int> prevsmallerelement(vector<int> &heights){
+int n=heights.size();
+    vector<int> pse(n);
+    stack<int> st;
+    for(int i=0;i<n;i++){
+    while(!st.empty() && heights[st.top()]>=heights[i]){
+        st.pop();
+    }
+    pse[i]=st.empty()?-1:st.top();
+    st.push(i);
+    }
+    return pse;
+}
+int largestRectangleArea(vector<int>& heights) {
+    vector<int> nextSmall= nextsmallerelement(heights);
+    vector<int> prevSmall= prevsmallerelement(heights);
+    int maxi=0;
+    for(int i=0;i<heights.size();i++){
+    maxi=max(maxi,heights[i]*(nextSmall[i]-prevSmall[i]-1));
+    }
+    return maxi;
+    }
+int main(){
+    vector<int> heights={2,1,5,6,2,3};
+    cout<<largestRectangleArea(heights);
+}
+    */
+/*
+largest rectangle in histogram
+TC-O(N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int largestRectangleArea(vector<int>& heights) {
+ int maxArea=0;
+ int n=heights.size();
+ stack<int> st;
+ for(int i=0;i<heights.size();i++){
+ while(!st.empty() && heights[st.top()]>heights[i]){
+     int element=st.top();
+     st.pop();
+     int nse=i,pse=st.empty()?-1:st.top();
+     maxArea=max(maxArea,heights[element]*(nse-pse-1));
+ }
+ st.push(i);
+ }
+ while(!st.empty()){
+     int nse=n;
+     int element=st.top();
+     st.pop();
+     int pse=st.empty()?-1:st.top();
+     maxArea=max(maxArea,heights[element]*(nse-pse-1));
+
+ }
+ return maxArea;
+ }
+int main(){
+ vector<int> heights={2,1,5,6,2,3};
+ cout<<largestRectangleArea(heights);
+}
+ */
+/*
+remove k digits
+TC-O(3N)+O(k)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+string removeKdigits(string num, int k) {
+  stack<char> st;
+  for(int i=0;i<num.size();i++){
+  while(!st.empty() && k>0 && (st.top()-'0')>num[i]-'0'){
+    st.pop();
+    k--;
+  }
+  st.push(num[i]);
+  }
+  while(k>0){
+    st.pop();
+    k--;
+  }
+  if(st.empty()) return "0";
+  string res="";
+  while(!st.empty()){
+    res+=st.top();
+    st.pop();
+  }
+  while(res.size()!=0 && res.back()=='0'){
+    res.pop_back();
+  }
+  reverse(res.begin(),res.end());
+  if(res.empty()) return "0";
+  return res;
+    }
+int main(){
+string num="10200";
+int k=1;
+cout<<removeKdigits(num,k);
+return 0;
+}
+*/
+/*
+maximal rectangle
+#include <bits/stdc++.h>
+using namespace std;
+int largesthist(vector<int> &heights){
+ int maxArea=0;
+ int n=heights.size();
+ stack<int> st;
+ for(int i=0;i<heights.size();i++){
+ while(!st.empty() && heights[st.top()]>heights[i]){
+     int element=st.top();
+     st.pop();
+     int nse=i,pse=st.empty()?-1:st.top();
+     maxArea=max(maxArea,heights[element]*(nse-pse-1));
+ }
+ st.push(i);
+ }
+ while(!st.empty()){
+     int nse=n;
+     int element=st.top();
+     st.pop();
+     int pse=st.empty()?-1:st.top();
+     maxArea=max(maxArea,heights[element]*(nse-pse-1));
+
+ }
+ return maxArea;
+}
+int maximalRectangle(vector<vector<char>>& matrix) {
+    int n=matrix.size();
+    int maxArea=0;
+    int m=matrix[0].size();
+    vector<vector<int>> prefixsum(n,vector<int>(m,0));
+    for(int j=0;j<m;j++){
+        int sum=0;
+        for(int i=0;i<n;i++){
+            sum+=matrix[i][j]-'0';
+            if(matrix[i][j]=='0') sum=0;
+            prefixsum[i][j]=sum;
+        }
+    }
+    for(int i=0;i<n;i++){
+        maxArea=max(maxArea,largesthist(prefixsum[i]));
+    }
+    return maxArea;
+    }
+int main(){
+vector<vector<char>> matrix={
+    {'1','0','1','0','0'},
+    {'1','0','1','1','1'},
+    {'1','1','1','1','1'},
+    {'1','0','0','1','0'}
+};
+cout<<maximalRectangle(matrix);
+return 0;
+}
+*/
+/*
+brute force for the max of sliding Window
+TC-O(n-k)*O(k)
+SC-O(n-k)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+ vector<int> ans;
+ int n=nums.size();
+ for(int i=0;i<=(n-k);i++){
+    int maxi=INT_MIN;
+    for(int j=i; j<=i+k-1;j++){
+      maxi=max(maxi,nums[j]);
+    }
+    ans.push_back(maxi);
+ }
+ return ans;
+    }
+int main(){
+vector<int> nums={1,3,-1,-3,5,3,6,7};
+int k=3;
+vector<int> ans=maxSlidingWindow(nums,k);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+optimal for the max of sliding Window
+TC-O(n)
+SC-O(n-k)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+int n=nums.size();
+ vector<int> ans;
+ deque<int> dq;
+ for(int i=0;i<n;i++){
+    if(!dq.empty() && dq.front()<=i-k){
+     dq.pop_front();
+    }
+    while(!dq.empty() && nums[dq.back()]<=nums[i]){
+        dq.pop_back();
+    }
+    dq.push_back(i);
+    if(i>=k-1) ans.push_back(nums[dq.front()]);
+ }
+ return ans;
+    }
+int main(){
+vector<int> nums={1,3,-1,-3,5,3,6,7};
+int k=3;
+vector<int> ans=maxSlidingWindow(nums,k);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+// sliding window and two pointers 2/8/26
+/*
+Max points You obtain from cards
+TC-O(n)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int maxScore(vector<int>& cardPoints, int k) {
+int lsum=0,rsum=0,maxsum=0;
+for(int i=0;i<k;i++){
+    lsum+=cardPoints[i];
+}
+maxsum=lsum;
+int ridx=cardPoints.size()-1;
+for(int i=k-1;i>=0;i--){
+    lsum=lsum-cardPoints[i];
+    rsum=rsum+cardPoints[ridx];
+    ridx--;
+    maxsum=max(maxsum,lsum+rsum);
+}
+return maxsum;
+    }
+int main(){
+vector<int> cardPoints={9,7,7,9,7,7,9};
+int k=7;
+cout<<maxScore(cardPoints,k);
+}
+*/
+/*
+longest substring without repeating characters
+TC-O(N)
+SC-O(256)
+#include <bits/stdc++.h>
+using namespace std;
+int lengthOfLongestSubstring(string s) {
+    char hash[256]={-1};
+   int left=0,right=0,maxLen=0,n=s.size();
+   while(right<n){
+   if(hash[s[right]]!=-1){
+    if(hash[s[right]]>=left){
+        left=hash[s[right]]+1;
+    }
+   }
+   maxLen=max(maxLen,right-left+1);
+   hash[s[right]]=right;
+   right++;
+   }
+   return maxLen;
+    }
+int main(){
+string s="abcabcbb";
+cout<<lengthOfLongestSubstring(s);
+}
+*/
+/*
+brute force for fruits into basket
+TC-O(n*n)
+SC-O(k)
+#include <bits/stdc++.h>
+using namespace std;
+int totalFruit(vector<int>& fruits) {
+    int maxLength=0;
+    for(int i=0;i<fruits.size();i++){
+        unordered_map<int,int> mpp;
+        for(int j=i;j<fruits.size();j++){
+            mpp[fruits[j]]++;
+            if(mpp.size()>2) break;
+            maxLength=max(maxLength,j-i+1);
+        }
+    }
+    return maxLength;
+    }
+int main(){
+    vector<int> fruits={1,2,1};
+    cout<<totalFruit(fruits);
+    return 0;
+}
+    */
+/*
+optimal for fruits into basket
+TC-O(n)
+SC-O(k)
+#include <bits/stdc++.h>
+using namespace std;
+int totalFruit(vector<int> &fruits)
+{
+ int maxLength = 0;
+ unordered_map<int, int> mpp;
+ int l = 0, r = 0, n = fruits.size();
+ while (r < n)
+ {
+     mpp[fruits[r]]++;
+  if (mpp.size() > 2)
+     {
+         mpp[fruits[l]]--;
+         if (mpp[fruits[l]] == 0)
+         {
+             mpp.erase(fruits[l]);
+         }
+         l++;
+     }
+     maxLength = max(maxLength, r - l + 1);
+     r++;
+ }
+ return maxLength;
+}
+int main()
+{
+ vector<int> fruits = {0, 1, 2, 2};
+ cout << totalFruit(fruits);
+ return 0;
+}
+ */
+/*
+longest substring with atmost k distinct char
+TC-O(N*N)
+SC-O(K)
+#include <bits/stdc++.h>
+using namespace std;
+int kdistinctcharacters(string s, int k) {
+  int maxLength=0;
+  for(int i=0;i<s.size();i++){
+  unordered_map<char,int> mpp;
+  for(int j=i;j<s.size();j++){
+    mpp[s[j]]++;
+    if(mpp.size()<=k){
+    maxLength=max(maxLength,j-i+1);
+    }
+    else break;
+  }
+  }
+  return maxLength;
+    }
+int main(){
+    string s="BAAAB";
+    int k=1;
+    cout << kdistinctcharacters(s,k);
+    return 0;
+}
+    */
+/*
+longest substring with atmost k distinct char optimal
+TC-O(N)
+SC-O(K)
+#include <bits/stdc++.h>
+using namespace std;
+int kdistinctcharacters(string s, int k) {
+int maxLength=0;
+unordered_map<char,int> mpp;
+int l=0,r=0,n=s.size();
+while(r<n){
+ mpp[s[r]]++;
+ while(mpp.size()>k){
+     mpp[s[l]]--;
+     if(mpp[s[l]]==0){
+         mpp.erase(s[l]);
+     }
+     l++;
+ }
+ maxLength=max(maxLength,r-l+1);
+ r++;
+}
+return maxLength;
+ }
+int main(){
+ string s="BAAAB";
+ int k=1;
+ cout << kdistinctcharacters(s,k);
+ return 0;
+}
+ */
+/*
+brute force for numbers containing all three characters
+TC-O(N*N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+ int numberOfSubstrings(string s) {
+ int cnt=0;
+ for(int i=0;i<s.size();i++){
+     unordered_map<char,int> mpp;
+    for(int j=i;j<s.size();j++){
+        mpp[s[j]]++;
+        if((mpp.find('a')!=mpp.end()) && (mpp.find('b')!=mpp.end()) && (mpp.find('c')!=mpp.end())){
+            cnt++;
+        }
+    }
+ }     
+ return cnt;
+    }
+int main(){
+string s="abcabc";
+cout<<numberOfSubstrings(s);
+return 0;
+}
+*/
+/*
+optimal for numbers containing all three characters
+TC-O(N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+ int numberOfSubstrings(string s) {
+ int cnt=0;
+int freq[3]={0};
+ int l=0,n=s.size(),r=0;
+ while(r<n){
+    freq[s[r]-'a']++;
+    while((freq[0]>0) && (freq[1]>0) && (freq[2]>0)){
+            cnt+=(n-r);
+            freq[s[l]-'a']--;
+          
+            l++;
+        }
+    r++;
+ }
+ return cnt;
+    }
+int main(){
+string s="abcabc";
+cout<<numberOfSubstrings(s);
+return 0;
+}
+*/
+/*
+brute force for character replacement
+TC-O(N*N)
+SC-O(26)
+#include <bits/stdc++.h>
+using namespace std;
+int characterReplacement(string s, int k) {
+    int n=s.size();
+    int maxlen=0;
+ for(int i=0;i<n;i++){
+    int hash[26]={0};
+    int maxf=0;
+    for(int j=i;j<n;j++){
+       hash[s[j]-'A']++;
+       maxf=max(maxf,hash[s[j]-'A']);
+       int change=(j-i+1)-maxf;
+       if(change<=k){
+        maxlen=max(maxlen,j-i+1);
+       }
+       else break;
+    }
+ }    
+ return maxlen;
+    }
+int main(){
+string s="ABAB";
+int k=2;
+cout<<characterReplacement(s,k);
+return 0;
+}  
+*/  
+/*
+optimal for character replacement
+TC-O(N)
+SC-O(26)
+#include <bits/stdc++.h>
+using namespace std;
+int characterReplacement(string s, int k) {
+    int n=s.size();
+    int maxlen=0;
+    int l=0,r=0;
+    int hash[26]={0};
+    int maxf=0;
+    while(r<n){
+    hash[s[r]-'A']++;
+    maxf=max(maxf,hash[s[r]-'A']);
+    if((r-l+1)-maxf <= k){
+    maxlen=max(maxlen,r-l+1);
+    }
+    if((r-l+1)-maxf >k){
+        hash[s[l]-'A']--;
+        l++;
+    }
+    r++;
+    }
+ return maxlen;
+    }
+int main(){
+string s="ABAB";
+int k=2;
+cout<<characterReplacement(s,k);
+return 0;
+} 
+*/
+/*
+brute force for numsubarraysum
+TC-O(N*N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int numSubarraysWithSum(vector<int>& nums, int goal) {
+int cnt=0;
+int n=nums.size();
+for(int i=0;i<n;i++){
+    int sum=0;
+    for(int j=i;j<n;j++){
+       sum+=nums[j];
+       if(sum==goal) cnt++;
+    }
+}
+return cnt;
+    }
+int main(){
+vector<int> nums={0,0,0,0,0};
+int goal=0;
+cout<<numSubarraysWithSum(nums,goal);
+return 0;
+}
+*/
+/*
+optimal for numsubarraysum
+TC-O(N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int numSubarraysWithSum(vector<int>& nums, int goal) {
+if(goal<0) return 0;
+int cnt=0;
+int n=nums.size();
+int l=0,r=0;
+int sum=0;
+while(r<n){
+sum+=nums[r];
+while(sum>goal){
+    sum-=nums[l];
+    l++;
+}
+ cnt+=(r-l+1);
+ r++;
+}
+return cnt;
+    }
+int main(){
+vector<int> nums={1,0,1,0,1};
+int goal=2;
+cout<<numSubarraysWithSum(nums,goal)-numSubarraysWithSum(nums,goal-1);
+return 0;
+}
+*/
+/*
+brute force for countinh nice subarrays
+TC-O(N*N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int numberOfSubarrays(vector<int>& nums, int k) {
+    int n=nums.size();
+    int cnt=0;
+    
+ for(int i=0;i<n;i++){
+     int odd=0;
+    for(int j=i;j<n;j++){
+        if(nums[j]%2==1){
+            odd++;
+        }
+        if(odd==k) cnt++;
+    }
+ }
+ return cnt;
+    }
+int main(){
+vector<int> nums={1,1,2,1,1};
+int k=3;
+cout<<numberOfSubarrays(nums,k);
+return 0;
+}
+*/
+/*
+optimal for countinh nice subarrays
+TC-O(N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int numberOfSubarrays(vector<int>& nums, int k) {
+    int n=nums.size();
+    int cnt=0;
+    int l=0,r=0;
+    while(r<n){
+    if(nums[r]%2==1){
+    k--;
+    }
+    while(k<0){
+    if(nums[l]%2==1){
+        k++;
+    }
+    l++;
+    }
+    cnt+=(r-l+1);
+    r++;
+    }
+ return cnt;
+    }
+int main(){
+vector<int> nums={2,2,2,1,2,2,1,2,2,2};
+int k=2;
+cout<<numberOfSubarrays(nums,k)-numberOfSubarrays(nums,k-1);
+return 0;
+}
+*/
+#include <bits/stdc++.h>
+using namespace std;
