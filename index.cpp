@@ -9233,7 +9233,7 @@ using namespace std;
             cnt++;
         }
     }
- }     
+ }
  return cnt;
     }
 int main(){
@@ -9257,7 +9257,7 @@ int freq[3]={0};
     while((freq[0]>0) && (freq[1]>0) && (freq[2]>0)){
             cnt+=(n-r);
             freq[s[l]-'a']--;
-          
+
             l++;
         }
     r++;
@@ -9291,7 +9291,7 @@ int characterReplacement(string s, int k) {
        }
        else break;
     }
- }    
+ }
  return maxlen;
     }
 int main(){
@@ -9299,8 +9299,8 @@ string s="ABAB";
 int k=2;
 cout<<characterReplacement(s,k);
 return 0;
-}  
-*/  
+}
+*/
 /*
 optimal for character replacement
 TC-O(N)
@@ -9332,7 +9332,7 @@ string s="ABAB";
 int k=2;
 cout<<characterReplacement(s,k);
 return 0;
-} 
+}
 */
 /*
 brute force for numsubarraysum
@@ -9398,7 +9398,7 @@ using namespace std;
 int numberOfSubarrays(vector<int>& nums, int k) {
     int n=nums.size();
     int cnt=0;
-    
+
  for(int i=0;i<n;i++){
      int odd=0;
     for(int j=i;j<n;j++){
@@ -9449,5 +9449,373 @@ cout<<numberOfSubarrays(nums,k)-numberOfSubarrays(nums,k-1);
 return 0;
 }
 */
+/*
+brute force for subarray with k distinct integers
+TC-O(n*n)
+SC-O(k)
 #include <bits/stdc++.h>
 using namespace std;
+int subarraysWithKDistinct(vector<int>& nums, int k) {
+    int n=nums.size();
+    int cnt=0;
+    for(int i=0;i<n;i++){
+        unordered_map<int,int> mpp;
+        for(int j=i;j<n;j++){
+            mpp[nums[j]]++;
+            if(mpp.size()==k) cnt++;
+            else if(mpp.size()>k) break;
+        }
+    }
+    return cnt;
+    }
+int main(){
+vector<int> nums={1,2,1,2,3};
+int k=2;
+cout<<subarraysWithKDistinct(nums,k);
+return 0;
+}
+*/
+/*
+Optimal approach for subarray with k distinct integers
+TC-O(n)
+SC-O(k)
+#include <bits/stdc++.h>
+using namespace std;
+int subarraysWithKDistinct(vector<int>& nums, int k) {
+    int n=nums.size();
+    int cnt=0;
+   int l=0,r=0;
+   unordered_map<int,int> mpp;
+   while(r<n){
+    mpp[nums[r]]++;
+    while(mpp.size()>k){
+     mpp[nums[l]]--;
+     if(mpp[nums[l]]==0){
+        mpp.erase(nums[l]);
+     }
+     l++;
+    }
+    cnt+=(r-l+1);
+
+    r++;
+   }
+    return cnt;
+    }
+int main(){
+vector<int> nums={1,2,1,2,3};
+int k=2;
+cout<<subarraysWithKDistinct(nums,k)-subarraysWithKDistinct(nums,k-1);
+return 0;
+}
+*/
+/*
+Minimum window substring
+TC-O(N)
+TC-O(256)
+#include <bits/stdc++.h>
+using namespace std;
+string minWindow(string s, string t) {
+    int l=0,r=0,cnt=0;
+    int  hash[256]={0};
+    int minLength=1e7;
+     int sIndex=-1;
+     for(int i=0;i<t.size();i++){
+        hash[t[i]]++;
+     }
+     while(r<s.size()){
+     if(hash[s[r]]>0) cnt++;
+     hash[s[r]]--;
+     while(cnt==t.size()){
+        if((r-l+1)<minLength){
+            minLength=r-l+1;
+            sIndex=l;
+        }
+        hash[s[l]]++;
+        if(hash[s[l]]>0){
+            cnt--;
+        }
+        l++;
+     }
+     r++;
+     }
+     return sIndex==-1?"": s.substr(sIndex,minLength);
+    }
+int main(){
+string s="ADOBECODEBANC";
+string t="ABC";
+cout<<minWindow(s,t);
+return 0;
+}
+*/
+// Heaps 8/5/2026
+/*
+heap operations
+#include <bits/stdc++.h>
+using namespace std;
+class heap
+{
+public:
+    int arr[100];
+    int size = 0;
+
+    heap(){
+    arr[0]=-1;
+    size=0;
+    }
+
+//Insertion in heap
+    void Insert(int val)
+    {
+        size = size + 1;
+        int index = size;
+        arr[index] = val;
+        while (index > 1)
+        {
+            int parent = index / 2;
+            if (arr[parent] < arr[index])
+            {
+                swap(arr[parent], arr[index]);
+                index = parent;
+            }
+            else
+                return;
+        }
+    }
+//deletion from maxheap
+    void deletefromMaxheap() {
+    if (size == 0) {
+        cout << "Nothing to delete";
+        return;
+    }
+    arr[1] = arr[size];
+    size--;
+
+    int i = 1;
+
+    while (true) {
+        int leftidx = 2 * i;
+        int rightidx = 2 * i + 1;
+        int largest = i;
+
+        if (leftidx <= size && arr[leftidx] > arr[largest]) {
+            largest = leftidx;
+        }
+
+        if (rightidx <= size && arr[rightidx] > arr[largest]) {
+            largest = rightidx;
+        }
+
+        if (largest == i) {
+            break;
+        }
+
+        swap(arr[i], arr[largest]);
+        i = largest;
+    }
+}
+//heapify for maxheap
+void heapify(int arr[],int n,int i){
+int largest=i;
+int left=2*i;
+int right=2*i+1;
+if(left<n && arr[largest]<arr[left]){
+    largest=left;
+}
+if(right<n && arr[largest]<arr[right]){
+    largest=right;
+}
+if(largest != i){
+    swap(arr[largest],arr[i]);
+    heapify(arr,n,largest);
+}
+}
+//for print the element  
+void print()
+    {
+        for (int i = 1; i <= size; i++)
+        {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main()
+{
+    heap h;
+    h.Insert(4);
+    h.Insert(1);
+    h.Insert(2);
+    h.Insert(6);
+    h.Insert(7);
+    h.Insert(3);
+    h.Insert(8);
+    h.Insert(5);
+    h.deletefromMaxheap();
+
+    h.print();
+    return 0;
+}
+
+*/
+/*
+implement min heap
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    vector<int> arr;
+
+    // Initialize heap
+    void initializeHeap() {
+        arr.clear();
+    }
+
+    // Heapify Down
+    void heapify(int i) {
+        int smallest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < arr.size() && arr[left] < arr[smallest])
+            smallest = left;
+
+        if (right < arr.size() && arr[right] < arr[smallest])
+            smallest = right;
+
+        if (smallest != i) {
+            swap(arr[i], arr[smallest]);
+            heapify(smallest);
+        }
+    }
+
+    void insert(int key) {
+        arr.push_back(key);
+
+        int index = arr.size() - 1;
+
+        while (index > 0) {
+            int parent = (index - 1) / 2;
+
+            if (arr[parent] > arr[index]) {
+                swap(arr[parent], arr[index]);
+                index = parent;
+            } else
+                break;
+        }
+    }
+
+    void changeKey(int index, int new_val) {
+
+        if (index < 0 || index >= arr.size())
+            return;
+
+        int old = arr[index];
+        arr[index] = new_val;
+
+        if (new_val < old) {
+
+            while (index > 0) {
+                int parent = (index - 1) / 2;
+
+                if (arr[parent] > arr[index]) {
+                    swap(arr[parent], arr[index]);
+                    index = parent;
+                } else
+                    break;
+            }
+        } else {
+            heapify(index);
+        }
+    }
+
+    void extractMin() {
+
+        if (arr.empty())
+            return;
+
+        arr[0] = arr.back();
+        arr.pop_back();
+
+        if (!arr.empty())
+            heapify(0);
+    }
+
+    bool isEmpty() {
+        return arr.empty();
+    }
+
+    int getMin() {
+        if (arr.empty())
+            return -1;
+
+        return arr[0];
+    }
+
+    int heapSize() {
+        return arr.size();
+    }
+};
+*/
+/*
+check if the array is min heap or not
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    bool isHeap(vector<int>& nums) {
+        int n = nums.size();
+
+        // Check only internal nodes
+        for (int i = 0; i <= (n - 2) / 2; i++) {
+
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+
+            if (left < n && nums[i] > nums[left])
+                return false;
+
+            if (right < n && nums[i] > nums[right])
+                return false;
+        }
+
+        return true;
+    }
+};
+*/
+/*
+convert min heap to max heap
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+
+    void heapify(vector<int>& nums, int n, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && nums[left] > nums[largest])
+            largest = left;
+
+        if (right < n && nums[right] > nums[largest])
+            largest = right;
+
+        if (largest != i) {
+            swap(nums[i], nums[largest]);
+            heapify(nums, n, largest);
+        }
+    }
+
+    vector<int> minToMaxHeap(vector<int>& nums) {
+        int n = nums.size();
+
+        // Build Max Heap
+        for (int i = (n - 2) / 2; i >= 0; i--) {
+            heapify(nums, n, i);
+        }
+
+        return nums;
+    }
+};
+*/
