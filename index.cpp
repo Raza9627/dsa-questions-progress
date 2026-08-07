@@ -1351,7 +1351,7 @@ int subarraysequalstok(vector<int>  candidates,int k){
     for(int i=0;i candidates.size();i++){
         int sum=0;
         for(int j=i;j candidates.size();j++){
-            sum+ candidates[j];
+            sum+=candidates[j];
             if(sum==k){
                 count++;
             }
@@ -1372,13 +1372,13 @@ TC-O(n)
 TC-O(n)
 #include <bits/stdc++.h>
 using namespace std;
-int subarraysequalstok(vector<int>  candidates, int k)
+int subarraysequalstok(vector<int>&candidates, int k)
 {
  unordered_map<int,int> mpp;
  mpp[0]=1;
  int presum=0,count=0;
  for(int i=0;i candidates.size();i++){
-     presum+ candidates[i];
+     presum+=candidates[i];
      int remove=presum-k;
      count+=mpp[remove];
      mpp[presum]+=1;
@@ -9629,7 +9629,7 @@ if(largest != i){
     heapify(arr,n,largest);
 }
 }
-//for print the element  
+//for print the element
 void print()
     {
         for (int i = 1; i <= size; i++)
@@ -9818,4 +9818,90 @@ public:
         return nums;
     }
 };
+*/
+/*
+kth largest element in array
+TC-O(nlogn)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+ int kthLargestElement(vector<int>& nums, int k) {
+int n=nums.size();
+  sort(nums.begin(),nums.end());
+  return nums[n-k];
+    }
+int main(){
+vector<int> nums={1,2,3,4,5};
+int k=2;
+cout<<kthLargestElement(nums,k);
+}
+*/
+/*
+kth largest element in array optimal
+TC-O(nlogk)
+SC-O(k)
+#include <bits/stdc++.h>
+using namespace std;
+int kthLargestElement(vector<int> &nums, int k){
+    int n = nums.size();
+    priority_queue<int, vector<int>, greater<int>> pq;
+    for(int i=0;i<k;i++){
+        pq.push(nums[i]);
+    }
+    for(int i=k;i<n;i++){
+        if(nums[i]>pq.top()){
+            pq.pop();
+            pq.push(nums[i]);
+        }
+    }
+    return pq.top();
+}
+int main()
+{
+    vector<int> nums = {1, 2, 3, 4, 5};
+    int k = 2;
+    cout << kthLargestElement(nums, k);
+}
+    */
+/*
+brute force for kth smallest element
+TC-O(nlogn)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+ int kthsmallestElement(vector<int>& nums, int k) {
+int n=nums.size();
+  sort(nums.begin(),nums.end());
+  return nums[k-1];
+    }
+int main(){
+vector<int> nums={1,2,3,4,5};
+int k=2;
+cout<<kthsmallestElement(nums,k);
+}
+*/
+/*
+optimal for kth smallest element
+TC-O(nlogk)
+SC-O(k)
+#include <bits/stdc++.h>
+using namespace std;
+ int kthsmallestElement(vector<int>& nums, int k) {
+  priority_queue<int> pq;
+  for(int i=0;i<k;i++){
+    pq.push(nums[i]);
+  }
+  for(int i=k;i<nums.size();i++){
+    if(nums[i]<pq.top()){
+        pq.pop();
+        pq.push(nums[i]);
+    }
+  }
+  return pq.top();
+    }
+int main(){
+vector<int> nums={1,2,3,4,5};
+int k=2;
+cout<<kthsmallestElement(nums,k);
+}
 */
