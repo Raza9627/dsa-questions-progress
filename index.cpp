@@ -1,4 +1,4 @@
-// till this phase1
+
 /*
 largest element in array
 #include<iostream>
@@ -1283,7 +1283,6 @@ int main(){
     return 0;
 }
     */
-// till this phase 2
 /*
 Spiral Matrix Problem
 #include <bits/stdc++.h>
@@ -1411,7 +1410,7 @@ int funnCr(int n,int r){
     cout<<funnCr(n,r)<<" ";
     return 0;
  }
-    */
+ */
 /*
 pascal triangle given element at Row N and Column R
 TC-O(n)
@@ -1912,6 +1911,7 @@ int main()
     return 0;
 }
     */
+
 /*
 brute force for subarray xor
 TC: O(n³)
@@ -2005,7 +2005,7 @@ int main()
 }
 */
 /*
-  optimal approach for largest subarray with sum 0
+optimal approach for largest subarray with sum 0
 TC: O(n)
 SC: O(n)
 #include <bits/stdc++.h>
@@ -2066,6 +2066,7 @@ cout<<my(2,-2)<<endl;
 return 0;
 }
 */
+
 /*
 container with most water optimized approach
 #include <iostream>
@@ -2150,6 +2151,7 @@ int main(){
     return 0;
 }
     */
+
 /*
 count inversion brute force
 TC-O(N^2)
@@ -2300,6 +2302,7 @@ int main(){
  return 0;
 }
  */
+
 /*
 occurence of element in sorted array
 TC-O(logn)
@@ -2508,6 +2511,7 @@ int main() {
  return 0;
 }
 */
+// till this
 /*
 singleNonDuplicate in sorted array
 TC-O(logn)
@@ -2881,7 +2885,7 @@ s
     }
 */
 /*
-finding the smallest divisor
+finding the largest divisor
 TC-O(n*maxi)
 #include <bits/stdc++.h>
 using namespace std;
@@ -2905,7 +2909,7 @@ using namespace std;
     return 0;
  }
     */
-/*finding the smallest divisor optimal
+/*finding the largest divisor optimal
 TC-O(n*log(maxi))
 #include <bits/stdc++.h>
 using namespace std;
@@ -9673,19 +9677,19 @@ public:
 
     // Heapify Down
     void heapify(int i) {
-        int smallest = i;
+        int largest = i;
         int left = 2 * i + 1;
         int right = 2 * i + 2;
 
-        if (left < arr.size() && arr[left] < arr[smallest])
-            smallest = left;
+        if (left < arr.size() && arr[left] < arr[largest])
+            largest = left;
 
-        if (right < arr.size() && arr[right] < arr[smallest])
-            smallest = right;
+        if (right < arr.size() && arr[right] < arr[largest])
+            largest = right;
 
-        if (smallest != i) {
-            swap(arr[i], arr[smallest]);
-            heapify(smallest);
+        if (largest != i) {
+            swap(arr[i], arr[largest]);
+            heapify(largest);
         }
     }
 
@@ -9864,7 +9868,7 @@ int main()
 }
     */
 /*
-brute force for kth smallest element
+brute force for kth largest element
 TC-O(nlogn)
 SC-O(1)
 #include <bits/stdc++.h>
@@ -9881,7 +9885,7 @@ cout<<kthsmallestElement(nums,k);
 }
 */
 /*
-optimal for kth smallest element
+optimal for kth largest element
 TC-O(nlogk)
 SC-O(k)
 #include <bits/stdc++.h>
@@ -9905,3 +9909,1335 @@ int k=2;
 cout<<kthsmallestElement(nums,k);
 }
 */
+/*
+merge k sorted lists
+TC-O(nlogk)
+SC-O(k)
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    struct compare {
+        bool operator()(ListNode* a, ListNode* b) {
+            return a->val > b->val;   // Min Heap
+        }
+    };
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+
+        priority_queue<ListNode*, vector<ListNode*>, compare> pq;
+
+        // Push the head of every list
+        for (int i = 0; i < lists.size(); i++) {
+            if (lists[i] != NULL)
+                pq.push(lists[i]);
+        }
+
+        ListNode* dummy = new ListNode(-1);
+        ListNode* temp = dummy;
+
+        while (!pq.empty()) {
+
+            ListNode* node = pq.top();
+            pq.pop();
+
+            temp->next = node;
+            temp = temp->next;
+
+            if (node->next != NULL) {
+                pq.push(node->next);
+            }
+        }
+
+        return dummy->next;
+    }
+};
+*/
+/*
+merge k sorted arrays
+TC-O(nlogk)
+SC-O(k)
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node {
+    int value;
+    int row;
+    int col;
+};
+
+struct compare {
+    bool operator()(Node a, Node b) {
+        return a.value > b.value;   // Min Heap
+    }
+};
+
+vector<int> mergeKSortedArrays(vector<vector<int>>& arr) {
+
+    priority_queue<Node, vector<Node>, compare> pq;
+
+    // Push first element of every array
+    for (int i = 0; i < arr.size(); i++) {
+        if (!arr[i].empty()) {
+            pq.push({arr[i][0], i, 0});
+        }
+    }
+
+    vector<int> ans;
+
+    while (!pq.empty()) {
+
+        Node temp = pq.top();
+        pq.pop();
+
+        ans.push_back(temp.value);
+
+        // Push next element from the same array
+        if (temp.col + 1 < arr[temp.row].size()) {
+            pq.push({arr[temp.row][temp.col + 1], temp.row, temp.col + 1});
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+
+    vector<vector<int>> arr = {
+        {1,4,7},
+        {2,5,8},
+        {3,6,9}
+    };
+
+    vector<int> ans = mergeKSortedArrays(arr);
+
+    for (int x : ans)
+        cout << x << " ";
+
+    return 0;
+}
+    */
+/*
+Replace elements by its rank in the array brute
+TC-O(N*N)
+SC-O(N)
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> replacebyrank(vector<int>&nums){
+     vector<int> rankArr;
+        for (int i = 0; i < nums.size(); i++) {
+            unordered_set<int> smaller;
+
+            for (int j = 0; j <nums.size(); j++) {
+                if (nums[j] < nums[i]) {
+                    smaller.insert(nums[j]);
+                }
+            }
+
+            int rank = smaller.size() + 1;
+            rankArr.push_back(rank);
+        }
+
+        return rankArr;
+}
+int main(){
+    vector<int> nums={20,15,26,2,98,6};
+    vector<int> ans=replacebyrank(nums);
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }
+    return 0;
+}
+    */
+/*
+Replace elements by its rank in the array better
+TC-O(NLogN)
+SC-O(N)
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> replacebyrank(vector<int>&nums){
+vector<int> sortedArr = nums;
+     sort(sortedArr.begin(), sortedArr.end());
+     unordered_map<int, int> rankMap;
+     int rank = 1;
+     for (int num : sortedArr) {
+         if (rankMap.find(num) == rankMap.end()) {
+             rankMap[num] = rank;
+             rank++;
+         }
+     }
+     vector<int> result;
+     for (int num : nums) {
+         result.push_back(rankMap[num]);
+     }
+     return result;
+}
+int main(){
+ vector<int> nums={20,15,26,2,98,6};
+ vector<int> ans=replacebyrank(nums);
+ for(int i=0;i<ans.size();i++){
+     cout<<ans[i]<<" ";
+ }
+ return 0;
+}
+*/
+/*
+Replace Elements by Their Rank
+TC-O(NlogN)
+SC-O(N)
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> replacebyrank(vector<int>&nums){
+int n=nums.size();
+priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+for(int i=0;i<n;i++){
+    pq.push({nums[i],i});
+}
+int rank=1;
+while(!pq.empty()){
+    pair<int,int> p=pq.top();
+    int value=p.first;
+    int index=p.second;
+    pq.pop();
+
+    nums[index]=rank++;
+}
+return nums;
+}
+int main(){
+    vector<int> nums={20,15,26,2,98,6};
+    vector<int> ans=replacebyrank(nums);
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }
+    return 0;
+}
+    */
+/*
+Task shedular
+#include <bits/stdc++.h>
+using namespace std;
+int leastInterval(vector<char>& tasks, int n) {
+
+        vector<int> freq(26, 0);
+
+        for (char task : tasks) {
+            freq[task - 'A']++;
+        }
+        priority_queue<int> pq;
+
+        for (int f : freq) {
+            if (f > 0) {
+                pq.push(f);
+            }
+        }
+        queue<pair<int, int>> q;
+
+        int time = 0;
+
+        while (!pq.empty() || !q.empty()) {
+
+            time++;
+
+            if (!pq.empty()) {
+                int f = pq.top();
+                pq.pop();
+
+                f--;
+                if (f > 0) {
+                    q.push({f, time + n});
+                }
+            }
+
+            if (!q.empty() && q.front().second == time) {
+                pq.push(q.front().first);
+                q.pop();
+            }
+        }
+
+        return time;
+    }
+int main(){
+vector<char> tasks={'A','A','A','B','B','B'};
+int n=2;
+cout<<leastInterval(tasks,n);
+return 0;
+}
+*/
+/*
+Hand of Straights optimal
+TC-O(NlogN)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+bool isNStraightHand(vector<int>& hand, int groupSize) {
+    if (hand.size() % groupSize != 0)
+        return false;
+map<int, int> freq;
+
+    for (int x : hand)
+        freq[x]++;
+
+    for (auto it = freq.begin(); it != freq.end(); it++) {
+        if (it->second == 0)
+            continue;
+
+        int start = it->first;
+        int count = it->second;
+
+        for (int i = 0; i < groupSize; i++) {
+            if (freq[start + i] < count)
+                return false;
+
+            freq[start + i] -= count;
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    vector<int> hand = {1,2,3,6,2,3,4,7,8};
+    int groupSize = 3;
+
+    cout << isNStraightHand(hand, groupSize);
+
+    return 0;
+}
+    */
+/*
+Minimum cost to connect sticks
+TC-O(Nlogn)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+int connectSticks(vector<int>& sticks) {
+ priority_queue<int ,vector<int>,greater<int>> pq;
+ int cost=0;
+ for(int i=0;i<sticks.size();i++){
+     pq.push(sticks[i]);
+ }
+ while(pq.size()>1){
+ int a=pq.top();
+ pq.pop();
+ int b=pq.top();
+ pq.pop();
+ int sum=a+b;
+ cost+=sum;
+ pq.push(sum);
+ }
+ return cost;
+ }
+int main(){
+vector<int> sticks={1,8,3,5};
+cout<<connectSticks(sticks);
+return 0;
+}
+*/
+/*
+kth largest element in a Stream
+#include <bits/stdc++.h>
+using namespace std;
+class KthLargest {
+    priority_queue<int, vector<int>, greater<int>> pq;
+    int k;
+
+public:
+    KthLargest(int k, vector<int>& nums) {
+        this->k = k;
+
+        for (int x : nums) {
+            pq.push(x);
+
+            if (pq.size() > k)
+                pq.pop();
+        }
+    }
+
+    int add(int val) {
+        pq.push(val);
+
+        if (pq.size() > k)
+            pq.pop();
+
+        return pq.top();
+    }
+};
+*/
+/*
+brute force for max sum combination
+TC-O(n*m log(n*m))
+SC-O(n)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> maxSumCombinations(vector<int> &nums1, vector<int> &nums2, int k) {
+    vector<int> ans;
+    for(int i=0;i<nums1.size();i++){
+    for(int j=0;j<nums2.size();j++){
+      int sum=nums1[i]+nums2[j];
+      ans.push_back(sum);
+    }
+}
+sort(ans.begin(),ans.end());
+vector<int> result;
+while(k>0){
+    result.push_back(ans.back());
+    ans.pop_back();
+    k--;
+}
+return result;
+  }
+  int main(){
+vector<int> nums1={7,3};
+vector<int> nums2={1,6};
+int k=2;
+vector<int> ans=maxSumCombinations(nums1,nums2,k);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+    return 0;
+  }
+    */
+/*
+optimized max sum combination
+TC: O(n log n + m log m + k log k)
+SC: O(k)
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> maxSumCombinations(vector<int> &nums1, vector<int> &nums2, int k) {
+
+    sort(nums1.begin(), nums1.end(), greater<int>());
+    sort(nums2.begin(), nums2.end(), greater<int>());
+
+    priority_queue<pair<int, pair<int, int>>> pq;
+    set<pair<int, int>> visited;
+    vector<int> result;
+
+    pq.push({nums1[0] + nums2[0], {0, 0}});
+    visited.insert({0, 0});
+
+    while(k > 0 && !pq.empty()) {
+
+        auto current = pq.top();
+        pq.pop();
+
+        int sum = current.first;
+        int i = current.second.first;
+        int j = current.second.second;
+
+        result.push_back(sum);
+        k--;
+
+        if(i + 1 < nums1.size() &&
+           visited.find({i + 1, j}) == visited.end()) {
+
+            pq.push({
+                nums1[i + 1] + nums2[j],
+                {i + 1, j}
+            });
+
+            visited.insert({i + 1, j});
+        }
+        if(j + 1 < nums2.size() &&
+           visited.find({i, j + 1}) == visited.end()) {
+
+            pq.push({
+                nums1[i] + nums2[j + 1],
+                {i, j + 1}
+            });
+
+            visited.insert({i, j + 1});
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    vector<int> nums1 = {7, 3};
+    vector<int> nums2 = {1, 6};
+    int k = 2;
+    vector<int> ans = maxSumCombinations(nums1, nums2, k);
+    for(int i = 0; i < ans.size(); i++) {
+        cout << ans[i] << " ";
+    }
+    return 0;
+}
+*/
+/*
+Top k frequent elements
+TC-O(N)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> topKFrequent(vector<int>& nums, int k) {
+unordered_map<int,int> mpp;
+priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+for(int i=0;i<nums.size();i++){
+    mpp[nums[i]]++;
+}
+for(auto it:mpp){
+    pq.push({it.second,it.first});
+    if(pq.size()>k) pq.pop();
+}
+vector<int> res;
+while(!pq.empty()){
+    pair<int,int> p=pq.top();
+    res.push_back(p.second);
+    pq.pop();
+}
+return res;
+    }
+int main(){
+vector<int> nums={1,1,1,2,2,3};
+int k=2;
+vector<int> ans=topKFrequent(nums,k);
+for(int i=0;i<ans.size();i++){
+    cout<<ans[i]<<" ";
+}
+return 0;
+}
+*/
+// Greedy Algorithms 12/08/2026
+/*
+assign cookies
+TC-O(N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+int findContentChildren(vector<int>& g, vector<int>& s) {
+     sort(g.begin(),g.end());
+    sort(s.begin(),s.end());
+    int l=0,r=0;
+    while(r<g.size() && l<s.size()){
+        if(g[r]<=s[l]){
+            r++;
+            l++;
+        }
+        else l++;
+    }
+    return r;
+    }
+int main(){
+vector<int> g={1,2,3};
+vector<int> s={1,1};
+cout<<findContentChildren(g,s);
+return 0;
+}
+*/
+/*
+lemonade change
+TC-O(N)
+SC-O(1)
+#include <bits/stdc++.h>
+using namespace std;
+    bool lemonadeChange(vector<int>& bills) {
+        int five = 0;
+        int ten = 0;
+
+        for (int bill : bills) {
+
+            if (bill == 5) {
+                five++;
+            }
+
+            else if (bill == 10) {
+                if (five == 0)
+                    return false;
+
+                five--;
+                ten++;
+            }
+
+            else {
+                if (ten > 0 && five > 0) {
+                    ten--;
+                    five--;
+                }
+                else if (five >= 3) {
+                    five -= 3;
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    int main(){
+        vector<int> bills={5,5,5,10,20};
+        cout<<lemonadeChange(bills);
+        return 0;
+    }
+        */
+/*
+fractional knapsack
+#include <bits/stdc++.h>
+using namespace std;
+struct Item {
+    long long value;
+    long long weight;
+};
+
+double fractionalKnapsack(vector<long long>& val,vector<long long>& wt,long long capacity) {
+
+    vector<Item> items;
+    for (int i = 0; i < val.size(); i++) {
+        items.push_back({val[i], wt[i]});
+    }
+    sort(items.begin(), items.end(), [](Item& a, Item& b) {
+        return (double)a.value / a.weight >
+               (double)b.value / b.weight;
+    });
+
+    double totalValue = 0;
+
+    for (auto& item : items) {
+
+        if (item.weight <= capacity) {
+
+            totalValue += item.value;
+            capacity -= item.weight;
+        }
+
+        else {
+
+            totalValue +=
+                ((double)item.value / item.weight) * capacity;
+
+            break;
+        }
+    }
+
+    return totalValue;
+}
+
+int main() {
+
+    vector<long long> val = {60, 100, 120};
+    vector<long long> wt = {10, 20, 30};
+
+    long long capacity = 50;
+
+    cout << fractionalKnapsack(val, wt, capacity);
+
+    return 0;
+}
+    */
+/*
+Valid paranthesis checker
+#include <bits/stdc++.h>
+using namespace std;
+bool checkValidString(string s)
+{
+ int min = 0, max = 0;
+ for (int i = 0; i < s.size(); i++)
+ {
+     if (s[i] == '(')
+     {
+         min++;
+         max++;
+     }
+     else if (s[i] == ')')
+     {
+         min--;
+         max--;
+     }
+     else
+     {
+         min--;
+         max++;
+     }
+     if (min < 0)
+         min = 0;
+     if (max < 0)
+         return false;
+ }
+ return (min == 0);
+}
+
+int main()
+{
+ string s = "()";
+ cout << checkValidString(s);
+ return 0;
+}
+ */
+/*
+jump game
+#include <bits/stdc++.h>
+using namespace std;
+bool canJump(vector<int>& nums) {
+    int maxi=0;
+    for(int i=0;i<nums.size();i++){
+        if(i>maxi) return false;
+        maxi=max(maxi,i+nums[i]);
+    }
+    return true;
+    }
+int main(){
+ vector<int> nums={2,3,1,1,4};
+ cout << canJump(nums);
+ return 0;
+}
+ */
+/*
+TC-O(Nlogn)+O(n)
+SC-O(1)
+shortest job first
+#include <bits/stdc++.h>
+using namespace std;
+ long long solve(vector<int>& bt) {
+    sort(bt.begin(),bt.end());
+    long long sum=0;
+    long currSum=0;
+    for(int i=1;i<bt.size();i++){
+        currSum+=bt[i-1];
+        sum+=currSum;
+    }
+    return sum/bt.size();
+    }
+int main(){
+    vector<int> bt={4,1,3,7,2};
+    cout<<solve(bt);
+}
+    */
+/*
+Jump game 2
+#include <bits/stdc++.h>
+using namespace std;
+
+int jump(vector<int>& nums) {
+ int farthest = 0;
+ int end = 0;
+ int jumps = 0;
+ for (int i = 0; i < nums.size() - 1; i++) {
+     farthest = max(farthest, i + nums[i]);
+     if (i == end) {
+         jumps++;
+         end = farthest;
+     }
+ }
+ return jumps;
+}
+
+int main() {
+ vector<int> nums = {2,3,1,1,4};
+ cout << jump(nums);
+ return 0;
+}
+ */
+/*
+job sheduling problem
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> JobScheduling(vector<vector<int>>& Jobs) {
+
+    int jobCnt = 0, maxProfit = 0;
+    sort(Jobs.begin(), Jobs.end(), [](vector<int>& a, vector<int>& b) {
+        return a[2] > b[2];
+    });
+    int maxDeadline = 0;
+
+    for (auto job : Jobs) {
+        maxDeadline = max(maxDeadline, job[1]);
+    }
+
+    vector<int> slot(maxDeadline + 1, -1);
+
+    for (auto job : Jobs) {
+
+        int deadline = job[1];
+        int profit = job[2];
+        for (int time = deadline; time >= 1; time--) {
+
+            if (slot[time] == -1) {
+
+                slot[time] = job[0];
+
+                jobCnt++;
+                maxProfit += profit;
+
+                break;
+            }
+        }
+    }
+
+    return {jobCnt, maxProfit};
+}
+
+int main() {
+
+    vector<vector<int>> jobs = {
+        {1,4,20},
+        {2,1,10},
+        {3,1,40},
+        {4,1,30}
+    };
+
+    vector<int> ans = JobScheduling(jobs);
+
+    cout << ans[0] << " " << ans[1];
+
+    return 0;
+}
+    */
+/*
+N meetings in one room
+#include <bits/stdc++.h>
+using namespace std;
+int maxMeetings(vector<int> &start, vector<int> &end) {
+
+ int n = start.size();
+
+ vector<pair<int, int>> data;
+
+ for (int i = 0; i < n; i++) {
+     data.push_back({start[i], end[i]});
+ }
+
+ sort(data.begin(), data.end(), [](auto &a, auto &b) {
+     return a.second < b.second;
+ });
+
+ int cnt = 0;
+ int lastEnd = -1;
+
+ for (int i = 0; i < n; i++) {
+
+     if (data[i].first > lastEnd) {
+         cnt++;
+         lastEnd = data[i].second;
+     }
+ }
+
+ return cnt;
+}
+
+int main()
+{
+ vector<int> start = {1, 3, 0, 5, 8, 5};
+ vector<int> end = {2, 4, 6, 7, 9, 9};
+
+ cout << maxMeetings(start, end);
+
+ return 0;
+}
+ */
+/*
+Non overlap interval
+#include <bits/stdc++.h>
+using namespace std;
+int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+    int n = intervals.size();
+        sort(intervals.begin(), intervals.end(),
+             [](vector<int>& a, vector<int>& b) {
+                 return a[1] < b[1];
+             });
+        int cnt = 0;
+        int lastEnd = intervals[0][1];
+        for (int i = 1; i < n; i++) {
+            if (intervals[i][0] >= lastEnd) {
+                cnt++;
+                lastEnd = intervals[i][1];
+            }
+
+        }
+        return n-cnt;
+    }
+int main(){
+vector<vector<int>> intervals={
+        {1,2},
+        {2,3},
+        {3,4},
+        {1,3}
+    };
+  cout<<eraseOverlapIntervals(intervals);
+    return 0;
+}
+    */
+/*
+insert interval
+#include <bits/stdc++.h>
+using namespace std;
+vector<vector<int>> insert(vector<vector<int>>& intervals,vector<int>& newInterval) {
+
+    vector<vector<int>> ans;
+    int i = 0;
+    int n = intervals.size();
+
+    while (i < n && intervals[i][1] < newInterval[0]) {
+        ans.push_back(intervals[i]);
+        i++;
+    }
+
+    while (i < n && intervals[i][0] <= newInterval[1]) {
+        newInterval[0] = min(newInterval[0], intervals[i][0]);
+        newInterval[1] = max(newInterval[1], intervals[i][1]);
+        i++;
+    }
+
+    ans.push_back(newInterval);
+
+    while (i < n) {
+        ans.push_back(intervals[i]);
+        i++;
+    }
+
+    return ans;
+}
+int main()
+{
+    vector<vector<int>> intervals = {{1, 3}, {6, 9}};
+    vector<int> interval = {2, 5};
+    vector<vector<int>> ans = insert(intervals, interval);
+    for (auto &x : ans)
+    {
+        for (int v : x)
+        {
+            cout << v << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+    */
+/*
+Merge intervals
+#include <bits/stdc++.h>
+using namespace std;
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+ vector<vector<int>> ans;
+ int n = intervals.size();
+ sort(intervals.begin(), intervals.end());
+ int lastidx = intervals[0][1];
+ int firstidx = intervals[0][0];
+ for (int i = 1; i < n; i++) {
+     if (intervals[i][0] <= lastidx) {
+         lastidx = max(lastidx, intervals[i][1]);
+         firstidx = min(firstidx, intervals[i][0]);
+     }
+     else {
+         ans.push_back({firstidx, lastidx});
+         firstidx = intervals[i][0];
+         lastidx = intervals[i][1];
+     }
+ }
+ ans.push_back({firstidx, lastidx});
+
+ return ans;
+}
+int main()
+{
+ vector<vector<int>> intervals = {{1, 3}, {2, 6},{8,10},{15,18}};
+ vector<vector<int>> ans = merge(intervals);
+ for (auto &x : ans)
+ {
+     for (int v : x)
+     {
+         cout << v;
+     }
+     cout <<" ";
+ }
+ return 0;
+}
+ */
+/*
+Minimum number of platforms required for a railway
+#include <bits/stdc++.h>
+using namespace std;
+int PlatformRequired(vector<int> &arrival,vector<int> &departure){
+sort(departure.begin(),departure.end());
+sort(arrival.begin(),arrival.end());
+int n=arrival.size();
+int i=0,j=0;
+int cnt=0,maxCnt=0;
+while(i<n){
+if(arrival[i]<=departure[j]){
+    cnt++;
+    i++;
+}
+else{
+    cnt--;
+    j++;
+}
+maxCnt=max(maxCnt,cnt);
+}
+return maxCnt;
+}
+int main(){
+vector<int> arrival={900,940,950,1100,1500,1800};
+vector<int> departure={910,1200,1120,1130,1900,2000};
+cout<<PlatformRequired(arrival,departure);
+return 0;
+}
+*/
+/*
+candy distribution problem
+#include <bits/stdc++.h>
+using namespace std;
+int candy(vector<int>& ratings) {
+ int sum=1,i=1,n=ratings.size();
+ while(i<n){
+ if(ratings[i]==ratings[i-1]){
+    sum+=1;
+    i++;
+    continue;
+ }
+ int peak=1;
+ while(i<n && ratings[i]>ratings[i-1]){
+    peak++;
+    sum+=peak;
+    i++;
+ }
+ int down=1;
+ while(i<n && ratings[i]<ratings[i-1]){
+    sum+=down;
+    i++;
+    down++;
+ }
+ if(down>peak){
+    sum+=(down-peak);
+ }
+ }
+ return sum;
+    }
+int main(){
+vector<int> ratings={1,0,2};
+cout<<candy(ratings);
+return 0;
+}
+*/
+// Trees 19/8/2026
+/*Traversels in tree*/
+/*Traversals in BT
+#include <bits/stdc++.h>
+using namespace std;
+queue<int> q;
+struct TreeNode
+{
+    int data;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int val)
+    {
+        data = val;
+        right = left = NULL;
+    }
+};
+// preorder traversal
+void preorder(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+
+    cout << root->data << " ";
+    preorder(root->left);
+    preorder(root->right);
+}
+// inorder traversal
+void inorder(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+// Postorder traversal
+void postorder(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+    postorder(root->left);
+    postorder(root->right);
+    cout << root->data << " ";
+}
+// level order traversal
+void levelorder(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+
+    queue<TreeNode *> q;
+    q.push(root);
+
+    while (!q.empty())
+    {
+        int size = q.size();
+
+        for (int i = 0; i < size; i++)
+        {
+            TreeNode *node = q.front();
+            q.pop();
+
+            cout << node->data << " ";
+
+            if (node->left != NULL)
+                q.push(node->left);
+
+            if (node->right != NULL)
+                q.push(node->right);
+        }
+
+        cout << endl;
+    }
+}
+// iterative preorder traversal
+void preorderiterative(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+
+    stack<TreeNode *> st;
+    st.push(root);
+
+    while (!st.empty())
+    {
+        int size = st.size();
+        for (int i = 0; i < size; i++)
+        {
+            TreeNode *node = st.top();
+            st.pop();
+
+            cout << node->data << " ";
+            if (node->right != NULL)
+                st.push(node->right);
+            if (node->left != NULL)
+                st.push(node->left);
+        }
+    }
+}
+// iterative inorder traversal
+void inorderiterative(TreeNode *root)
+{
+    stack<TreeNode *> st;
+    TreeNode *node = root;
+    while (true)
+    {
+        if (node != NULL)
+        {
+            st.push(node);
+            node = node->left;
+        }
+        else
+        {
+            if (st.empty() == true)
+                break;
+            node = st.top();
+            st.pop();
+            cout << node->data << " ";
+            node = node->right;
+        }
+    }
+}
+// iterative Postorder traversal using two stacks
+void postorderiterative(TreeNode *root)
+{
+    if (root == NULL)
+        return;
+    stack<TreeNode *> s1, s2;
+    s1.push(root);
+    while (!s1.empty())
+    {
+        TreeNode *node = s1.top();
+        s1.pop();
+        s2.push(node);
+        if (node->left != NULL)
+            s1.push(node->left);
+        if (node->right != NULL)
+            s1.push(node->right);
+    }
+    while (!s2.empty())
+    {
+        cout << s2.top()->data << " ";
+        s2.pop();
+    }
+}
+//pre,in,post all orders in one
+void preinpost(TreeNode* root){
+stack<pair<TreeNode*,int>> st;
+st.push({root,1});
+if(root==NULL) return;
+while(!st.empty()){
+auto it=st.top();
+st.pop();
+if(it.second==1){
+cout<<it.first->data<<",";
+it.second++;
+st.push(it);
+if(it.first->left!=NULL){
+    st.push({it.first->left,1});
+}
+}
+else if(it.second==2){
+cout<<it.first->data<<".";
+it.second++;
+st.push(it);
+if(it.first->right!=NULL){
+    st.push({it.first->right,1});
+}
+}
+else {
+    cout<<it.first->data<<"-";
+}
+}
+}
+int main()
+{
+    struct TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(7);
+    root->left->right = new TreeNode(5);
+    root->right->left = new TreeNode(6);
+    root->right->right = new TreeNode(9);
+    preinpost(root);
+}
+*/
+/*
+max depth of binary Tree
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x)
+    {
+        val = x;
+        right = left = NULL;
+    }
+};
+int maxDepth(TreeNode* root) {
+    if(root==NULL) return 0;
+    int lh=maxDepth(root->left);
+    int rh=maxDepth(root->right);
+    return 1+max(lh,rh);
+    }
+int main()
+{
+    struct TreeNode *root = new TreeNode(3);
+    root->left = new TreeNode(9);
+    root->right = new TreeNode(20);
+    root->right->left = new TreeNode(15);
+    root->right->right = new TreeNode(7);
+    cout<<maxDepth(root);
+    return 0;
+}    
+*/
+/*
+balanced BT or not
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x)
+    {
+        val = x;
+        right = left = NULL;
+    }
+};
+    bool isBalanced(TreeNode* root) {
+    return dfheight(root)!=-1;
+    }
+    int dfheight(TreeNode* root){
+         if(root==NULL) return 0;
+    int lh=dfheight(root->left);
+    if(lh==-1) return -1;
+    int rh=dfheight(root->right);
+    if(rh==-1) return -1;
+    if(abs(lh-rh)>1) return -1;
+     return max(lh,rh)+1;
+    }
+int main()
+{
+    struct TreeNode *root = new TreeNode(3);
+    root->left = new TreeNode(9);
+    root->right = new TreeNode(20);
+    root->right->left = new TreeNode(15);
+    root->right->right = new TreeNode(7);
+    cout<<isBalanced(root);
+    return 0;
+} 
+    */
+   /*
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x)
+    {
+        val = x;
+        right = left = NULL;
+    }
+};
+int maxi = 0;
+int height(TreeNode* root)
+{
+    if (root == NULL)
+        return 0;
+
+    int lh = height(root->left);
+    int rh = height(root->right);
+
+    maxi = max(maxi, lh + rh);
+
+    return 1 + max(lh, rh);
+}
+
+int diameterOfBinaryTree(TreeNode* root)
+{
+    maxi = 0;
+    height(root);
+    return maxi;
+}
+int main()
+{
+    struct TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+    cout<<diameterOfBinaryTree(root);
+    return 0;
+} 
+    */
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x)
+    {
+        val = x;
+        right = left = NULL;
+    }
+};
+
+int main()
+{
+    struct TreeNode *root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+    return 0;
+} 
