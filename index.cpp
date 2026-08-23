@@ -11130,7 +11130,7 @@ int main()
     root->right->right = new TreeNode(7);
     cout<<maxDepth(root);
     return 0;
-}    
+}
 */
 /*
 balanced BT or not
@@ -11169,75 +11169,276 @@ int main()
     root->right->right = new TreeNode(7);
     cout<<isBalanced(root);
     return 0;
-} 
+}
     */
-   /*
+/*
 #include <bits/stdc++.h>
 using namespace std;
 struct TreeNode
 {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
+ int val;
+ TreeNode *left;
+ TreeNode *right;
 
-    TreeNode(int x)
-    {
-        val = x;
-        right = left = NULL;
-    }
+ TreeNode(int x)
+ {
+     val = x;
+     right = left = NULL;
+ }
 };
 int maxi = 0;
 int height(TreeNode* root)
 {
-    if (root == NULL)
-        return 0;
+ if (root == NULL)
+     return 0;
 
-    int lh = height(root->left);
-    int rh = height(root->right);
+ int lh = height(root->left);
+ int rh = height(root->right);
 
-    maxi = max(maxi, lh + rh);
+ maxi = max(maxi, lh + rh);
 
-    return 1 + max(lh, rh);
+ return 1 + max(lh, rh);
 }
 
 int diameterOfBinaryTree(TreeNode* root)
 {
-    maxi = 0;
-    height(root);
-    return maxi;
+ maxi = 0;
+ height(root);
+ return maxi;
 }
 int main()
 {
-    struct TreeNode *root = new TreeNode(1);
-    root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
-    root->left->left = new TreeNode(4);
-    root->left->right = new TreeNode(5);
-    cout<<diameterOfBinaryTree(root);
-    return 0;
-} 
-    */
+ struct TreeNode *root = new TreeNode(1);
+ root->left = new TreeNode(2);
+ root->right = new TreeNode(3);
+ root->left->left = new TreeNode(4);
+ root->left->right = new TreeNode(5);
+ cout<<diameterOfBinaryTree(root);
+ return 0;
+}
+ */
+/*
+max pathsum
 #include <bits/stdc++.h>
 using namespace std;
 struct TreeNode
 {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
+ int val;
+ TreeNode *left;
+ TreeNode *right;
 
-    TreeNode(int x)
-    {
-        val = x;
-        right = left = NULL;
+ TreeNode(int x)
+ {
+     val = x;
+     right = left = NULL;
+ }
+};
+int height(TreeNode* root,int &maxi) {
+if(root==NULL) return 0;
+int lsum=max(0,height(root->left,maxi));
+int rsum=max(0,height(root->right,maxi));
+maxi=max(maxi,lsum+rsum+root->val);
+return root->val+ max(lsum,rsum);
+}
+int maxPathSum(TreeNode* root){
+int maxi=INT_MIN;
+height(root,maxi);
+return maxi;
+}
+int main() {
+ TreeNode* root = new TreeNode(-10);
+ root->left = new TreeNode(9);
+ root->right = new TreeNode(20);
+ root->right->left = new TreeNode(15);
+ root->right->right = new TreeNode(7);
+
+ cout << maxPathSum(root) << endl;
+
+ return 0;
+}
+ */
+/*
+is the treee same or not
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+ int val;
+ TreeNode *left, *right;
+ TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+bool isSameTree(TreeNode* p, TreeNode* q) {
+ if(p==NULL && q==NULL) return true;
+ if(p==NULL || q==NULL) return false;
+ if(p->val != q->val) return false;
+
+ bool l = isSameTree(p->left, q->left);
+ bool r = isSameTree(p->right, q->right);
+ return l && r;
+}
+
+int main() {
+ TreeNode* p = new TreeNode(1);
+ p->left = new TreeNode(2);
+ p->right = new TreeNode(3);
+ TreeNode* q = new TreeNode(1);
+ q->left = new TreeNode(2);
+ q->right = new TreeNode(3);
+ cout << (isSameTree(p, q) ? "true" : "false") << endl;
+ return 0;
+}
+ */
+/*
+Zig zag traversal
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+vector<vector<int>> ans;
+queue<TreeNode*>q;
+if(root==NULL) return {};
+q.push(root);
+int cnt=0;
+while(!q.empty()){
+int size=q.size();
+vector<int> curr;
+ for(int i=0;i<size;i++){
+  TreeNode* node=q.front();
+  q.pop();
+  curr.push_back(node->val);
+  if(node->left!=NULL) q.push(node->left);
+  if(node->right!=NULL) q.push(node->right);
+ }
+ cnt++;
+ if(cnt%2==0){
+reverse(curr.begin(),curr.end());
+ans.push_back(curr);
+}
+else{
+   ans.push_back(curr);
+ }
+}
+return ans;
+}
+
+int main() {
+    TreeNode* root = new TreeNode(3);
+    root->left = new TreeNode(9);
+    root->right = new TreeNode(20);
+    root->right->left = new TreeNode(15);
+    root->right->right = new TreeNode(7);
+
+    vector<vector<int>> result = zigzagLevelOrder(root);
+
+    for (auto& level : result) {
+        for (int n : level) cout << n << " ";
+        cout << endl;
     }
+
+    return 0;
+}
+    */
+/*
+Boundary Traversal
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
-int main()
-{
-    struct TreeNode *root = new TreeNode(1);
+bool isLeaf(TreeNode* root) {
+    return !root->left && !root->right;
+}
+
+void addLeftBoundary(TreeNode* root, vector<int>& res) {
+    TreeNode* curr = root->left;
+    while (curr) {
+        if (!isLeaf(curr)) res.push_back(curr->val);
+        if (curr->left) curr = curr->left;
+        else curr = curr->right;
+    }
+}
+
+void addLeaves(TreeNode* root, vector<int>& res) {
+    if (isLeaf(root)) {
+        res.push_back(root->val);
+        return;
+    }
+    if (root->left) addLeaves(root->left, res);
+    if (root->right) addLeaves(root->right, res);
+}
+
+void addRightBoundary(TreeNode* root, vector<int>& res) {
+    TreeNode* curr = root->right;
+    vector<int> temp;
+    while (curr) {
+        if (!isLeaf(curr)) temp.push_back(curr->val);
+        if (curr->right) curr = curr->right;
+        else curr = curr->left;
+    }
+    for (int i = temp.size() - 1; i >= 0; i--) {
+        res.push_back(temp[i]);
+    }
+}
+
+vector<int> boundaryTraversal(TreeNode* root) {
+    vector<int> res;
+    if (!root) return res;
+
+    if (!isLeaf(root)) res.push_back(root->val);
+
+    addLeftBoundary(root, res);
+    addLeaves(root, res);
+    addRightBoundary(root, res);
+
+    return res;
+}
+
+int main() {
+    TreeNode *root = new TreeNode(1);
     root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
-    root->left->left = new TreeNode(4);
-    root->left->right = new TreeNode(5);
+    root->left->right = new TreeNode(3);
+    root->left->right->left = new TreeNode(4);
+
+    vector<int> result = boundaryTraversal(root);
+    for (int n : result) cout << n << " ";
+    cout << endl;
+
     return 0;
-} 
+}
+    */
+   #include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+    // TODO: implement
+}
+
+int main() {
+    TreeNode* root = new TreeNode(3);
+    root->left = new TreeNode(9);
+    root->right = new TreeNode(20);
+    root->right->left = new TreeNode(15);
+    root->right->right = new TreeNode(7);
+    
+    vector<vector<int>> result = verticalTraversal(root);
+    
+    for (auto& col : result) {
+        for (int n : col) cout << n << " ";
+        cout << endl;
+    }
+    
+    return 0;
+}
