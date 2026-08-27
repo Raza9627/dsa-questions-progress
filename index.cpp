@@ -11569,4 +11569,460 @@ int main() {
     return 0;
 }
     */
-   
+   /*
+right side view of btree
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+vector<int> rightSideView(TreeNode* root) {
+    vector<int> ans;
+    if(root==NULL) return ans;
+    queue<TreeNode*> q;
+    q.push(root);
+    while(!q.empty()){
+        int levelSize = q.size();
+        for(int i = 0; i < levelSize; i++){
+            TreeNode* node = q.front();
+            q.pop();
+            if(i == levelSize - 1){  // last node of this level
+                ans.push_back(node->val);
+            }
+            if(node->left) q.push(node->left);
+            if(node->right) q.push(node->right);
+        }
+    }
+    return ans;
+}
+int main() {
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->right = new TreeNode(5);
+    root->right->right = new TreeNode(4);
+    
+    vector<int> result = rightSideView(root);
+    
+    for (int n : result) cout << n << " ";
+    cout << endl;
+    
+    return 0;
+}
+    */
+   /*
+check tree symmetric or not
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+bool check(TreeNode* left, TreeNode* right) {
+
+        // Both are NULL -> symmetric
+        if (left == NULL && right == NULL)
+            return true;
+
+        // One is NULL -> not symmetric
+        if (left == NULL || right == NULL)
+            return false;
+
+        // Values are different -> not symmetric
+        if (left->val != right->val)
+            return false;
+
+        // Compare mirror children
+        return check(left->left, right->right) &&
+               check(left->right, right->left);
+    }
+
+    bool isSymmetric(TreeNode* root) {
+
+        if (root == NULL)
+            return true;
+
+        return check(root->left, root->right);
+    }
+int main() {
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(2);
+    root->left->left = new TreeNode(3);
+    root->left->right = new TreeNode(4);
+    root->right->left = new TreeNode(4);
+    root->right->right = new TreeNode(3);
+    
+    cout << (isSymmetric(root) ? "true" : "false") << endl;
+    
+    return 0;
+}
+    */
+   /*
+Paths in Binary Tree
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+void solve(TreeNode* root, vector<int>& path, vector<vector<int>>& ans) {
+    if(root==NULL) return;
+    path.push_back(root->val);
+    solve(root->left,path,ans);
+    solve(root->right,path,ans);
+    if(root->left==NULL && root->right==NULL){
+        ans.push_back(path);
+    }
+    path.pop_back();
+}
+
+vector<vector<int>> binaryTreePaths(TreeNode* root) {
+    if(root==NULL){
+        return {};
+    }
+    vector<vector<int>> ans;
+    vector<int> path;
+    solve(root,path,ans);
+    return ans;
+}
+
+int main() {
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+    root->right = new TreeNode(3);
+    
+    vector<vector<int>> result = binaryTreePaths(root);
+    
+    for (auto& path : result) {
+        for (int n : path) cout << n << " ";
+        cout << endl;
+    }
+    
+    return 0;
+}
+    */
+/*
+lowest common ancestor
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+ if( root==NULL || root==p || root==q){
+    return root;
+ }
+TreeNode* left=lowestCommonAncestor(root->left,p,q);
+TreeNode* right=lowestCommonAncestor(root->right,p,q);
+if (left == NULL){
+            return right;
+        }
+        else if(right==NULL) {
+            return left;
+        }
+        else return root;
+}
+int main() {
+
+    TreeNode* root = new TreeNode(3);
+    root->left = new TreeNode(5);
+    root->right = new TreeNode(1);
+    root->left->left = new TreeNode(6);
+    root->left->right = new TreeNode(2);
+    root->right->left = new TreeNode(0);
+    root->right->right = new TreeNode(8);
+    root->left->right->left = new TreeNode(7);
+    root->left->right->right = new TreeNode(4);
+    
+    TreeNode* p = root->left;
+    TreeNode* q = root->right;
+    
+    cout << lowestCommonAncestor(root, p, q)->val << endl;
+    
+    return 0;
+}   
+    */
+   /*
+Maxwidth of BT
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+int widthOfBinaryTree(TreeNode* root) {
+     queue<pair<TreeNode*, long long>> q;
+    q.push({root, 0});
+    int maxwidth = 0;
+    
+    while (!q.empty()) {
+        int size = q.size();
+        long long firstIdx = q.front().second;
+        long long lastIdx = firstIdx;
+        
+        for (int i = 0; i < size; i++) {
+            TreeNode* node = q.front().first;
+            long long idx = q.front().second - firstIdx;  // normalize
+            q.pop();
+            lastIdx = idx;
+            
+            if (node->left) q.push({node->left, 2*idx+1});
+            if (node->right) q.push({node->right, 2*idx+2});
+        }
+        
+        maxwidth = max(maxwidth, (int)(lastIdx + 1));
+    }
+    
+    return maxwidth;
+}
+
+int main() {
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(3);
+    root->right = new TreeNode(2);
+    root->left->left = new TreeNode(5);
+    root->left->right = new TreeNode(3);
+    root->right->right = new TreeNode(9);
+    
+    cout << widthOfBinaryTree(root) << endl;
+    
+    return 0;
+}  
+    */
+/*
+check sum property
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+bool isChildrenSum(TreeNode* root) {
+    if (root == NULL) return true;
+    if (root->left == NULL && root->right == NULL) return true;
+    
+    int child = 0;
+    if (root->left) child += root->left->val;
+    if (root->right) child += root->right->val;
+    
+    if (root->val != child) return false;
+    
+    bool leftOk = isChildrenSum(root->left);
+    bool rightOk = isChildrenSum(root->right);
+    
+    return leftOk && rightOk;
+}
+
+int main() {
+    TreeNode* root = new TreeNode(10);
+    root->left = new TreeNode(8);
+    root->right = new TreeNode(2);
+    root->left->left = new TreeNode(3);
+    root->left->right = new TreeNode(5);
+    root->right->right = new TreeNode(2);
+    
+    cout << (isChildrenSum(root) ? "true" : "false") << endl;
+    
+    return 0;
+}
+    */
+/*
+Node at distance k
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+void markParents(TreeNode* root, unordered_map<TreeNode*, TreeNode*>& parent_track) {
+        queue<TreeNode*> q;
+        q.push(root);
+        while (!q.empty()) {
+            TreeNode* current = q.front();
+            q.pop();
+            if (current->left) {
+                parent_track[current->left] = current;
+                q.push(current->left);
+            }
+            if (current->right) {
+                parent_track[current->right] = current;
+                q.push(current->right);
+            }
+        }
+    }
+
+vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+     unordered_map<TreeNode*, TreeNode*> parent_track;
+        markParents(root, parent_track);
+
+        unordered_map<TreeNode*, bool> visited;
+        queue<TreeNode*> q;
+        q.push(target);
+        visited[target] = true;
+
+        int curr_level = 0;
+        while (!q.empty()) {
+            int size = q.size();
+            if (curr_level++ == k) break;
+
+            for (int i = 0; i < size; i++) {
+                TreeNode* current = q.front();
+                q.pop();
+
+                if (current->left && !visited[current->left]) {
+                    visited[current->left] = true;
+                    q.push(current->left);
+                }
+                if (current->right && !visited[current->right]) {
+                    visited[current->right] = true;
+                    q.push(current->right);
+                }
+                if (parent_track[current] && !visited[parent_track[current]]) {
+                    visited[parent_track[current]] = true;
+                    q.push(parent_track[current]);
+                }
+            }
+        }
+
+        vector<int> result;
+        while (!q.empty()) {
+            TreeNode* current = q.front();
+            q.pop();
+            result.push_back(current->val);
+        }
+
+        return result;
+}
+
+int main() {
+    TreeNode* root = new TreeNode(3);
+    root->left = new TreeNode(5);
+    root->right = new TreeNode(1);
+    root->left->left = new TreeNode(6);
+    root->left->right = new TreeNode(2);
+    root->right->left = new TreeNode(0);
+    root->right->right = new TreeNode(8);
+    root->left->right->left = new TreeNode(7);
+    root->left->right->right = new TreeNode(4);
+    
+    TreeNode* target = root->left;
+    int k = 2;
+    
+    vector<int> result = distanceK(root, target, k);
+    
+    for (int n : result) cout << n << " ";
+    cout << endl;
+    
+    return 0;
+}
+    */
+/*
+min time taken to burn the node
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+void markParents(TreeNode* root, unordered_map<TreeNode*, TreeNode*>& parent_track) {
+    queue<TreeNode*> q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* current = q.front();
+        q.pop();
+        if (current->left) {
+            parent_track[current->left] = current;
+            q.push(current->left);
+        }
+        if (current->right) {
+            parent_track[current->right] = current;
+            q.push(current->right);
+        }
+    }
+}
+
+TreeNode* findTarget(TreeNode* root, int target) {
+    if (!root) return NULL;
+    if (root->val == target) return root;
+    TreeNode* left = findTarget(root->left, target);
+    if (left) return left;
+    return findTarget(root->right, target);
+}
+
+int minTime(TreeNode* root, int target) {
+    unordered_map<TreeNode*, TreeNode*> parent_track;
+    markParents(root, parent_track);
+
+    TreeNode* targetNode = findTarget(root, target);
+
+    unordered_map<TreeNode*, bool> visited;
+    queue<TreeNode*> q;
+    q.push(targetNode);
+    visited[targetNode] = true;
+
+    int time = 0;
+    while (!q.empty()) {
+        int size = q.size();
+        bool spread = false;
+
+        for (int i = 0; i < size; i++) {
+            TreeNode* current = q.front();
+            q.pop();
+
+            if (current->left && !visited[current->left]) {
+                spread = true;
+                visited[current->left] = true;
+                q.push(current->left);
+            }
+            if (current->right && !visited[current->right]) {
+                spread = true;
+                visited[current->right] = true;
+                q.push(current->right);
+            }
+            if (parent_track[current] && !visited[parent_track[current]]) {
+                spread = true;
+                visited[parent_track[current]] = true;
+                q.push(parent_track[current]);
+            }
+        }
+
+        if (spread) time++;
+    }
+
+    return time;
+}
+
+int main() {
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->right->left = new TreeNode(5);
+    root->right->right = new TreeNode(6);
+    root->left->left->right = new TreeNode(7);
+    
+    int target = 1;
+    
+    cout << minTime(root, target) << endl;
+    
+    return 0;
+}
+    */
