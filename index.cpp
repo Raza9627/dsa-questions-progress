@@ -11413,60 +11413,60 @@ int main() {
     return 0;
 }
     */
-   /*
+/*
 vertical traversal
- #include <bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 struct TreeNode {
-    int val;
-    TreeNode *left, *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ int val;
+ TreeNode *left, *right;
+ TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 vector<vector<int>> verticalTraversal(TreeNode* root) {
-   map<int,map<int,multiset<int>>> nodes;
-   queue<pair<TreeNode*,pair<int,int>>> todo;
-   todo.push({root,{0,0}});
-   while(!todo.empty()){
-    auto p=todo.front();
-    todo.pop();
-    TreeNode* node=p.first;
-    int x=p.second.first,y=p.second.second;
-    nodes[x][y].insert(node->val);
-    if(node->left){
-        todo.push({node->left,{x-1,y+1}});
-    }
-    if(node->right){
-    todo.push({node->right,{x+1,y+1}});
-    }
-   }
-   vector<vector<int>> ans;
-   for(auto p:nodes){
-    vector<int> col;
-    for(auto q:p.second){
-        col.insert(col.end(),q.second.begin(),q.second.end());
-    }
-    ans.push_back(col);
-   }
-   return ans;
+map<int,map<int,multiset<int>>> nodes;
+queue<pair<TreeNode*,pair<int,int>>> todo;
+todo.push({root,{0,0}});
+while(!todo.empty()){
+ auto p=todo.front();
+ todo.pop();
+ TreeNode* node=p.first;
+ int x=p.second.first,y=p.second.second;
+ nodes[x][y].insert(node->val);
+ if(node->left){
+     todo.push({node->left,{x-1,y+1}});
+ }
+ if(node->right){
+ todo.push({node->right,{x+1,y+1}});
+ }
+}
+vector<vector<int>> ans;
+for(auto p:nodes){
+ vector<int> col;
+ for(auto q:p.second){
+     col.insert(col.end(),q.second.begin(),q.second.end());
+ }
+ ans.push_back(col);
+}
+return ans;
 }
 
 int main() {
-    TreeNode* root = new TreeNode(3);
-    root->left = new TreeNode(9);
-    root->right = new TreeNode(20);
-    root->right->left = new TreeNode(15);
-    root->right->right = new TreeNode(7);
-    
-    vector<vector<int>> result = verticalTraversal(root);
-    
-    for (auto& col : result) {
-        for (int n : col) cout << n << " ";
-        cout << endl;
-    }
-    
-    return 0;
+ TreeNode* root = new TreeNode(3);
+ root->left = new TreeNode(9);
+ root->right = new TreeNode(20);
+ root->right->left = new TreeNode(15);
+ root->right->right = new TreeNode(7);
+
+ vector<vector<int>> result = verticalTraversal(root);
+
+ for (auto& col : result) {
+     for (int n : col) cout << n << " ";
+     cout << endl;
+ }
+
+ return 0;
 }
-    */
+ */
 /*
 Top View of binary tree
 #include <bits/stdc++.h>
@@ -11491,10 +11491,10 @@ int line=it.second;
 if(mpp.find(line)==mpp.end()) mpp[line]=node->val;
 if(node->left!=NULL){
     q.push({node->left,line-1});
-} 
+}
 if(node->right!=NULL){
     q.push({node->right,line+1});
-} 
+}
 }
 for(auto it:mpp){
     ans.push_back(it.second);
@@ -11507,207 +11507,207 @@ int main() {
     root->right = new TreeNode(3);
     root->left->right = new TreeNode(4);
     root->left->right->right = new TreeNode(5);
-    
+
     vector<int> result = topView(root);
-    
+
     for (int n : result) cout << n << " ";
     cout << endl;
-    
+
     return 0;
 }
     */
-   /*
+/*
 Bottom view of BT
 #include <bits/stdc++.h>
 using namespace std;
 
 struct TreeNode {
-    int val;
-    TreeNode *left, *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ int val;
+ TreeNode *left, *right;
+ TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 
 vector<int> bottomView(TreeNode* root) {
-    vector<int> ans;
-    if(root==NULL) return ans;
-    map<int,int>mpp;
-    queue<pair<TreeNode*,int>>q;
-    q.push({root,0});
-    while(!q.empty()){
-    auto it=q.front();
-    q.pop();
-    TreeNode* node=it.first;
-    int line=it.second;
-    if(mpp.find(line)==mpp.end()) mpp[line]=node->val;
-    else mpp[line]=node->val;
-    if(node->left!=NULL){
-    q.push({node->left,line-1});
-} 
+ vector<int> ans;
+ if(root==NULL) return ans;
+ map<int,int>mpp;
+ queue<pair<TreeNode*,int>>q;
+ q.push({root,0});
+ while(!q.empty()){
+ auto it=q.front();
+ q.pop();
+ TreeNode* node=it.first;
+ int line=it.second;
+ if(mpp.find(line)==mpp.end()) mpp[line]=node->val;
+ else mpp[line]=node->val;
+ if(node->left!=NULL){
+ q.push({node->left,line-1});
+}
 if(node->right!=NULL){
-    q.push({node->right,line+1});
-} 
+ q.push({node->right,line+1});
+}
 }
 for(auto it:mpp){
-    ans.push_back(it.second);
+ ans.push_back(it.second);
 }
 return ans;
-    }
+ }
 
 
 int main() {
-    TreeNode* root = new TreeNode(1);
-    root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
-    root->left->right = new TreeNode(4);
-    root->left->right->right = new TreeNode(5);
-    
-    vector<int> result = bottomView(root);
-    
-    for (int n : result) cout << n << " ";
-    cout << endl;
-    
-    return 0;
+ TreeNode* root = new TreeNode(1);
+ root->left = new TreeNode(2);
+ root->right = new TreeNode(3);
+ root->left->right = new TreeNode(4);
+ root->left->right->right = new TreeNode(5);
+
+ vector<int> result = bottomView(root);
+
+ for (int n : result) cout << n << " ";
+ cout << endl;
+
+ return 0;
 }
-    */
-   /*
+ */
+/*
 right side view of btree
 #include <bits/stdc++.h>
 using namespace std;
 struct TreeNode {
-    int val;
-    TreeNode *left, *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ int val;
+ TreeNode *left, *right;
+ TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 vector<int> rightSideView(TreeNode* root) {
-    vector<int> ans;
-    if(root==NULL) return ans;
-    queue<TreeNode*> q;
-    q.push(root);
-    while(!q.empty()){
-        int levelSize = q.size();
-        for(int i = 0; i < levelSize; i++){
-            TreeNode* node = q.front();
-            q.pop();
-            if(i == levelSize - 1){  // last node of this level
-                ans.push_back(node->val);
-            }
-            if(node->left) q.push(node->left);
-            if(node->right) q.push(node->right);
-        }
-    }
-    return ans;
+ vector<int> ans;
+ if(root==NULL) return ans;
+ queue<TreeNode*> q;
+ q.push(root);
+ while(!q.empty()){
+     int levelSize = q.size();
+     for(int i = 0; i < levelSize; i++){
+         TreeNode* node = q.front();
+         q.pop();
+         if(i == levelSize - 1){  // last node of this level
+             ans.push_back(node->val);
+         }
+         if(node->left) q.push(node->left);
+         if(node->right) q.push(node->right);
+     }
+ }
+ return ans;
 }
 int main() {
-    TreeNode* root = new TreeNode(1);
-    root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
-    root->left->right = new TreeNode(5);
-    root->right->right = new TreeNode(4);
-    
-    vector<int> result = rightSideView(root);
-    
-    for (int n : result) cout << n << " ";
-    cout << endl;
-    
-    return 0;
+ TreeNode* root = new TreeNode(1);
+ root->left = new TreeNode(2);
+ root->right = new TreeNode(3);
+ root->left->right = new TreeNode(5);
+ root->right->right = new TreeNode(4);
+
+ vector<int> result = rightSideView(root);
+
+ for (int n : result) cout << n << " ";
+ cout << endl;
+
+ return 0;
 }
-    */
-   /*
+ */
+/*
 check tree symmetric or not
 #include <bits/stdc++.h>
 using namespace std;
 struct TreeNode {
-    int val;
-    TreeNode *left, *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ int val;
+ TreeNode *left, *right;
+ TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 bool check(TreeNode* left, TreeNode* right) {
 
-        // Both are NULL -> symmetric
-        if (left == NULL && right == NULL)
-            return true;
+     // Both are NULL -> symmetric
+     if (left == NULL && right == NULL)
+         return true;
 
-        // One is NULL -> not symmetric
-        if (left == NULL || right == NULL)
-            return false;
+     // One is NULL -> not symmetric
+     if (left == NULL || right == NULL)
+         return false;
 
-        // Values are different -> not symmetric
-        if (left->val != right->val)
-            return false;
+     // Values are different -> not symmetric
+     if (left->val != right->val)
+         return false;
 
-        // Compare mirror children
-        return check(left->left, right->right) &&
-               check(left->right, right->left);
-    }
+     // Compare mirror children
+     return check(left->left, right->right) &&
+            check(left->right, right->left);
+ }
 
-    bool isSymmetric(TreeNode* root) {
+ bool isSymmetric(TreeNode* root) {
 
-        if (root == NULL)
-            return true;
+     if (root == NULL)
+         return true;
 
-        return check(root->left, root->right);
-    }
+     return check(root->left, root->right);
+ }
 int main() {
-    TreeNode* root = new TreeNode(1);
-    root->left = new TreeNode(2);
-    root->right = new TreeNode(2);
-    root->left->left = new TreeNode(3);
-    root->left->right = new TreeNode(4);
-    root->right->left = new TreeNode(4);
-    root->right->right = new TreeNode(3);
-    
-    cout << (isSymmetric(root) ? "true" : "false") << endl;
-    
-    return 0;
+ TreeNode* root = new TreeNode(1);
+ root->left = new TreeNode(2);
+ root->right = new TreeNode(2);
+ root->left->left = new TreeNode(3);
+ root->left->right = new TreeNode(4);
+ root->right->left = new TreeNode(4);
+ root->right->right = new TreeNode(3);
+
+ cout << (isSymmetric(root) ? "true" : "false") << endl;
+
+ return 0;
 }
-    */
-   /*
+ */
+/*
 Paths in Binary Tree
 #include <bits/stdc++.h>
 using namespace std;
 struct TreeNode {
-    int val;
-    TreeNode *left, *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ int val;
+ TreeNode *left, *right;
+ TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 void solve(TreeNode* root, vector<int>& path, vector<vector<int>>& ans) {
-    if(root==NULL) return;
-    path.push_back(root->val);
-    solve(root->left,path,ans);
-    solve(root->right,path,ans);
-    if(root->left==NULL && root->right==NULL){
-        ans.push_back(path);
-    }
-    path.pop_back();
+ if(root==NULL) return;
+ path.push_back(root->val);
+ solve(root->left,path,ans);
+ solve(root->right,path,ans);
+ if(root->left==NULL && root->right==NULL){
+     ans.push_back(path);
+ }
+ path.pop_back();
 }
 
 vector<vector<int>> binaryTreePaths(TreeNode* root) {
-    if(root==NULL){
-        return {};
-    }
-    vector<vector<int>> ans;
-    vector<int> path;
-    solve(root,path,ans);
-    return ans;
+ if(root==NULL){
+     return {};
+ }
+ vector<vector<int>> ans;
+ vector<int> path;
+ solve(root,path,ans);
+ return ans;
 }
 
 int main() {
-    TreeNode* root = new TreeNode(1);
-    root->left = new TreeNode(2);
-    root->left->left = new TreeNode(4);
-    root->left->right = new TreeNode(5);
-    root->right = new TreeNode(3);
-    
-    vector<vector<int>> result = binaryTreePaths(root);
-    
-    for (auto& path : result) {
-        for (int n : path) cout << n << " ";
-        cout << endl;
-    }
-    
-    return 0;
+ TreeNode* root = new TreeNode(1);
+ root->left = new TreeNode(2);
+ root->left->left = new TreeNode(4);
+ root->left->right = new TreeNode(5);
+ root->right = new TreeNode(3);
+
+ vector<vector<int>> result = binaryTreePaths(root);
+
+ for (auto& path : result) {
+     for (int n : path) cout << n << " ";
+     cout << endl;
+ }
+
+ return 0;
 }
-    */
+ */
 /*
 lowest common ancestor
 #include <bits/stdc++.h>
@@ -11742,63 +11742,63 @@ int main() {
     root->right->right = new TreeNode(8);
     root->left->right->left = new TreeNode(7);
     root->left->right->right = new TreeNode(4);
-    
+
     TreeNode* p = root->left;
     TreeNode* q = root->right;
-    
+
     cout << lowestCommonAncestor(root, p, q)->val << endl;
-    
+
     return 0;
-}   
+}
     */
-   /*
+/*
 Maxwidth of BT
 #include <bits/stdc++.h>
 using namespace std;
 struct TreeNode {
-    int val;
-    TreeNode *left, *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ int val;
+ TreeNode *left, *right;
+ TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 };
 int widthOfBinaryTree(TreeNode* root) {
-     queue<pair<TreeNode*, long long>> q;
-    q.push({root, 0});
-    int maxwidth = 0;
-    
-    while (!q.empty()) {
-        int size = q.size();
-        long long firstIdx = q.front().second;
-        long long lastIdx = firstIdx;
-        
-        for (int i = 0; i < size; i++) {
-            TreeNode* node = q.front().first;
-            long long idx = q.front().second - firstIdx;  // normalize
-            q.pop();
-            lastIdx = idx;
-            
-            if (node->left) q.push({node->left, 2*idx+1});
-            if (node->right) q.push({node->right, 2*idx+2});
-        }
-        
-        maxwidth = max(maxwidth, (int)(lastIdx + 1));
-    }
-    
-    return maxwidth;
+  queue<pair<TreeNode*, long long>> q;
+ q.push({root, 0});
+ int maxwidth = 0;
+
+ while (!q.empty()) {
+     int size = q.size();
+     long long firstIdx = q.front().second;
+     long long lastIdx = firstIdx;
+
+     for (int i = 0; i < size; i++) {
+         TreeNode* node = q.front().first;
+         long long idx = q.front().second - firstIdx;  // normalize
+         q.pop();
+         lastIdx = idx;
+
+         if (node->left) q.push({node->left, 2*idx+1});
+         if (node->right) q.push({node->right, 2*idx+2});
+     }
+
+     maxwidth = max(maxwidth, (int)(lastIdx + 1));
+ }
+
+ return maxwidth;
 }
 
 int main() {
-    TreeNode* root = new TreeNode(1);
-    root->left = new TreeNode(3);
-    root->right = new TreeNode(2);
-    root->left->left = new TreeNode(5);
-    root->left->right = new TreeNode(3);
-    root->right->right = new TreeNode(9);
-    
-    cout << widthOfBinaryTree(root) << endl;
-    
-    return 0;
-}  
-    */
+ TreeNode* root = new TreeNode(1);
+ root->left = new TreeNode(3);
+ root->right = new TreeNode(2);
+ root->left->left = new TreeNode(5);
+ root->left->right = new TreeNode(3);
+ root->right->right = new TreeNode(9);
+
+ cout << widthOfBinaryTree(root) << endl;
+
+ return 0;
+}
+ */
 /*
 check sum property
 #include <bits/stdc++.h>
@@ -11813,16 +11813,16 @@ struct TreeNode {
 bool isChildrenSum(TreeNode* root) {
     if (root == NULL) return true;
     if (root->left == NULL && root->right == NULL) return true;
-    
+
     int child = 0;
     if (root->left) child += root->left->val;
     if (root->right) child += root->right->val;
-    
+
     if (root->val != child) return false;
-    
+
     bool leftOk = isChildrenSum(root->left);
     bool rightOk = isChildrenSum(root->right);
-    
+
     return leftOk && rightOk;
 }
 
@@ -11833,9 +11833,9 @@ int main() {
     root->left->left = new TreeNode(3);
     root->left->right = new TreeNode(5);
     root->right->right = new TreeNode(2);
-    
+
     cout << (isChildrenSum(root) ? "true" : "false") << endl;
-    
+
     return 0;
 }
     */
@@ -11919,15 +11919,15 @@ int main() {
     root->right->right = new TreeNode(8);
     root->left->right->left = new TreeNode(7);
     root->left->right->right = new TreeNode(4);
-    
+
     TreeNode* target = root->left;
     int k = 2;
-    
+
     vector<int> result = distanceK(root, target, k);
-    
+
     for (int n : result) cout << n << " ";
     cout << endl;
-    
+
     return 0;
 }
     */
@@ -12018,11 +12018,1615 @@ int main() {
     root->right->left = new TreeNode(5);
     root->right->right = new TreeNode(6);
     root->left->left->right = new TreeNode(7);
-    
+
     int target = 1;
-    
+
     cout << minTime(root, target) << endl;
-    
+
     return 0;
 }
     */
+/*
+count the number of nodes
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+ int val;
+ TreeNode *left, *right;
+ TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+int leftHeight(TreeNode* root) {
+ int height = 0;
+ while (root) {
+     height++;
+     root = root->left;
+ }
+ return height;
+}
+
+int rightHeight(TreeNode* root) {
+ int height = 0;
+ while (root) {
+     height++;
+     root = root->right;
+ }
+ return height;
+}
+int countNodes(TreeNode* root) {
+int left=leftHeight(root);
+int right=rightHeight(root);
+if(left==right) return pow(2,left)-1;
+return 1+countNodes(root->left)+countNodes(root->right);
+}
+int main() {
+ TreeNode* root = new TreeNode(1);
+ root->left = new TreeNode(2);
+ root->right = new TreeNode(3);
+ root->left->left = new TreeNode(4);
+ root->left->right = new TreeNode(5);
+ root->right->left = new TreeNode(6);
+
+ cout << countNodes(root) << endl;
+
+ return 0;
+}
+ */
+/*
+Requirements Needed to Construct a Unique Binary Tree
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isPossible(int a, int b) {
+    if (a == b) return false;
+    if ((a == 1 && b == 3) || (a == 3 && b == 1)) return false;
+    return true;
+}
+
+int main() {
+    int a = 1, b = 2;
+
+    cout << (isPossible(a, b) ? "true" : "false") << endl;
+
+    return 0;
+}
+    */
+/*
+Construct BT from inorder and preorder
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+TreeNode* solve(vector<int>&preorder,int preStart,int preEnd,vector<int>& inorder,int inStart,int inEnd,map<int,int>mpp){
+if(preStart>preEnd || inStart>inEnd) return NULL;
+TreeNode* root=new TreeNode(preorder[preStart]);
+    int inRoot = mpp[root->val];
+    int numsLeft = inRoot - inStart;
+ root->left = solve(preorder, preStart + 1, preStart + numsLeft,
+                        inorder, inStart, inRoot - 1, mpp);
+
+    root->right = solve(preorder, preStart + numsLeft + 1, preEnd,
+                         inorder, inRoot + 1, inEnd, mpp);
+
+    return root;
+}
+TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+map<int,int>mpp;
+for(int i=0;i<inorder.size();i++){
+    mpp[inorder[i]]=i;
+}
+return solve(preorder,0,preorder.size()-1,inorder,0,inorder.size()-1,mpp);
+}
+
+int main() {
+    vector<int> preorder = {3,9,20,15,7};
+    vector<int> inorder = {9,3,15,20,7};
+
+    TreeNode* root = buildTree(preorder, inorder);
+
+    // simple check: print root, left, right values
+    cout << root->val << " " << root->left->val << " " << root->right->val << endl;
+
+    return 0;
+}
+    */
+/*
+construct BT using inorder and postorder
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode
+{
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+TreeNode* solve(vector<int> postorder, int postStart, int postEnd, vector<int> inorder, int inStart, int inEnd, unordered_map<int, int> &mpp)
+{
+    if (postStart > postEnd || inStart > inEnd)
+        return NULL;
+    TreeNode *root = new TreeNode(postorder[postEnd]);
+    int inRoot = mpp[root->val];
+    int numsLeft = inRoot - inStart;
+    root->left = solve(postorder, postStart, postStart + numsLeft-1,
+                       inorder, inStart, inRoot - 1, mpp);
+    root->right = solve(postorder, postStart+numsLeft, postEnd-1,
+                        inorder, inRoot + 1, inEnd, mpp);
+
+    return root;
+}
+TreeNode* buildTree(vector<int> &inorder, vector<int> &postorder)
+{
+    unordered_map<int, int> mpp;
+    for (int i = 0; i < inorder.size(); i++)
+    {
+        mpp[inorder[i]] = i;
+    }
+    return solve(postorder, 0,postorder.size() - 1, inorder, 0, inorder.size() - 1, mpp);
+}
+
+int main()
+{
+    vector<int> inorder = {9, 3, 15, 20, 7};
+    vector<int> postorder = {9, 15, 7, 20, 3};
+
+    TreeNode *root = buildTree(inorder, postorder);
+
+    cout << root->val << " " << root->left->val << " " << root->right->val << endl;
+
+    return 0;
+}
+    */
+/*
+serialize and deserialize
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left, *right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+string serialize(TreeNode* root) {
+   if(!root) return "";
+   string s="";
+   queue<TreeNode*> q;
+   q.push(root);
+   while(!q.empty()){
+    TreeNode* node=q.front();
+    q.pop();
+    if(node==NULL) s.append("#,");
+    else s.append(to_string(node->val)+",");
+    if(node!=NULL){
+        q.push(node->left);
+        q.push(node->right);
+    }
+   }
+   return s;
+}
+TreeNode* deserialize(string data) {
+if(data.size()==0) return NULL;
+stringstream s(data);
+string str;
+getline(s,str,',');
+TreeNode* root=new TreeNode(stoi(str));
+queue<TreeNode*>q;
+q.push(root);
+while(!q.empty()){
+    TreeNode* node=q.front();
+    q.pop();
+    getline(s,str,',');
+    if(str=="#") node->left=NULL;
+    else{
+        TreeNode* leftNode=new TreeNode(stoi(str));
+        node->left=leftNode;
+        q.push(leftNode);
+    }
+    getline(s,str,',');
+    if(str=="#") node->right=NULL;
+    else{
+        TreeNode* rightNode=new TreeNode(stoi(str));
+        node->right=rightNode;
+        q.push(rightNode);
+    }
+}
+return root;
+}
+int main() {
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->right->left = new TreeNode(4);
+    root->right->right = new TreeNode(5);
+
+    string data = serialize(root);
+    cout << data << endl;
+
+    TreeNode* newRoot = deserialize(data);
+    cout << newRoot->val << " " << newRoot->right->left->val << endl;
+
+    return 0;
+}
+    */
+/*
+flatten BT into LINK list
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+void flatten(TreeNode* root) {
+TreeNode* cur=root;
+TreeNode* prev=root;
+while(cur!=NULL){
+    if(cur->left!=NULL){
+        prev=cur->left;
+        while(prev->right!=NULL){
+            prev=prev->right;
+        }
+            prev->right=cur->right;
+            cur->right=cur->left;
+           cur->left=NULL;
+        }
+        cur=cur->right;
+}
+}
+int main() {
+
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(5);
+    root->left->left = new TreeNode(3);
+    root->left->right = new TreeNode(4);
+    root->right->right = new TreeNode(6);
+    flatten(root);
+    TreeNode* curr = root;
+    while (curr != NULL) {
+        cout << curr->val << " ";
+        curr = curr->right;
+    }
+    return 0;
+}
+    */
+// BST 30/08/2026
+/*
+Search in Bst
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+TreeNode* searchBST(TreeNode* root, int val) {
+    while(root!=NULL){
+    if(root->val==val){
+        return root;
+    }
+    else if(root->val<val){
+        root=root->right;
+    }
+    else root=root->left;
+    }
+  return NULL;
+}
+
+int main() {
+
+    TreeNode* root = new TreeNode(4);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(7);
+    root->left->left = new TreeNode(1);
+    root->left->right = new TreeNode(3);
+
+    int val = 2;
+
+    TreeNode* result = searchBST(root, val);
+
+    if (result)
+        cout << "Found: " << result->val << endl;
+    else
+        cout << "Not Found" << endl;
+
+    return 0;
+}
+    */
+/*
+Floor and ceil in BST
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+int floorBST(TreeNode* root, int x) {
+    int ans=0;
+   while(root!=NULL){
+    if(root->val<=x){
+        ans=root->val;
+        root=root->right;
+    }
+    else root=root->left;
+   }
+   return ans;
+}
+
+int ceilBST(TreeNode* root, int x) {
+    int ans = -1;
+    while(root != NULL) {
+        if(root->val >= x) {
+            ans = root->val;
+            root = root->left;
+        }
+        else {
+            root = root->right;
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+
+    TreeNode* root = new TreeNode(8);
+    root->left = new TreeNode(4);
+    root->right = new TreeNode(12);
+
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(6);
+
+    root->right->left = new TreeNode(10);
+    root->right->right = new TreeNode(14);
+
+    int x = 7;
+
+    cout << "Floor: " << floorBST(root, x) << endl;
+    cout << "Ceil: " << ceilBST(root, x) << endl;
+
+    return 0;
+}
+    */
+/*
+Insert the node in BST
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+TreeNode* insertIntoBST(TreeNode* root, int val) {
+
+    if (root == NULL) {
+        return new TreeNode(val);
+    }
+    if (val < root->val) {
+        root->left = insertIntoBST(root->left, val);
+    }
+    else {
+        root->right = insertIntoBST(root->right, val);
+    }
+    return root;
+}
+void inorder(TreeNode* root) {
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+    cout << root->val << " ";
+    inorder(root->right);
+}
+int main() {
+
+    TreeNode* root = new TreeNode(4);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(7);
+    root->left->left = new TreeNode(1);
+    root->left->right = new TreeNode(3);
+
+    int val = 5;
+
+    root = insertIntoBST(root, val);
+    inorder(root);
+    // Inorder traversal to check the result
+    // Expected: 1 2 3 4 5 7
+
+    return 0;
+}
+    */
+/*
+Delete Node
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+TreeNode* deleteNode(TreeNode* root, int key) {
+    if (root == NULL)
+        return NULL;
+
+    if (key < root->val) {
+        root->left = deleteNode(root->left, key);
+    }
+    else if (key > root->val) {
+        root->right = deleteNode(root->right, key);
+    }
+    else {
+
+        // No left child
+        if (root->left == NULL)
+            return root->right;
+
+        // No right child
+        if (root->right == NULL)
+            return root->left;
+
+        // Two children
+        TreeNode* successor = root->right;
+
+        while (successor->left != NULL)
+            successor = successor->left;
+
+        root->val = successor->val;
+
+        root->right = deleteNode(root->right, successor->val);
+    }
+
+    return root;
+
+}
+
+void inorder(TreeNode* root) {
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+    cout << root->val << " ";
+    inorder(root->right);
+}
+
+int main() {
+
+    TreeNode* root = new TreeNode(5);
+    root->left = new TreeNode(3);
+    root->right = new TreeNode(6);
+
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(4);
+
+    root->right->right = new TreeNode(7);
+
+    int key = 3;
+
+    root = deleteNode(root, key);
+
+    cout << "Inorder after deletion: ";
+    inorder(root);
+
+    // Expected: 2 4 5 6 7
+
+    return 0;
+}
+    */
+/*
+Kth Smallest element in a BST
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+int kthSmallest(TreeNode* root, int k) {
+    stack<TreeNode *> st;
+    TreeNode *node = root;
+    int cnt=0;
+    while (true){
+        if (node != NULL){
+            st.push(node);
+            node = node->right;
+        }
+        else{
+            if (st.empty() == true)
+                break;
+            node = st.top();
+            st.pop();
+            cnt++;
+            if(cnt==k) return node->val;
+            node = node->left;
+        }
+    }
+    return -1;
+}
+
+void inorder(TreeNode* root) {
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+    cout << root->val << " ";
+    inorder(root->right);
+}
+
+int main() {
+
+    TreeNode* root = new TreeNode(5);
+    root->left = new TreeNode(3);
+    root->right = new TreeNode(6);
+
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(4);
+
+    root->left->left->left = new TreeNode(1);
+
+    int k = 3;
+
+    cout << "Kth smallest: " << kthSmallest(root, k) << endl;
+
+    return 0;
+}
+    */
+/*
+Check if the BST is Valid
+#include <bits/stdc++.h>
+using namespace std;
+struct TreeNode {
+ int val;
+ TreeNode *left;
+ TreeNode *right;
+
+ TreeNode(int x) {
+     val = x;
+     left = nullptr;
+     right = nullptr;
+ }
+};
+bool check(TreeNode* root, long long minVal, long long maxVal) {
+ if(root==NULL) return true;
+ if(root->val>=maxVal || root->val<=minVal) return false;
+ return check(root->left,minVal,root->val) && check(root->right,root->val,maxVal);
+}
+bool isValidBST(TreeNode* root) {
+ return check(root, LLONG_MIN, LLONG_MAX);
+}
+
+int main() {
+
+ TreeNode* root = new TreeNode(5);
+
+ root->left = new TreeNode(3);
+ root->right = new TreeNode(7);
+
+ root->left->left = new TreeNode(2);
+ root->left->right = new TreeNode(4);
+
+ root->right->left = new TreeNode(6);
+ root->right->right = new TreeNode(8);
+
+ cout << isValidBST(root) << endl;
+
+ // Expected: 1 (true)
+
+ return 0;
+}
+ */
+/*
+construct BST from preorder
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+TreeNode* build(vector<int>&A,int i,int bound){
+    if(i==A.size() || A[i]>bound) return NULL;
+    TreeNode* root=new TreeNode(A[i++]);
+    root->left=build(A,i,root->val);
+    root->right=build(A,i,bound);
+    return root;
+}
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+    int i=0;
+    return build(preorder,i,INT_MAX);
+}
+
+void inorder(TreeNode* root) {
+    if (root == NULL)
+        return;
+
+    inorder(root->left);
+    cout << root->val << " ";
+    inorder(root->right);
+}
+
+int main() {
+
+    vector<int> preorder = {8, 5, 1, 7, 10, 12};
+
+    TreeNode* root = bstFromPreorder(preorder);
+
+    inorder(root);
+
+    // Expected: 1 5 7 8 10 12
+
+    return 0;
+}
+    */
+/*
+precessor and decessor
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+int successor(TreeNode* root,int key){
+    int s=-1;
+    while(root!=NULL){
+    if(key>=root->val){
+        root=root->right;
+    }else{
+        s=root->val;
+        root=root->left;
+    }
+    }
+    return s;
+}
+int predecessor(TreeNode* root,int key){
+    int p=-1;
+    while(root!=NULL){
+    if(key==root->val){
+        root=root->left;
+    }
+    else if(key>root->val){
+        p=root->val;
+        root=root->right;
+    }
+    else root=root->left;
+    }
+    return p;
+}
+pair<int, int> predecessorSuccessor(TreeNode* root, int key) {
+    int s=successor(root,key);
+    int p=predecessor(root,key);
+    return {p,s};
+}
+
+int main() {
+
+    TreeNode* root = new TreeNode(8);
+
+    root->left = new TreeNode(4);
+    root->right = new TreeNode(12);
+
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(6);
+
+    root->right->left = new TreeNode(10);
+    root->right->right = new TreeNode(14);
+
+    int key = 8;
+
+    pair<int, int> ans = predecessorSuccessor(root, key);
+
+    cout << "Predecessor: " << ans.first << endl;
+    cout << "Successor: " << ans.second << endl;
+
+    // Expected:
+    // Predecessor: 6
+    // Successor: 10
+
+    return 0;
+}
+    */
+/*
+BTS iterator
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+class BSTIterator {
+     stack<TreeNode*> st;
+public:
+
+    BSTIterator(TreeNode* root) {
+         while (root != NULL) {
+            st.push(root);
+            root = root->left;
+        }
+    }
+
+    int next() {
+       TreeNode* node = st.top();
+        st.pop();
+
+        TreeNode* temp = node->right;
+
+        while (temp != NULL) {
+            st.push(temp);
+            temp = temp->left;
+        }
+
+        return node->val;
+    }
+
+    bool hasNext() {
+        if(!st.empty()) return true;
+        return false;
+    }
+};
+
+int main() {
+
+    TreeNode* root = new TreeNode(7);
+
+    root->left = new TreeNode(3);
+    root->right = new TreeNode(15);
+
+    root->right->left = new TreeNode(9);
+    root->right->right = new TreeNode(20);
+
+    BSTIterator it(root);
+
+    cout << it.next() << endl;      // Expected: 3
+    cout << it.next() << endl;      // Expected: 7
+    cout << it.hasNext() << endl;   // Expected: 1
+    cout << it.next() << endl;      // Expected: 9
+    cout << it.next() << endl;      // Expected: 15
+    cout << it.next() << endl;      // Expected: 20
+    cout << it.hasNext() << endl;   // Expected: 0
+
+    return 0;
+}
+    */
+/*
+Two sum 4
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x) {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+bool solve(TreeNode* root, int k, unordered_set<int>& st) {
+    if (root == NULL)
+        return false;
+
+    if (solve(root->left, k, st))
+        return true;
+
+    int need = k - root->val;
+
+    if (st.find(need) != st.end())
+        return true;
+
+    st.insert(root->val);
+
+    if (solve(root->right, k, st))
+        return true;
+
+    return false;
+}
+bool findTarget(TreeNode* root, int k) {
+    unordered_set<int> st;
+    return solve(root,k,st);
+}
+
+int main() {
+
+    TreeNode* root = new TreeNode(5);
+
+    root->left = new TreeNode(3);
+    root->right = new TreeNode(6);
+
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(4);
+
+    root->right->right = new TreeNode(7);
+
+    int k = 9;
+
+    cout << findTarget(root, k) << endl;
+
+    // Expected: 1
+    // Because 2 + 7 = 9
+
+    return 0;
+}
+    */
+/*
+recover BST
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x)
+    {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+// Global pointers
+TreeNode *first = nullptr;
+TreeNode *middle = nullptr;
+TreeNode *last = nullptr;
+TreeNode *previousNode = nullptr;
+
+void inorder(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+
+    // Left
+    inorder(root->left);
+
+    // Current
+    if (previousNode != nullptr && root->val < previousNode->val)
+    {
+        if (first == nullptr)
+        {
+            first = previousNode;
+            middle = root;
+        }
+        else
+        {
+            last = root;
+        }
+    }
+
+    previousNode = root;
+
+    // Right
+    inorder(root->right);
+}
+
+void recoverTree(TreeNode *root)
+{
+    first = nullptr;
+    middle = nullptr;
+    last = nullptr;
+    previousNode = nullptr;
+
+    inorder(root);
+
+    // Non-adjacent nodes swapped
+    if (first != nullptr && last != nullptr)
+    {
+        swap(first->val, last->val);
+    }
+
+    // Adjacent nodes swapped
+    else if (first != nullptr && middle != nullptr)
+    {
+        swap(first->val, middle->val);
+    }
+}
+
+void printInorder(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+
+    printInorder(root->left);
+
+    cout << root->val << " ";
+
+    printInorder(root->right);
+}
+
+int main()
+{
+    TreeNode *root = new TreeNode(3);
+
+    root->left = new TreeNode(1);
+    root->right = new TreeNode(4);
+    root->right->left = new TreeNode(2);
+
+    cout << "Before recovery: ";
+    printInorder(root);
+    cout << endl;
+
+    recoverTree(root);
+
+    cout << "After recovery:  ";
+    printInorder(root);
+    cout << endl;
+
+    return 0;
+}
+    */
+/*
+Largest BST
+#include <bits/stdc++.h>
+using namespace std;
+
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+
+    TreeNode(int x)
+    {
+        val = x;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+int ans = 0;
+
+struct Info
+{
+    bool isBST;
+    int minVal;
+    int maxVal;
+    int sum;
+};
+
+Info solve(TreeNode *root)
+{
+    // Empty tree is a valid BST
+    if (root == nullptr)
+    {
+        return {true, INT_MAX, INT_MIN, 0};
+    }
+
+    Info left = solve(root->left);
+    Info right = solve(root->right);
+
+    // Check if current subtree is a BST
+    if (left.isBST &&
+        right.isBST &&
+        left.maxVal < root->val &&
+        root->val < right.minVal)
+    {
+        int sum = left.sum + right.sum + root->val;
+
+        ans = max(ans, sum);
+
+        int minVal = min(root->val, left.minVal);
+        int maxVal = max(root->val, right.maxVal);
+
+        return {true, minVal, maxVal, sum};
+    }
+
+    // Current subtree is NOT a BST
+    return {false, 0, 0, 0};
+}
+
+int maxSumBST(TreeNode *root)
+{
+    ans = 0;
+    solve(root);
+    return ans;
+}
+
+void inorder(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+
+    inorder(root->left);
+    cout << root->val << " ";
+    inorder(root->right);
+}
+
+int main()
+{
+
+
+    TreeNode *root = new TreeNode(1);
+
+    root->left = new TreeNode(4);
+    root->right = new TreeNode(3);
+
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(4);
+
+    root->right->left = new TreeNode(2);
+    root->right->right = new TreeNode(5);
+
+    cout << "Inorder: ";
+    inorder(root);
+    cout << endl;
+
+    cout << "Maximum Sum BST: " << maxSumBST(root) << endl;
+
+    return 0;
+}
+    */
+// 12/09/2026 Graph
+/*
+TC-O(N)+O(V+2E)
+SC-O(N)+O(N)
+#include <bits/stdc++.h>
+using namespace std;
+
+void dfs(int node, vector<vector<int>>& isConnected,
+         vector<bool>& visited){
+    visited[node] = true;
+    for (int neighbour = 0; neighbour < isConnected.size(); neighbour++)
+    {
+        if (isConnected[node][neighbour] == 1 &&
+            !visited[neighbour])
+        {
+            dfs(neighbour, isConnected, visited);
+        }
+    }
+}
+
+int findCircleNum(vector<vector<int>>& isConnected){
+    int n = isConnected.size();
+
+    vector<bool> visited(n, false);
+
+    int provinces = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!visited[i])
+        {
+            provinces++;
+
+            dfs(i, isConnected, visited);
+        }
+    }
+
+    return provinces;
+}
+
+int main(){
+    vector<vector<int>> isConnected =
+    {
+        {1, 1, 0},
+        {1, 1, 0},
+        {0, 0, 1}
+    };
+
+    cout << "Number of Provinces: "
+         << findCircleNum(isConnected)
+         << endl;
+
+    return 0;
+}
+    */
+/*
+Number Of islands dfs
+#include <bits/stdc++.h>
+using namespace std;
+
+void dfs(int row, int col, vector<vector<char>>& grid,
+         vector<vector<bool>>& visited)
+{
+    visited[row][col] = true;
+
+    int dr[] = {-1, 0, 1, 0};
+    int dc[] = {0, 1, 0, -1};
+
+    for (int i = 0; i < 4; i++)
+    {
+        int newRow = row + dr[i];
+        int newCol = col + dc[i];
+
+        if (newRow >= 0 && newRow < grid.size() &&
+            newCol >= 0 && newCol < grid[0].size() &&
+            grid[newRow][newCol] == '1' &&
+            !visited[newRow][newCol])
+        {
+            dfs(newRow, newCol, grid, visited);
+        }
+    }
+}
+int numIslands(vector<vector<char>>& grid){
+    int n=grid.size();
+    int m=grid[0].size();
+    vector<vector<bool>> vis(n, vector<bool>(m, false));
+    int cnt=0;
+    for(int i=0;i<n;i++){
+     for(int j=0;j<m;j++){
+       if(grid[i][j]=='1' && vis[i][j]==false){
+        cnt++;
+        dfs(i,j,grid,vis);
+       }
+     }
+    }
+    return cnt;
+}
+
+int main()
+{
+    vector<vector<char>> grid =
+    {
+        {'1','1','0','0','0'},
+        {'1','1','0','0','0'},
+        {'0','0','1','0','0'},
+        {'0','0','0','1','1'}
+    };
+
+    cout << "Number of Islands: "
+         << numIslands(grid)
+         << endl;
+
+    // Expected output: 3
+
+    return 0;
+}
+    */
+/*
+Number Of islands bfs
+Tc-O(N*N)
+SC-O(N*N)+O(N*N)
+#include <bits/stdc++.h>
+using namespace std;
+void bfs(int row, int col, vector<vector<char>> &grid,
+         vector<vector<bool>> &visited)
+{
+    queue<pair<int, int>> q;
+
+    visited[row][col] = true;
+    q.push({row, col});
+
+    while (!q.empty())
+    {
+        pair<int, int> node = q.front();
+        q.pop();
+        int r = node.first;
+        int c = node.second;
+        int dr[] = {-1, 0, 1, 0};
+        int dc[] = {0, 1, 0, -1};
+
+        for (int i = 0; i < 4; i++)
+        {
+            int newRow = r + dr[i];
+            int newCol = c + dc[i];
+            if (newRow >= 0 && newRow < grid.size() &&
+                newCol >= 0 && newCol < grid[0].size() &&
+                grid[newRow][newCol] == '1' &&
+                !visited[newRow][newCol])
+            {
+                visited[newRow][newCol] = true;
+                q.push({newRow,newCol});
+            }
+        }
+    }
+}
+int numIslands(vector<vector<char>> &grid)
+{
+    int n = grid.size();
+    int m = grid[0].size();
+    vector<vector<bool>> vis(n, vector<bool>(m, false));
+    int cnt = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (grid[i][j] == '1' && vis[i][j] == false)
+            {
+                cnt++;
+                bfs(i, j, grid, vis);
+            }
+        }
+    }
+    return cnt;
+}
+
+int main()
+{
+    vector<vector<char>> grid =
+        {
+            {'1', '1', '0', '0', '0'},
+            {'1', '1', '0', '0', '0'},
+            {'0', '0', '1', '0', '0'},
+            {'0', '0', '0', '1', '1'}};
+
+    cout << "Number of Islands: "
+         << numIslands(grid)
+         << endl;
+
+    // Expected output: 3
+
+    return 0;
+}
+    */
+/*
+Flood Fill algorithem
+#include <bits/stdc++.h>
+using namespace std;
+
+void dfs(int row, int col, vector<vector<int>>& image,
+         int oldColor, int color,int drow[],int dcol[],vector<vector<int>>&ans){
+    int n=image.size();
+    int m=image[0].size();
+      ans[row][col]=color;
+      for(int i=0;i<4;i++){
+        int updatedRow=row+drow[i];
+        int updatedCol=col+dcol[i];
+        if(updatedCol>=0 && updatedCol<m && updatedRow>=0 && updatedRow<n && ans[updatedRow][updatedCol]==oldColor && image[updatedRow][updatedCol]!=color){
+            dfs(updatedRow,updatedCol,image,oldColor,color,drow,dcol,ans);
+        }
+      }
+}
+
+vector<vector<int>> floodFill(vector<vector<int>>& image,
+                              int sr, int sc, int color){
+        vector<vector<int>> ans=image;
+        int drow[]={-1,0,1,0};
+        int dcol[]={0,1,0,-1};
+        int oldcolor=image[sr][sc];
+        dfs(sr,sc,image,oldcolor,color,drow,dcol,ans);
+        return ans;
+}
+
+int main()
+{
+    vector<vector<int>> image =
+    {
+        {1, 1, 1},
+        {1, 1, 0},
+        {1, 0, 1}
+    };
+
+    int sr = 1;
+    int sc = 1;
+    int color = 2;
+
+    vector<vector<int>> result =
+        floodFill(image, sr, sc, color);
+
+    for (auto& row : result)
+    {
+        for (auto x : row)
+            cout << x << " ";
+
+        cout << endl;
+    }
+
+    // Expected:
+    // 2 2 2
+    // 2 2 0
+    // 2 0 1
+
+    return 0;
+}
+    */
+/*
+Rotten Oranges
+TC-O(N*M)
+SC-O(N*M)
+#include <bits/stdc++.h>
+using namespace std;
+
+int orangesRotting(vector<vector<int>>& grid){
+int n=grid.size();
+int m=grid[0].size();
+queue<pair<pair<int,int>,int>> q;
+int vis[n][m];
+for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+        if(grid[i][j]==2){
+            q.push({{i,j},0});
+            vis[i][j]=2;
+        }else{
+            vis[i][j]=0;
+        }
+    }
+}
+int tm=0;
+int drow[]={-1,0,1,0};
+int dcol[]={0,1,0,-1};
+while(!q.empty()){
+int r=q.front().first.first;
+int c=q.front().first.second;
+int t=q.front().second;
+tm=max(tm,t);
+q.pop();
+for(int i=0;i<4;i++){
+    int nrow=r+drow[i];
+    int ncol=c+dcol[i];
+    if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]==1 && vis[nrow][ncol]!=2){
+    q.push({{nrow,ncol},t+1});
+    vis[nrow][ncol]=2;
+    }
+}
+}
+for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+        if(vis[i][j]!=2 && grid[i][j]==1){
+            return -1;
+        }
+    }
+}
+return tm;
+}
+
+int main()
+{
+    vector<vector<int>> grid =
+    {
+        {2, 1, 1},
+        {1, 1, 0},
+        {0, 1, 1}
+    };
+
+    cout << orangesRotting(grid) << endl;
+
+    // Expected output: 4
+
+    return 0;
+}
+    */
+/*
+Cycle detection in undirected graph
+TC-O(N + 2E) + O(N)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+
+bool detectCycle(int src, vector<int> adj[], vector<int>& vis)
+{
+    vis[src] = 1;
+
+    queue<pair<int, int>> q;
+    q.push({src, -1});
+
+    while (!q.empty())
+    {
+        int node = q.front().first;
+        int parent = q.front().second;
+        q.pop();
+
+        for (auto adjacent : adj[node])
+        {
+            if (!vis[adjacent])
+            {
+                vis[adjacent] = 1;
+                q.push({adjacent, node});
+            }
+            else if (parent != adjacent)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool isCycle(int V, vector<vector<int>>& edges)
+{
+    // Create adjacency list
+    vector<int> adj[V];
+
+    // Build undirected graph
+    for (auto edge : edges)
+    {
+        int u = edge[0];
+        int v = edge[1];
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector<int> vis(V, 0);
+
+    // Handle disconnected components
+    for (int i = 0; i < V; i++)
+    {
+        if (!vis[i])
+        {
+            if (detectCycle(i, adj, vis))
+                return true;
+        }
+    }
+
+    return false;
+}
+
+int main()
+{
+    int V = 5;
+
+    vector<vector<int>> edges =
+    {
+        {0, 1},
+        {1, 2},
+        {2, 0},
+        {2, 3},
+        {3, 4}
+    };
+
+    cout << (isCycle(V, edges)
+                 ? "Cycle exists"
+                 : "No cycle")
+         << endl;
+
+    return 0;
+}*/
+/*
+TC-O(V+E)
+SC-O(V+E)
+Cycle detection using DFS in graph
+#include <bits/stdc++.h>
+using namespace std;
+bool detectCycle(int node, int parent, vector<int> adj[], vector<int>& vis)
+{
+    vis[node] = 1;
+
+    for (auto neighbor : adj[node])
+    {
+        if (!vis[neighbor])
+        {
+            if (detectCycle(neighbor, node, adj, vis))
+                return true;
+        }
+        else if (neighbor != parent)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool isCycle(int V, vector<vector<int>>& edges)
+{
+    vector<int> adj[V];
+
+    // Build undirected adjacency list
+    for (auto edge : edges)
+    {
+        int u = edge[0];
+        int v = edge[1];
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector<int> vis(V, 0);
+
+    // Handle disconnected components
+    for (int i = 0; i < V; i++)
+    {
+        if (!vis[i])
+        {
+            if (detectCycle(i, -1, adj, vis))
+                return true;
+        }
+    }
+
+    return false;
+}
+
+int main()
+{
+    int V = 5;
+
+    vector<vector<int>> edges =
+    {
+        {0, 1},
+        {1, 2},
+        {2, 0},
+        {2, 3},
+        {3, 4}
+    };
+
+    cout << (isCycle(V, edges)
+                 ? "Cycle exists"
+                 : "No cycle")
+         << endl;
+
+    return 0;
+}
+    */
+#include <bits/stdc++.h>
+using namespace std;
+
+bool canFinish(int numCourses, vector<vector<int>>& prerequisites){
+    
+}
+
+int main()
+{
+    int numCourses = 2;
+
+    vector<vector<int>> prerequisites =
+    {
+        {1, 0}
+    };
+
+    cout << (canFinish(numCourses, prerequisites) ? "Can finish" : "Cannot finish") << endl;
+
+    // Expected: Can finish
+
+    return 0;
+}
