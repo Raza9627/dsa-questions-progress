@@ -13608,11 +13608,60 @@ int main()
     return 0;
 }
     */
+/*
+Course shedudle
 #include <bits/stdc++.h>
 using namespace std;
+bool dfs(int node, vector<vector<int>>& adj,
+         vector<int>& visited, vector<int>& pathVisited)
+{
+    visited[node] = 1;
+    pathVisited[node] = 1;
 
-bool canFinish(int numCourses, vector<vector<int>>& prerequisites){
-    
+    for (auto neighbor : adj[node])
+    {
+        if (!visited[neighbor])
+        {
+            if (dfs(neighbor, adj, visited, pathVisited))
+                return true;
+        }
+        else if (pathVisited[neighbor])
+        {
+            return true;
+        }
+    }
+
+    pathVisited[node] = 0;
+
+    return false;
+}
+
+bool canFinish(int numCourses, vector<vector<int>>& prerequisites)
+{
+    vector<vector<int>> adj(numCourses);
+
+    // Build directed graph
+    for (auto edge : prerequisites)
+    {
+        int course = edge[0];
+        int prerequisite = edge[1];
+
+        adj[prerequisite].push_back(course);
+    }
+
+    vector<int> visited(numCourses, 0);
+    vector<int> pathVisited(numCourses, 0);
+
+    for (int i = 0; i < numCourses; i++)
+    {
+        if (!visited[i])
+        {
+            if (dfs(i, adj, visited, pathVisited))
+                return false;
+        }
+    }
+
+    return true;
 }
 
 int main()
@@ -13624,9 +13673,193 @@ int main()
         {1, 0}
     };
 
-    cout << (canFinish(numCourses, prerequisites) ? "Can finish" : "Cannot finish") << endl;
-
-    // Expected: Can finish
+    cout << (canFinish(numCourses, prerequisites)
+                 ? "Can finish"
+                 : "Cannot finish")
+         << endl;
 
     return 0;
 }
+    */
+/*
+Nearest 0 from each cell
+TC-O(N*M)
+SC-O(N*M)
+#include <bits/stdc++.h>
+using namespace std;
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+    int n=mat.size();
+    int m=mat[0].size();
+    vector<vector<int>> vis(n,vector<int>(m,0));
+    vector<vector<int>> dis(n,vector<int>(m,0));
+    queue<pair<pair<int,int>,int>> q;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(mat[i][j]==0){
+            q.push({{i,j},0});
+            vis[i][j]=1;
+            }
+            else{
+            vis[i][j]=0;
+            }
+        }
+    }
+    int drow[]={-1,0,1,0};
+    int dcol[]={0,1,0,-1};
+   while(!q.empty()){
+    int row=q.front().first.first;
+    int col=q.front().first.second;
+    int steps=q.front().second;
+    q.pop();
+    dis[row][col]=steps;
+    for(int i=0;i<4;i++){
+    int nrow=row+drow[i];
+    int ncol=col+dcol[i];
+    if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && vis[nrow][ncol]==0 ){
+        vis[nrow][ncol]=1;
+        q.push({{nrow,ncol},steps+1});
+    }
+    }
+   }
+   return dis;
+}
+
+int main()
+{
+    vector<vector<int>> mat =
+    {
+        {0, 0, 0},
+        {0, 1, 0},
+        {1, 1, 1}
+    };
+
+    vector<vector<int>> ans = updateMatrix(mat);
+
+    for (auto row : ans)
+    {
+        for (auto x : row)
+            cout << x << " ";
+
+        cout << endl;
+    }
+
+    return 0;
+}
+    */
+/*
+Surround Region
+TC-O(N*M)
+SC-O(N*M)
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution
+{
+private:
+    void dfs(int row, int col, vector<vector<char>>& board,
+             vector<vector<int>>& vis, int drow[], int dcol[])
+    {
+        vis[row][col] = 1;
+
+        for (int i = 0; i < 4; i++)
+        {
+            int nrow = row + drow[i];
+            int ncol = col + dcol[i];
+
+            if (nrow >= 0 && nrow < board.size() &&
+                ncol >= 0 && ncol < board[0].size() &&
+                vis[nrow][ncol] == 0 &&
+                board[nrow][ncol] == 'O')
+            {
+                dfs(nrow, ncol, board, vis, drow, dcol);
+            }
+        }
+    }
+
+public:
+    void solve(vector<vector<char>>& board)
+    {
+        int n = board.size();
+        int m = board[0].size();
+
+        int drow[] = {-1, 0, 1, 0};
+        int dcol[] = {0, 1, 0, -1};
+
+        vector<vector<int>> vis(n, vector<int>(m, 0));
+
+        // Top
+        for (int j = 0; j < m; j++)
+        {
+            if (board[0][j] == 'O')
+            {
+                dfs(0, j, board, vis, drow, dcol);
+            }
+        }
+
+        // Right
+        for (int i = 1; i < n; i++)
+        {
+            if (board[i][m - 1] == 'O')
+            {
+                dfs(i, m - 1, board, vis, drow, dcol);
+            }
+        }
+
+        // Bottom
+        for (int j = m - 2; j >= 0; j--)
+        {
+            if (board[n - 1][j] == 'O')
+            {
+                dfs(n - 1, j, board, vis, drow, dcol);
+            }
+        }
+
+        // Left
+        for (int i = 1; i < n - 1; i++)
+        {
+            if (board[i][0] == 'O')
+            {
+                dfs(i, 0, board, vis, drow, dcol);
+            }
+        }
+
+        // Flip surrounded O's
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (board[i][j] == 'O' && vis[i][j] == 0)
+                {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+};
+
+int main()
+{
+    Solution obj;
+
+    vector<vector<char>> board =
+    {
+        {'X', 'X', 'X', 'X'},
+        {'X', 'O', 'O', 'X'},
+        {'X', 'X', 'O', 'X'},
+        {'X', 'O', 'X', 'X'}
+    };
+
+    obj.solve(board);
+
+    for (auto row : board)
+    {
+        for (auto cell : row)
+        {
+            cout << cell << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+    */
