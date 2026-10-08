@@ -13863,3 +13863,1004 @@ int main()
     return 0;
 }
     */
+/*
+Number of enclaves
+TC-O(n*m)
+SC-O(n*m)
+#include <bits/stdc++.h>
+using namespace std;
+int numEnclaves(vector<vector<int>>& grid)
+{
+ int n=grid.size();
+        int m=grid[0].size();
+        queue<pair<int,int>> q;
+        vector<vector<int>> vis(n, vector<int>(m, 0));
+
+        for(int j=0;j<m;j++){
+            if(grid[0][j]==1){
+                q.push({0,j});
+                vis[0][j]=1;
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            if(grid[i][m-1]==1){
+                q.push({i,m-1});
+                vis[i][m-1]=1;
+            }
+        }
+
+        for(int j=m-1;j>=0;j--){
+            if(grid[n-1][j]==1){
+                q.push({n-1,j});
+                vis[n-1][j]=1;
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            if(grid[i][0]==1){
+                q.push({i,0});
+                vis[i][0]=1;
+            }
+        }
+        int drow[]={-1,0,1,0};
+        int dcol[]={0,1,0,-1};
+        while(!q.empty()){
+            int row=q.front().first;
+            int col=q.front().second;
+            q.pop();
+            for(int i=0;i<4;i++){
+                int nrow=row+drow[i];
+                int ncol=col+dcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]==1 && vis[nrow][ncol]==0){
+                    q.push({nrow,ncol});
+                    vis[nrow][ncol]=1;
+                }
+            }
+        }
+        int cnt =0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1 && vis[i][j]==0) cnt++;
+            }
+        }
+        return cnt;
+}
+
+int main()
+{
+    vector<vector<int>> grid =
+    {
+        {0, 0, 0, 0},
+        {1, 0, 1, 0},
+        {0, 1, 1, 0},
+        {0, 0, 0, 0}
+    };
+
+    cout << "Number of Enclaves: "
+         << numEnclaves(grid)
+         << endl;
+
+    // Expected output: 3
+
+    return 0;
+}
+    */
+/*
+Number of distinct islands
+#include <bits/stdc++.h>
+using namespace std;
+
+void dfs(int row, int col,
+         vector<vector<int>>& grid,
+         vector<vector<bool>>& visited,
+         vector<pair<int, int>>& island,
+         int baseRow, int baseCol)
+{
+    visited[row][col] = true;
+
+    // Store position relative to starting cell
+    island.push_back({row - baseRow, col - baseCol});
+
+    int dr[] = {-1, 0, 1, 0};
+    int dc[] = {0, 1, 0, -1};
+
+    for (int i = 0; i < 4; i++)
+    {
+        int newRow = row + dr[i];
+        int newCol = col + dc[i];
+
+        if (newRow >= 0 && newRow < grid.size() &&
+            newCol >= 0 && newCol < grid[0].size() &&
+            grid[newRow][newCol] == 1 &&
+            !visited[newRow][newCol])
+        {
+            dfs(newRow, newCol, grid, visited,
+                island, baseRow, baseCol);
+        }
+    }
+}
+
+int countDistinctIslands(vector<vector<int>>& grid)
+{
+    int n = grid.size();
+    int m = grid[0].size();
+
+    vector<vector<bool>> visited(n, vector<bool>(m, false));
+
+    // Each island shape is stored as a vector of relative coordinates
+    set<vector<pair<int, int>>> shapes;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (grid[i][j] == 1 && !visited[i][j])
+            {
+                vector<pair<int, int>> island;
+
+                dfs(i, j, grid, visited,
+                    island, i, j);
+
+                shapes.insert(island);
+            }
+        }
+    }
+
+    return shapes.size();
+}
+
+int main()
+{
+    vector<vector<int>> grid =
+    {
+        {1, 1, 0, 0, 0},
+        {1, 0, 0, 0, 0},
+        {0, 0, 0, 1, 1},
+        {0, 0, 0, 1, 0}
+    };
+
+    cout << countDistinctIslands(grid) << endl;
+
+    return 0;
+}
+*/
+/*
+bipartite graph using BFS
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isBipartite(vector<vector<int>>& graph){
+      int n = graph.size();
+
+    vector<int> color(n, -1);
+
+    for (int start = 0; start < n; start++)
+    {
+        // Handle disconnected components
+        if (color[start] != -1)
+            continue;
+
+        queue<int> q;
+
+        q.push(start);
+        color[start] = 0;
+
+        while (!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+
+            for (int neighbour : graph[node])
+            {
+                // Not colored yet
+                if (color[neighbour] == -1)
+                {
+                    color[neighbour] = 1 - color[node];
+                    q.push(neighbour);
+                }
+
+                // Same color as current node
+                else if (color[neighbour] == color[node])
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+int main()
+{
+    vector<vector<int>> graph =
+    {
+        {1, 3},
+        {0, 2},
+        {1, 3},
+        {0, 2}
+    };
+
+    cout << boolalpha << isBipartite(graph) << endl;
+
+    return 0;
+}
+    */
+/*
+bipartite graph using DFS
+#include <bits/stdc++.h>
+using namespace std;
+bool dfs(int node, int co, vector<int>& color,
+         vector<vector<int>>& graph)
+{
+    color[node] = co;
+
+    for (auto it : graph[node])
+    {
+        if (color[it] == -1)
+        {
+            if (!dfs(it, !co, color, graph))
+                return false;
+        }
+        else if (color[it] == co)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+bool isBipartite(vector<vector<int>>& graph)
+{
+    int n = graph.size();
+
+    vector<int> color(n, -1);
+
+    for (int i = 0; i < n; i++)
+    {
+        if (color[i] == -1)
+        {
+            if (!dfs(i, 0, color, graph))
+                return false;
+        }
+    }
+
+    return true;
+}
+int main()
+{
+vector<vector<int>> graph =
+{
+    {1, 3},
+    {0, 2},
+    {1, 3},
+    {0, 2}
+};
+
+cout << boolalpha << isBipartite(graph) << endl;
+
+return 0;
+}
+*/
+/*
+Course Shedudle 2
+#include <bits/stdc++.h>
+using namespace std;
+
+bool dfs(int node,
+         vector<vector<int>>& adj,
+         vector<int>& vis,
+         vector<int>& pathVis,
+         vector<int>& res)
+{
+    vis[node] = 1;
+    pathVis[node] = 1;
+
+    for(auto it : adj[node])
+    {
+        if(!vis[it])
+        {
+            if(dfs(it, adj, vis, pathVis, res))
+                return true;
+        }
+        else if(pathVis[it])
+        {
+            return true;
+        }
+    }
+
+    pathVis[node] = 0;
+
+    // Add after processing neighbours
+    res.push_back(node);
+
+    return false;
+}
+
+vector<int> findOrder(int numCourses,
+                      vector<vector<int>>& prerequisites)
+{
+    vector<vector<int>> adj(numCourses);
+
+    // Build adjacency list
+    for(auto p : prerequisites)
+    {
+        adj[p[1]].push_back(p[0]);
+    }
+
+    vector<int> vis(numCourses, 0);
+    vector<int> pathVis(numCourses, 0);
+
+    vector<int> res;
+
+    for(int i = 0; i < numCourses; i++)
+    {
+        if(!vis[i])
+        {
+            if(dfs(i, adj, vis, pathVis, res))
+            {
+                return {};
+            }
+        }
+    }
+
+    reverse(res.begin(), res.end());
+
+    return res;
+}
+
+int main()
+{
+    int numCourses = 4;
+
+    vector<vector<int>> prerequisites =
+    {
+        {1, 0},
+        {2, 0},
+        {3, 1},
+        {3, 2}
+    };
+
+    vector<int> ans = findOrder(numCourses, prerequisites);
+
+    for(int course : ans)
+    {
+        cout << course << " ";
+    }
+
+    cout << endl;
+
+    return 0;
+}
+    */
+/*
+Find eventual safe states
+#include <bits/stdc++.h>
+using namespace std;
+bool dfs(int node,vector<int> &vis,vector<int> &pathVis,vector<vector<int>>&graph,vector<int>&check){
+   vis[node]=1;
+   pathVis[node]=1;
+   check[node]=0;
+   for(auto it:graph[node]){
+    if(!vis[it]){
+        if(dfs(it,vis,pathVis,graph,check)==true){
+            check[node]=0;
+            return true;
+        }
+    }
+    else if(pathVis[it]){
+        check[node]=0;
+        return true;
+    }
+   }
+   check[node]=1;
+   pathVis[node]=0;
+   return false;
+}
+vector<int> eventualSafeNodes(vector<vector<int>>& graph){
+    int n=graph.size();
+    vector<int> vis(n,0);
+    vector<int> pathVis(n,0);
+    vector<int> check(n,0);
+    vector<int> safeNode;
+    for(int i=0;i<n;i++){
+        if(!vis[i]){
+            dfs(i,vis,pathVis,graph,check);
+        }
+    }
+    for(int i=0;i<n;i++){
+        if(check[i]==1){
+            safeNode.push_back(i);
+        }
+    }
+    return safeNode;
+}
+
+int main()
+{
+    vector<vector<int>> graph =
+    {
+       {1},
+       {2},
+       {3},
+       {4,5},
+       {6},
+       {6},
+       {7},
+       {},
+       {1,9},
+       {10},
+       {8},
+       {9}
+    };
+
+    vector<int> ans = eventualSafeNodes(graph);
+
+    for(int node : ans)
+        cout << node << " ";
+
+    cout << endl;
+
+    return 0;
+}
+   */
+/*
+Topological Sort
+TC-O(V+E)
+SC-O(V)
+  #include <bits/stdc++.h>
+using namespace std;
+void dfs(int node,vector<int>&vis,stack<int>&st,vector<vector<int>>&adj){
+     vis[node]=1;
+     for(auto it:adj[node]){
+       if(!vis[it]){
+        dfs(it,vis,st,adj);
+       }
+     }
+     st.push(node);
+}
+vector<int> topoSort(int V, vector<vector<int>>& adj){
+    vector<int> vis(V,0);
+    stack<int> st;
+    vector<int> res;
+    for(int i=0;i<V;i++){
+       if(!vis[i]){
+        dfs(i,vis,st,adj);
+       } 
+    }
+    while(!st.empty()){
+        res.push_back(st.top());
+        st.pop();
+    }
+    return res;
+}
+
+int main()
+{
+    int V = 6;
+
+    vector<vector<int>> adj =
+    {
+        {2, 3},
+        {3, 4},
+        {4},
+        {5},
+        {},
+        {}
+    };
+
+    vector<int> ans = topoSort(V, adj);
+
+    for(int node : ans)
+        cout << node << " ";
+
+    cout << endl;
+
+    return 0;
+}
+    */
+   /*
+Kahn alogrithem
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> topoSort(int V, vector<vector<int>>& adj){
+   int inDegree[V]={0};
+   vector<int> res;
+   for(int i=0;i<V;i++){
+    for(auto it:adj[i]){
+        inDegree[it]++;
+    }
+   }
+   queue<int> q;
+   for(int i=0;i<V;i++){
+    if(inDegree[i]==0){
+        q.push(i);
+    }
+   }
+   while(!q.empty()){
+    int node=q.front();
+    q.pop();
+    res.push_back(node);
+    for(auto it:adj[node]){
+        inDegree[it]--;
+        if(inDegree[it]==0){
+            q.push(it);
+        }
+    }
+   }
+   return res;
+}
+
+int main()
+{
+    int V = 6;
+
+    vector<vector<int>> adj =
+    {
+        {2, 3},
+        {3, 4},
+        {4},
+        {5},
+        {},
+        {}
+    };
+
+    vector<int> ans = topoSort(V, adj);
+
+    for(int node : ans)
+        cout << node << " ";
+
+    cout << endl;
+
+    return 0;
+}
+    */
+/*Alian dictionary
+#include <bits/stdc++.h>
+using namespace std;
+
+string findOrder(vector<string>& words, int N, int K)
+{
+    // Step 1: Create adjacency list
+    vector<vector<int>> adj(K);
+
+    // Step 2: Compare adjacent words
+    for(int i = 0; i < N - 1; i++)
+    {
+        string word1 = words[i];
+        string word2 = words[i + 1];
+
+        int len = min(word1.size(), word2.size());
+
+        for(int j = 0; j < len; j++)
+        {
+            if(word1[j] != word2[j])
+            {
+                int u = word1[j] - 'a';
+                int v = word2[j] - 'a';
+
+                adj[u].push_back(v);
+
+                // First different character gives the ordering
+                break;
+            }
+        }
+    }
+
+    // Step 3: Calculate indegree
+    vector<int> indegree(K, 0);
+
+    for(int i = 0; i < K; i++)
+    {
+        for(auto neighbour : adj[i])
+        {
+            indegree[neighbour]++;
+        }
+    }
+
+    // Step 4: Kahn's Algorithm
+    queue<int> q;
+
+    for(int i = 0; i < K; i++)
+    {
+        if(indegree[i] == 0)
+        {
+            q.push(i);
+        }
+    }
+
+    string ans;
+
+    while(!q.empty())
+    {
+        int node = q.front();
+        q.pop();
+
+        ans += char(node + 'a');
+
+        for(auto neighbour : adj[node])
+        {
+            indegree[neighbour]--;
+
+            if(indegree[neighbour] == 0)
+            {
+                q.push(neighbour);
+            }
+        }
+    }
+
+    return ans;
+}
+
+int main()
+{
+    vector<string> words =
+    {
+        "baa",
+        "abcd",
+        "abca",
+        "cab",
+        "cad"
+    };
+
+    int N = words.size();
+    int K = 4;
+
+    string ans = findOrder(words, N, K);
+
+    cout << ans << endl;
+
+    return 0;
+}
+*/
+/*
+shortest path problem
+TC-O(V+E)+O(N+M)+O(N)
+SC-O(N)
+#include<bits/stdc++.h>
+using namespace std;
+void topoSort(int node,vector<pair<int,int>> adj[],vector<int> vis,stack<int>&st){
+    vis[node]=1;
+    for(auto it:adj[node]){
+        int v=it.first;
+        if(!vis[v]){
+            topoSort(v,adj,vis,st);
+        }
+    }
+    st.push(node);
+}
+vector<int> shortestPath(int N, int M, vector<vector<int>>& edges) {
+   vector<pair<int,int>> adj[N];
+   for(int i=0;i<M;i++){
+    int u=edges[i][0];
+    int v=edges[i][1];
+    int wt=edges[i][2];
+    adj[u].push_back({v,wt});
+   }
+   vector<int> vis(N,0);
+   stack<int> st;
+   for(int i=0;i<N;i++){
+    if(!vis[i]){
+        topoSort(i,adj,vis,st);
+    }
+   }
+   vector<int> dist(N);
+   for(int i=0;i<N;i++) dist[i]=1e9;
+   dist[0]=0;
+   while(!st.empty()){
+    int node=st.top();
+    st.pop();
+    for(auto it:adj[node]){
+        int v=it.first;
+        int wt=it.second;
+        if(dist[node]+wt<dist[v]){
+            dist[v]=dist[node]+wt;
+        }
+    }
+   }
+   for(int i=0;i<N;i++){
+    if(dist[i]==1e9){
+        dist[i]=-1;
+    }
+   }
+   return dist;
+    }
+int main(){
+int n=4,m=2;
+vector<vector<int>> edges={
+    {0,1,2},
+    {0,2,1}
+};
+vector<int> res=shortestPath(n,m,edges);
+for(int i=0;i<res.size();i++){
+    cout<<res[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+TC-O(V+E)
+SC-O(N)
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> shortestPath(int N, int M, vector<vector<int>>& edges) {
+   vector<int> adj[N];
+   for(auto it:edges){
+    adj[it[0]].push_back(it[1]);
+    adj[it[1]].push_back(it[0]);
+   }
+   vector<int> dist(N,1e9);
+   dist[0]=0;
+   queue<int> q;
+   q.push(0);
+   while(!q.empty()){
+    int node=q.front();
+    q.pop();
+    for(auto it:adj[node]){
+        if(dist[node]+1<dist[it]){
+            dist[it]=1+dist[node];
+            q.push(it);
+        }
+    }
+   }
+   vector<int> ans(N,-1);
+   for(int i=0;i<N;i++){
+    if(dist[i]!=1e9){
+        ans[i]=dist[i];
+    }
+   }
+   return ans;
+    }
+int main(){
+int n=9,m=10;
+vector<vector<int>> edges={
+    {0,1},
+    {0,3},
+    {3,4},
+    {4,5},
+    {5,6},
+    {1,2},
+    {2,6},
+    {6,7},
+    {7,8},
+    {6,8}
+};
+vector<int> res=shortestPath(n,m,edges);
+for(int i=0;i<res.size();i++){
+    cout<<res[i]<<" ";
+}
+return 0;
+}
+*/
+/*
+Word ladder
+TC-O(wordLength)*26*N*LogN
+SC-O(N)
+#include<bits/stdc++.h>
+using namespace std;
+int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+    queue<pair<string,int>> q;
+     q.push({beginWord,1});
+     unordered_set<string> st(wordList.begin(),wordList.end());
+     st.erase(beginWord);
+     while(!q.empty()){
+    string word=q.front().first;
+    int steps=q.front().second;
+    q.pop();
+    if(word==endWord) return steps;
+    for(int i=0;i<word.size();i++){
+        char original=word[i];
+        for(char ch='a';ch<='z';ch++){
+          word[i]=ch;
+          if(st.find(word)!=st.end()){
+            st.erase(word);
+            q.push({word,steps+1});
+          }
+        }
+        word[i]=original;
+    }
+     }
+     return 0;
+    }
+int main(){
+    string beginWord="hit";
+    string endWord="cog";
+    vector<string> wordList={
+        "hot",
+        "dot",
+        "dog",
+        "lot",
+        "log",
+        "cog"
+    };
+    cout<<ladderLength(beginWord,endWord,wordList);
+    return 0;
+}
+    */
+   /*
+Word ladders 2 Brute force
+TC-O(impossible)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+vector<vector<string>> findLadders(string beginWord,string endWord,vector<string>& wordList){
+    queue<vector<string>> q;
+    unordered_set<string> st(wordList.begin(),wordList.end());
+    q.push({beginWord});
+     vector<string> used;  
+     used.push_back(beginWord);
+     int lv=0;
+     vector<vector<string>> ans; 
+     while(!q.empty()){
+    vector<string> vec=q.front();
+    q.pop();
+    if(vec.size()>lv){
+        lv++;
+        for(auto it:used){
+            st.erase(it);
+        }
+    }
+
+    string word=vec.back();
+    if(word==endWord){
+        if(ans.size()==0){
+            ans.push_back(vec);
+        }
+        else if(ans[0].size()==vec.size()){
+            ans.push_back(vec);
+        }
+    }
+    for(int i=0;i<word.size();i++){
+        char original=word[i];
+        for(char ch='a';ch<='z';ch++){
+            word[i]=ch;
+        if(st.count(word)>0){
+            vec.push_back(word);
+            q.push({vec});
+            used.push_back(word);
+            vec.pop_back();
+        }
+        }
+        word[i]=original;
+    }
+     }
+     return ans;
+}
+
+int main()
+{
+    string beginWord = "hit";
+    string endWord = "cog";
+
+    vector<string> wordList = {
+        "hot",
+        "dot",
+        "dog",
+        "lot",
+        "log",
+        "cog"
+    };
+
+    vector<vector<string>> result =
+        findLadders(beginWord, endWord, wordList);
+
+    for (auto& path : result)
+    {
+        for (auto& word : path)
+        {
+            cout << word << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+    */
+/*
+Djikstra algorithem using priority Queue
+TC-ElogV
+SC-O(V)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> dijkstra(int V, vector<vector<pair<int, int>>>& adj, int S){
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+   vector<int> dist(V);
+   for(int i=0;i<V;i++) dist[i]=1e9;
+   dist[S]=0;
+   pq.push({0,S});
+   while(!pq.empty()){
+    int dis=pq.top().first;
+    int node=pq.top().second;
+    pq.pop();
+    for(auto it:adj[node]){
+        int edgeWeight=it.second;
+        int adjNode=it.first;
+        if(dis+edgeWeight < dist[adjNode]){
+            dist[adjNode]=dis+edgeWeight;
+            pq.push({dist[adjNode],adjNode});
+        }
+    }
+   }
+   return dist;
+}
+
+int main()
+{
+    int V = 5;
+
+    vector<vector<pair<int, int>>> adj(V);
+
+    adj[0].push_back({1, 2});
+    adj[0].push_back({2, 4});
+
+    adj[1].push_back({2, 1});
+    adj[1].push_back({3, 7});
+
+    adj[2].push_back({4, 3});
+    adj[3].push_back({4, 1});
+
+    int S = 0;
+
+    vector<int> result = dijkstra(V, adj, S);
+
+    for (int x : result)
+        cout << x << " ";
+
+    return 0;
+}
+*/
+/*
+djisktra algorithem using set
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> dijkstra(int V, vector<vector<pair<int, int>>>& adj, int S){
+  vector<int> dist(V,1e9);
+  set<pair<int,int>> st;
+  dist[S]=0;
+  st.insert({0,S});
+  while(!st.empty()){
+  auto it= *(st.begin());
+  int dis=it.first;
+  int node=it.second;
+  st.erase(it);
+  for(auto it:adj[node]){
+  int adjNode=it.first;
+  int edgeWeight=it.second;
+  if(dis+edgeWeight < dist[adjNode]){
+    if(dist[adjNode] != 1e9){
+        st.erase({dist[adjNode],adjNode});
+    }
+    dist[adjNode]=dis+edgeWeight;
+    st.insert({dist[adjNode],adjNode});
+  }
+  }
+  }
+  return dist;
+}
+
+int main()
+{
+    int V = 5;
+
+    vector<vector<pair<int, int>>> adj(V);
+
+    adj[0].push_back({1, 2});
+    adj[0].push_back({2, 4});
+
+    adj[1].push_back({2, 1});
+    adj[1].push_back({3, 7});
+
+    adj[2].push_back({4, 3});
+    adj[3].push_back({4, 1});
+
+    int S = 0;
+
+    vector<int> result = dijkstra(V, adj, S);
+
+    for (int x : result)
+        cout << x << " ";
+
+    return 0;
+}
+    */
