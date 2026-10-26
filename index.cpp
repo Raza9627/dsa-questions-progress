@@ -14327,7 +14327,7 @@ vector<int> topoSort(int V, vector<vector<int>>& adj){
     for(int i=0;i<V;i++){
        if(!vis[i]){
         dfs(i,vis,st,adj);
-       } 
+       }
     }
     while(!st.empty()){
         res.push_back(st.top());
@@ -14360,62 +14360,62 @@ int main()
     return 0;
 }
     */
-   /*
+/*
 Kahn alogrithem
 #include <bits/stdc++.h>
 using namespace std;
 vector<int> topoSort(int V, vector<vector<int>>& adj){
-   int inDegree[V]={0};
-   vector<int> res;
-   for(int i=0;i<V;i++){
-    for(auto it:adj[i]){
-        inDegree[it]++;
-    }
-   }
-   queue<int> q;
-   for(int i=0;i<V;i++){
-    if(inDegree[i]==0){
-        q.push(i);
-    }
-   }
-   while(!q.empty()){
-    int node=q.front();
-    q.pop();
-    res.push_back(node);
-    for(auto it:adj[node]){
-        inDegree[it]--;
-        if(inDegree[it]==0){
-            q.push(it);
-        }
-    }
-   }
-   return res;
+int inDegree[V]={0};
+vector<int> res;
+for(int i=0;i<V;i++){
+ for(auto it:adj[i]){
+     inDegree[it]++;
+ }
+}
+queue<int> q;
+for(int i=0;i<V;i++){
+ if(inDegree[i]==0){
+     q.push(i);
+ }
+}
+while(!q.empty()){
+ int node=q.front();
+ q.pop();
+ res.push_back(node);
+ for(auto it:adj[node]){
+     inDegree[it]--;
+     if(inDegree[it]==0){
+         q.push(it);
+     }
+ }
+}
+return res;
 }
 
 int main()
 {
-    int V = 6;
+ int V = 6;
 
-    vector<vector<int>> adj =
-    {
-        {2, 3},
-        {3, 4},
-        {4},
-        {5},
-        {},
-        {}
-    };
+ vector<vector<int>> adj =
+ {
+     {2, 3},
+     {3, 4},
+     {4},
+     {5},
+     {},
+     {}
+ };
 
-    vector<int> ans = topoSort(V, adj);
+ vector<int> ans = topoSort(V, adj);
 
-    for(int node : ans)
-        cout << node << " ";
+ for(int node : ans)
+     cout << node << " ";
 
-    cout << endl;
+ cout << endl;
 
-    return 0;
+ return 0;
 }
-    */
+ */
 /*Alian dictionary
 #include <bits/stdc++.h>
 using namespace std;
@@ -14678,85 +14678,85 @@ int main(){
     return 0;
 }
     */
-   /*
+/*
 Word ladders 2 Brute force
 TC-O(impossible)
 SC-O(N)
 #include <bits/stdc++.h>
 using namespace std;
 vector<vector<string>> findLadders(string beginWord,string endWord,vector<string>& wordList){
-    queue<vector<string>> q;
-    unordered_set<string> st(wordList.begin(),wordList.end());
-    q.push({beginWord});
-     vector<string> used;  
-     used.push_back(beginWord);
-     int lv=0;
-     vector<vector<string>> ans; 
-     while(!q.empty()){
-    vector<string> vec=q.front();
-    q.pop();
-    if(vec.size()>lv){
-        lv++;
-        for(auto it:used){
-            st.erase(it);
-        }
-    }
-
-    string word=vec.back();
-    if(word==endWord){
-        if(ans.size()==0){
-            ans.push_back(vec);
-        }
-        else if(ans[0].size()==vec.size()){
-            ans.push_back(vec);
-        }
-    }
-    for(int i=0;i<word.size();i++){
-        char original=word[i];
-        for(char ch='a';ch<='z';ch++){
-            word[i]=ch;
-        if(st.count(word)>0){
-            vec.push_back(word);
-            q.push({vec});
-            used.push_back(word);
-            vec.pop_back();
-        }
-        }
-        word[i]=original;
-    }
+ queue<vector<string>> q;
+ unordered_set<string> st(wordList.begin(),wordList.end());
+ q.push({beginWord});
+  vector<string> used;
+  used.push_back(beginWord);
+  int lv=0;
+  vector<vector<string>> ans;
+  while(!q.empty()){
+ vector<string> vec=q.front();
+ q.pop();
+ if(vec.size()>lv){
+     lv++;
+     for(auto it:used){
+         st.erase(it);
      }
-     return ans;
+ }
+
+ string word=vec.back();
+ if(word==endWord){
+     if(ans.size()==0){
+         ans.push_back(vec);
+     }
+     else if(ans[0].size()==vec.size()){
+         ans.push_back(vec);
+     }
+ }
+ for(int i=0;i<word.size();i++){
+     char original=word[i];
+     for(char ch='a';ch<='z';ch++){
+         word[i]=ch;
+     if(st.count(word)>0){
+         vec.push_back(word);
+         q.push({vec});
+         used.push_back(word);
+         vec.pop_back();
+     }
+     }
+     word[i]=original;
+ }
+  }
+  return ans;
 }
 
 int main()
 {
-    string beginWord = "hit";
-    string endWord = "cog";
+ string beginWord = "hit";
+ string endWord = "cog";
 
-    vector<string> wordList = {
-        "hot",
-        "dot",
-        "dog",
-        "lot",
-        "log",
-        "cog"
-    };
+ vector<string> wordList = {
+     "hot",
+     "dot",
+     "dog",
+     "lot",
+     "log",
+     "cog"
+ };
 
-    vector<vector<string>> result =
-        findLadders(beginWord, endWord, wordList);
+ vector<vector<string>> result =
+     findLadders(beginWord, endWord, wordList);
 
-    for (auto& path : result)
-    {
-        for (auto& word : path)
-        {
-            cout << word << " ";
-        }
-        cout << endl;
-    }
+ for (auto& path : result)
+ {
+     for (auto& word : path)
+     {
+         cout << word << " ";
+     }
+     cout << endl;
+ }
 
-    return 0;
+ return 0;
 }
-    */
+ */
 /*
 Djikstra algorithem using priority Queue
 TC-ElogV
@@ -14864,3 +14864,463 @@ int main()
     return 0;
 }
     */
+/*
+Print shortest path
+TC-O(ElogV)
+SC-O
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> shortestPath(int n, int m, vector<vector<int>> &edges)
+{
+    // Build adjacency list
+    vector<vector<pair<int, int>>> adj(n + 1);
+
+    for (auto edge : edges)
+    {
+        int u = edge[0];
+        int v = edge[1];
+        int wt = edge[2];
+
+        adj[u].push_back({v, wt});
+        adj[v].push_back({u, wt});
+    }
+
+    // Distance array
+    vector<int> dist(n + 1, 1e9);
+
+    // Parent array for reconstructing path
+    vector<int> parent(n + 1);
+
+    for (int i = 1; i <= n; i++)
+    {
+        parent[i] = i;
+    }
+
+    // {distance, node}
+    set<pair<int, int>> st;
+
+    dist[1] = 0;
+    st.insert({0, 1});
+
+    while (!st.empty())
+    {
+        auto it = *(st.begin());
+
+        int dis = it.first;
+        int node = it.second;
+
+        st.erase(it);
+
+        for (auto edge : adj[node])
+        {
+            int adjNode = edge.first;
+            int edgeWeight = edge.second;
+
+            if (dis + edgeWeight < dist[adjNode])
+            {
+                // Remove old pair if it exists
+                if (dist[adjNode] != 1e9)
+                {
+                    st.erase({dist[adjNode], adjNode});
+                }
+
+                // Update distance
+                dist[adjNode] = dis + edgeWeight;
+
+                // Remember where we came from
+                parent[adjNode] = node;
+
+                st.insert({dist[adjNode], adjNode});
+            }
+        }
+    }
+
+    // Destination unreachable
+    if (dist[n] == 1e9)
+    {
+        return {-1};
+    }
+
+    // Reconstruct path from n → 1
+    vector<int> path;
+
+    int node = n;
+
+    while (parent[node] != node)
+    {
+        path.push_back(node);
+        node = parent[node];
+    }
+
+    path.push_back(1);
+
+    // Reverse to get 1 → n
+    reverse(path.begin(), path.end());
+
+    return path;
+}
+
+int main()
+{
+    int n = 5;
+    int m = 6;
+
+    vector<vector<int>> edges =
+    {
+        {1, 2, 2},
+        {2, 5, 5},
+        {2, 3, 4},
+        {1, 4, 1},
+        {4, 3, 3},
+        {3, 5, 1}
+    };
+
+    vector<int> result = shortestPath(n, m, edges);
+
+    for (int x : result)
+    {
+        cout << x << " ";
+    }
+
+    return 0;
+}
+    */
+/*
+Shortest path in binary matrix
+TC-O(N*M)
+SC-O(N*M)
+#include <bits/stdc++.h>
+using namespace std;
+int shortestPathBinaryMatrix(vector<vector<int>>& grid){
+    int n=grid.size();
+    int m=grid[0].size();
+    if (grid[0][0] == 1 || grid[n-1][m-1] == 1)
+    return -1;
+    if (n == 1 && m == 1)
+            return 1;
+    queue<pair<int,pair<int,int>>> q;
+    vector<vector<int>> dist(n,vector<int>(m,1e9));
+    int dr[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+    int dc[] = {-1,  0,  1, -1, 1, -1, 0, 1};
+    dist[0][0]=1;
+    q.push({1,{0,0}});
+    while(!q.empty()){
+        auto it=q.front();
+        int dis=it.first;
+        int r=it.second.first;
+        int c=it.second.second;
+        for(int i=0;i<8;i++){
+        int nrow=r+dr[i];
+        int ncol=c+dc[i];
+        if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]==0 && dis+1 <dist[nrow][ncol]){
+            dist[nrow][ncol]=1+dis;
+            if(nrow==n-1 && ncol==m-1) return dis+1;
+            q.push({dis+1,{nrow,ncol}});
+        }
+        }
+    }
+    return -1;
+}
+
+int main()
+{
+    vector<vector<int>> grid = {
+        {0, 1},
+        {1, 0}
+    };
+
+    cout << shortestPathBinaryMatrix(grid) << endl;
+
+    return 0;
+}
+    */
+/*
+Path with minimum effort
+TC-O(VlogV)
+SC-O(V)
+#include <bits/stdc++.h>
+using namespace std;
+int minimumEffortPath(vector<vector<int>>& heights) {
+int n=heights.size();
+int m=heights[0].size();
+priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>> pq;
+vector<vector<int>> dist(n,vector<int>(m,1e9));
+int dr[]={-1,0,1,0};
+int dc[]={0,1,0,-1};
+dist[0][0]=0;
+pq.push({0,{0,0}});
+while(!pq.empty()){
+auto it=pq.top();
+pq.pop();
+int diff=it.first;
+int r=it.second.first;
+int c=it.second.second;
+if(r==n-1 && c==m-1) return diff;
+for(int i=0;i<4;i++){
+    int nrow=r+dr[i];
+    int ncol=c+dc[i];
+    if(nrow>=0 && nrow<n && ncol>=0 && ncol<m){
+        int newEffort=max(abs(heights[r][c]-heights[nrow][ncol]),diff);
+        if(newEffort < dist[nrow][ncol]){
+            dist[nrow][ncol]=newEffort;
+            pq.push({newEffort,{nrow,ncol}});
+        }
+    }
+}
+}
+return 0;
+}
+
+int main() {
+    vector<vector<int>> heights = {
+        {1, 2, 2},
+        {3, 8, 2},
+        {5, 3, 5}
+    };
+    
+    int result = minimumEffortPath(heights);
+    
+    cout << "Result: " << result << endl;
+    
+    return 0;
+}
+    */
+/*
+find the ceapest price to raech the destination
+TC-O(E*k)
+SC-O(N+E)
+#include <bits/stdc++.h>
+using namespace std;
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+   vector<pair<int,int>> adj[n];
+   for(auto it:flights){
+    adj[it[0]].push_back({it[1],it[2]});
+   }
+   queue<pair<int,pair<int,int>>> q;
+   q.push({0,{src,0}});
+   vector<int> dist(n,1e9);
+   dist[src]=0;
+   while(!q.empty()){
+      auto it=q.front();
+      q.pop();
+      int stops=it.first;
+      int node=it.second.first;
+      int cost=it.second.second;
+      
+      if(stops>k) continue;
+      for(auto iter:adj[node]){
+        int adjNode=iter.first;
+        int eW=iter.second;
+        if(cost+eW < dist[adjNode] && stops<=k){
+            dist[adjNode]=cost+eW;
+            q.push({stops+1,{adjNode,cost+eW}});
+        }
+      }
+   }
+if(dist[dst]==1e9) return -1;
+return dist[dst];
+}
+int main() {
+    int n = 4;
+    vector<vector<int>> flights = {
+        {0, 1, 100},
+        {1, 2, 100},
+        {2, 0, 100},
+        {1, 3, 600},
+        {2, 3, 200}
+    };
+    int src = 0, dst = 3, k = 1;
+    
+    int result = findCheapestPrice(n, flights, src, dst, k);
+    
+    cout << "Result: " << result << endl;
+    
+    return 0;
+}
+    */
+/*
+Min multiplication to reach the end
+TC-O(M*N)
+SC-O(M)
+#include <bits/stdc++.h>
+using namespace std;
+int minimumMultiplications(vector<int>& arr, int start, int end) {
+    if(start==end) return 0;
+    int mod = 100000;
+   vector<int> dist(mod,1e9);
+queue<pair<int, int>> q;
+   dist[start]=0;
+   q.push({start,0});
+   while(!q.empty()){
+    auto it=q.front();
+    q.pop();
+    int node=it.first;
+    int steps=it.second;
+    for(int i=0;i<arr.size();i++){
+       int nextNode = (1LL * node * arr[i]) % mod;
+        if (steps + 1 < dist[nextNode]) {
+                dist[nextNode] = steps + 1;
+                
+                if (nextNode == end) return steps + 1;
+                
+                q.push({nextNode, steps + 1});
+    }
+   }
+}
+return -1;
+}
+int main() {
+    vector<int> arr = {2, 5, 7};
+    int start = 3, end = 30;
+    
+    int result = minimumMultiplications(arr, start, end);
+    
+    cout << "Result: " << result << endl;
+    
+    return 0;
+}
+    */
+/*
+Number of ways to arrive at the destination
+TC-O(E+logv)
+#include <bits/stdc++.h>
+using namespace std;
+int countPaths(int n, vector<vector<int>>& roads) {
+        vector<pair<int,int>> adj[n];
+    vector<int> ways(n,0);
+    vector<long long> dist(n,1e18);
+    priority_queue<pair<long long,int>,vector<pair<long long,int>>,greater<pair<long long ,int>>>pq;
+    for(auto it:roads){
+        adj[it[0]].push_back({it[1],it[2]});
+        adj[it[1]].push_back({it[0],it[2]});
+    }
+    dist[0]=0;
+    ways[0]=1;
+    pq.push({0,0});
+    int mod=(int)(1e9+7);
+    while(!pq.empty()){
+    long long dis=pq.top().first;
+    int node=pq.top().second;
+    pq.pop();
+    if (dis > dist[node]) continue;
+    for(auto it:adj[node]){
+        int adjNode=it.first;
+        int edW=it.second;
+        if(dis+edW <dist[adjNode]){
+         dist[adjNode]=dis+edW;
+         pq.push({dis+edW,adjNode});
+         ways[adjNode]=ways[node];
+        }
+        else if(dis+edW==dist[adjNode]){
+            ways[adjNode]=(ways[adjNode]+ways[node])%mod;
+        }
+    }
+    }
+    return ways[n-1]%mod;
+}
+int main() {
+    int n = 7;
+    vector<vector<int>> roads = {
+        {0, 6, 7},
+        {0, 1, 2},
+        {1, 2, 3},
+        {1, 3, 3},
+        {6, 3, 3},
+        {3, 5, 1},
+        {6, 5, 1},
+        {2, 5, 1},
+        {0, 4, 5},
+        {4, 6, 2}
+    };
+    
+    int result = countPaths(n, roads);
+    
+    cout << "Result: " << result << endl;
+    
+    return 0;
+}
+*/
+/*
+Bellmenford algorithem
+TC-O(V*E)
+SC-O(V)
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> bellmanFord(int V, vector<vector<int>>& edges, int src) {
+    vector<int> dist(V,1e8);
+    dist[src]=0;
+    for(int i=0;i<V-1;i++){
+        for(auto it:edges){
+            int u=it[0];
+            int v=it[1];
+            int wt=it[2];
+            if(dist[u]!=1e8 && dist[u]+wt<dist[v]){
+                dist[v]=dist[u]+wt;
+            }
+        }
+    }
+    for(auto it:edges){
+            int u=it[0];
+            int v=it[1];
+            int wt=it[2];
+            if(dist[u]!=1e8 && dist[u]+wt<dist[v]){
+                return {-1};
+            }
+        }
+        return dist;
+}
+
+int main() {
+    int V = 3;
+    // Format: {u, v, weight}
+    vector<vector<int>> edges = {
+        {0, 1, 5},
+        {1, 0, 3},
+        {1, 2, -1},
+        {2, 0, 1}
+    };
+    int src = 2;
+    
+    vector<int> result = bellmanFord(V, edges, src);
+    
+    cout << "Result: ";
+    for (int dist : result) {
+        cout << dist << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}
+    */
+/*
+Floyd warshell algorithem
+*/
+#include <bits/stdc++.h>
+using namespace std;
+void shortest_distance(vector<vector<int>>& matrix) {
+    // Write your code here
+    
+}
+
+int main() {
+    // Example input: -1 represents no direct edge (infinity)
+    vector<vector<int>> matrix = {
+        {0, 2, -1, 6},
+        {1, 0, 3, -1},
+        {-1, -1, 0, 1},
+        {3, -1, -1, 0}
+    };
+    
+    shortest_distance(matrix);
+    
+    cout << "Result Matrix:" << endl;
+    for (int i = 0; i < matrix.size(); i++) {
+        for (int j = 0; j < matrix[0].size(); j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}
