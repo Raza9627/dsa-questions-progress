@@ -15295,12 +15295,39 @@ int main() {
     */
 /*
 Floyd warshell algorithem
-*/
+TC-O(n*n*n)
+SC-O(n*n)
 #include <bits/stdc++.h>
 using namespace std;
 void shortest_distance(vector<vector<int>>& matrix) {
-    // Write your code here
-    
+   int n=matrix.size();
+   for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++){
+        if(matrix[i][j]==-1) {
+           matrix[i][j]=1e9;
+        }
+        if(i==j) matrix[i][j]=0;
+    }
+   }
+    for(int k=0;k<n;k++){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                matrix[i][j]=min(matrix[i][j],matrix[i][k]+matrix[k][j]);
+            }
+        }
+    }
+    for(int i=0;i<n;i++){
+        if(matrix[i][i]<0){
+
+        }
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(matrix[i][j]==1e9){
+                matrix[i][j]=-1;
+            }
+        }
+    }
 }
 
 int main() {
@@ -15324,3 +15351,178 @@ int main() {
     
     return 0;
 }
+*/
+/*
+Find the City With the Smallest Number of Neighbors at a Threshold Distance
+#include <bits/stdc++.h>
+using namespace std;
+
+int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+    vector<vector<int>> dist(n, vector<int>(n, 1e9));
+    
+    for (auto it : edges) {
+        dist[it[0]][it[1]] = it[2];
+        dist[it[1]][it[0]] = it[2];
+    }
+    
+    for (int i = 0; i < n; i++) {
+        dist[i][i] = 0;
+    }
+    
+    // Floyd-Warshall Algorithm
+    for (int k = 0; k < n; k++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (dist[i][k] == 1e9 || dist[k][j] == 1e9) continue;
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+            }
+        }
+    }
+    
+    int minCities = n;
+    int city = -1;
+    
+    for (int i = 0; i < n; i++) {
+        int cnt = 0;
+        for (int j = 0; j < n; j++) {
+            if (dist[i][j] <= distanceThreshold) {
+                cnt++;
+            }
+        }
+        // <= ensures we pick the greatest numbered city in case of a tie
+        if (cnt <= minCities) {
+            minCities = cnt;
+            city = i;
+        }
+    }
+    
+    return city;
+}
+
+int main() {
+    int n = 4;
+    vector<vector<int>> edges = {
+        {0, 1, 3},
+        {1, 2, 1},
+        {1, 3, 4},
+        {2, 3, 1}
+    };
+    int distanceThreshold = 4;
+    
+    int result = findTheCity(n, edges, distanceThreshold);
+    
+    cout << "Result: " << result << endl;
+    
+    return 0;
+}
+    */
+/*
+network delay time
+TC-O(V*E)
+SC-O(V)
+#include <bits/stdc++.h>
+using namespace std;
+int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+    // 1-indexed nodes, so size n + 1
+    vector<int> dist(n + 1, 1e9);
+    dist[k] = 0;
+    
+    // Bellman-Ford: Relax all edges V - 1 times (where V = n)
+    for (int i = 0; i < n - 1; i++) {
+        for (auto& edge : times) {
+            int u = edge[0];
+            int v = edge[1];
+            int w = edge[2];
+            
+            if (dist[u] != 1e9 && dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+            }
+        }
+    }
+    
+    // Find the maximum time required to reach any node
+    int maxWaitTime = 0;
+    for (int i = 1; i <= n; i++) {
+        if (dist[i] == 1e9) {
+            return -1; // If any node is unreachable
+        }
+        maxWaitTime = max(maxWaitTime, dist[i]);
+    }
+    
+    return maxWaitTime;
+}
+
+int main() {
+    vector<vector<int>> times = {
+        {2, 1, 1},
+        {2, 3, 1},
+        {3, 4, 1}
+    };
+    int n = 4, k = 2;
+    
+    int result = networkDelayTime(times, n, k);
+    
+    cout << "Result: " << result << endl;
+    
+    return 0;
+*/
+/*
+swim in rising water
+#include <bits/stdc++.h>
+using namespace std;
+int swimInWater(vector<vector<int>>& grid) {
+    int n = grid.size();
+
+    priority_queue<pair<int, pair<int, int>>, 
+                   vector<pair<int, pair<int, int>>>, 
+                   greater<pair<int, pair<int, int>>>> pq;
+                   
+    vector<vector<int>> vis(n, vector<int>(n, 0));
+    
+    pq.push({grid[0][0], {0, 0}});
+    vis[0][0] = 1;
+    
+    int dr[] = {-1, 0, 1, 0};
+    int dc[] = {0, 1, 0, -1};
+    
+    while (!pq.empty()) {
+        auto it = pq.top();
+        pq.pop();
+        
+        int elev = it.first;
+        int r = it.second.first;
+        int c = it.second.second;
+        
+        // If we reached the bottom-right corner, return the max elevation encountered
+        if (r == n - 1 && c == n - 1) {
+            return elev;
+        }
+        
+        for (int i = 0; i < 4; i++) {
+            int nr = r + dr[i];
+            int nc = c + dc[i];
+            
+            if (nr >= 0 && nr < n && nc >= 0 && nc < n && !vis[nr][nc]) {
+                vis[nr][nc] = 1;
+                // The new max elevation is the maximum between our current path max and the neighbor's cell value
+                pq.push({max(elev, grid[nr][nc]), {nr, nc}});
+            }
+        }
+    }
+    
+    return 0;
+}
+
+int main() {
+    vector<vector<int>> grid = {
+        {0, 2},
+        {1, 3}
+    };
+    
+    int result = swimInWater(grid);
+    
+    cout << "Result: " << result << endl;
+    
+    return 0;
+}
+    */
