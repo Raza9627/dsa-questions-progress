@@ -15526,3 +15526,532 @@ int main() {
     return 0;
 }
     */
+/*
+prims algorithem
+TC-O(ElogV)
+SC-O(V+E)
+#include <bits/stdc++.h>
+using namespace std;
+int spanningTree(int V, vector<vector<int>> adj[]) {
+priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+vector<int> vis(V,0);
+pq.push({0,0});
+int sum=0;
+while(!pq.empty()){
+ auto it=pq.top();
+ pq.pop();
+ int wt=it.first;
+ int node=it.second;
+ if(vis[node]==1) continue;
+ vis[node]=1;
+ sum+=wt;
+ for(auto it:adj[node]){
+    int adjNode=it[0];
+    int eWt=it[1];
+    if(!vis[adjNode]){
+        pq.push({eWt,adjNode});
+    }
+ }
+}
+return sum;
+}
+
+int main() {
+    int V = 5;
+    vector<vector<int>> edges = {
+        {0, 1, 2},
+        {0, 3, 6},
+        {1, 2, 3},
+        {1, 3, 8},
+        {1, 4, 5},
+        {4, 2, 7}
+    };
+    
+    // Converting edges to adjacency list for Prim's algorithm
+    vector<vector<int>> adj[V];
+    for (auto it : edges) {
+        vector<int> tmp1 = {it[1], it[2]};
+        vector<int> tmp2 = {it[0], it[2]};
+        adj[it[0]].push_back(tmp1);
+        adj[it[1]].push_back(tmp2);
+    }
+    
+    int result = spanningTree(V, adj);
+    
+    cout << "Result (MST Weight): " << result << endl;
+    
+    return 0;
+}
+    */
+/*
+Disjoint set union by rank 
+TC-O(4alpha)
+#include <bits/stdc++.h>
+using namespace std;
+class DisjointSet {
+    vector<int> rank, parent;
+public:
+    DisjointSet(int n) {
+        rank.resize(n + 1, 0);
+        parent.resize(n + 1);
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    // Find ultimate parent with path compression
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // Path compression
+    }
+
+    // Union by rank
+    void unionByRank(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return; // Already in the same set
+
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } 
+        else if (rank[rootV] < rank[rootU]) {
+            parent[rootV] = rootU;
+        } 
+        else {
+            parent[rootV] = rootU;
+            rank[rootU]++; // Height increases only when merging trees of equal rank
+        }
+    }
+};
+
+int main() {
+    int n = 7;
+    DisjointSet ds(n);
+    
+    ds.unionByRank(1, 2);
+    ds.unionByRank(2, 3);
+    ds.unionByRank(4, 5);
+    ds.unionByRank(6, 7);
+    ds.unionByRank(5, 6);
+
+    // Check if 1 and 3 are in the same component
+    if (ds.findParent(1) == ds.findParent(3)) {
+        cout << "1 and 3 belong to the same component." << endl;
+    } else {
+        cout << "1 and 3 belong to different components." << endl;
+    }
+
+    // Check if 3 and 7 are in the same component
+    if (ds.findParent(3) == ds.findParent(7)) {
+        cout << "3 and 7 belong to the same component." << endl;
+    } else {
+        cout << "3 and 7 belong to different components." << endl;
+    }
+
+    return 0;
+}
+*/
+/*
+Disjoint set union by rank 
+TC-O(4alpha)
+#include <bits/stdc++.h>
+using namespace std;
+class DisjointSet {
+    vector<int> size, parent;
+public:
+    DisjointSet(int n) {
+        size.resize(n + 1, 1); // Every node starts with a size of 1
+        parent.resize(n + 1);
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    // Find ultimate parent with path compression
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // Path compression
+    }
+
+    // Union by size
+    void unionBySize(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return; // Already in the same set
+
+        // Attach smaller tree under the larger tree
+        if (size[rootU] < size[rootV]) {
+            parent[rootU] = rootV;
+            size[rootV] += size[rootU];
+        } else {
+            parent[rootV] = rootU;
+            size[rootU] += size[rootV];
+        }
+    }
+    
+    // Optional utility to get the size of the component a node belongs to
+    int getComponentSize(int node) {
+        return size[findParent(node)];
+    }
+};
+
+int main() {
+    int n = 7;
+    DisjointSet ds(n);
+    
+    ds.unionBySize(1, 2);
+    ds.unionBySize(2, 3);
+    ds.unionBySize(4, 5);
+    
+    cout << "Size of component containing 1: " << ds.getComponentSize(1) << endl; // Output: 3
+    cout << "Size of component containing 4: " << ds.getComponentSize(4) << endl; // Output: 2
+
+    return 0;
+}
+*/
+/*
+Kruskals algorithem 
+TC-O(ElogE)
+SC-O(V)
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class DisjointSet {
+    vector<int> rank, parent;
+public:
+    DisjointSet(int n) {
+        rank.resize(n + 1, 0);
+        parent.resize(n + 1);
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]);
+    }
+
+    void unionByRank(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return;
+
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } 
+        else if (rank[rootV] < rank[rootU]) {
+            parent[rootV] = rootU;
+        } 
+        else {
+            parent[rootV] = rootU;
+            rank[rootU]++;
+        }
+    }
+};
+
+int kruskalMST(int V, vector<vector<int>>& edges) {
+    // Step 1: Sort all edges in non-decreasing order of their weight
+    sort(edges.begin(), edges.end(), [](const vector<int>& a, const vector<int>& b) {
+        return a[2] < b[2];
+    });
+
+    DisjointSet ds(V);
+    int mstWeight = 0;
+
+    // Step 2: Iterate through the sorted edges
+    for (auto& edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        int wt = edge[2];
+
+        // Step 3: If u and v are not in the same component, include edge in MST
+        if (ds.findParent(u) != ds.findParent(v)) {
+            mstWeight += wt;
+            ds.unionByRank(u, v);
+        }
+    }
+
+    return mstWeight;
+}
+
+int main() {
+    int V = 5;
+    // Edge format: {u, v, weight}
+    vector<vector<int>> edges = {
+        {0, 1, 2},
+        {0, 3, 6},
+        {1, 2, 3},
+        {1, 3, 8},
+        {1, 4, 5},
+        {4, 2, 7}
+    };
+    
+    int result = kruskalMST(V, edges);
+    
+    cout << "Result (MST Weight): " << result << endl;
+    
+    return 0;
+}
+    */
+/*
+Number of provinces using disjoint set
+TC-O(N*N*alphaN)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+
+class DisjointSet {
+    vector<int> rank, parent;
+public:
+    DisjointSet(int n) {
+        rank.resize(n + 1, 0);
+        parent.resize(n + 1);
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // Path compression
+    }
+
+    void unionByRank(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return;
+
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } 
+        else if (rank[rootV] < rank[rootU]) {
+            parent[rootV] = rootU;
+        } 
+        else {
+            parent[rootV] = rootU;
+            rank[rootU]++;
+        }
+    }
+};
+
+int findCircleNum(vector<vector<int>>& isConnected) {
+       int n=isConnected.size();
+    DisjointSet ds(n);
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(isConnected[i][j]==1){
+                ds.unionByRank(i,j);
+            }
+        }
+    }
+    int cnt=0;
+    for(int i=0;i<n;i++){
+        if(ds.findParent(i)==i){
+            cnt++;
+        }
+    }
+    return cnt;
+    
+}
+
+int main() {
+    vector<vector<int>> isConnected = {
+        {1, 1, 0},
+        {1, 1, 0},
+        {0, 0, 1}
+    };
+    
+    int result = findCircleNum(isConnected);
+    
+    cout << "Number of Provinces: " << result << endl; // Expected: 2
+    
+    return 0;
+}
+    */
+/*
+find the number of opertions to connect the component
+TC-O(E*alpha(N))
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+class DisjointSet {
+    public:
+    vector<int> rank, parent;
+    DisjointSet(int n) {
+        rank.resize(n, 0);
+        parent.resize(n);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // Path compression
+    }
+
+    void unionByRank(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return;
+
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } 
+        else if (rank[rootV] < rank[rootU]) {
+            parent[rootV] = rootU;
+        } 
+        else {
+            parent[rootV] = rootU;
+            rank[rootU]++;
+        }
+    }
+};
+
+int makeConnected(int n, vector<vector<int>>& connections) {
+    DisjointSet ds(n);
+    int cntExtras=0;
+    for(auto it:connections){
+        int u=it[0];
+        int v=it[1];
+        if(ds.findParent(u)==ds.findParent(v)){
+            cntExtras++;
+        }
+        else {
+            ds.unionByRank(u,v);
+        }
+    }
+    int cntC=0;
+    for(int i=0;i<n;i++){
+        if(ds.parent[i]==i){
+            cntC++;
+        }
+    }
+    int ans=cntC-1;
+    if(cntExtras>=ans) return ans;
+    return -1;
+}
+
+int main() {
+    int n = 4;
+    vector<vector<int>> connections = {{0, 1}, {0, 2}, {1, 2}};
+    
+    int result = makeConnected(n, connections);
+    
+    cout << "Minimum operations needed: " << result << endl; // Expected: 1
+    
+    return 0;
+}
+    */
+/*
+Account merge problem
+TC-O()
+SC-O()
+#include <bits/stdc++.h>
+using namespace std;
+
+class DisjointSet {
+    vector<int> rank, parent;
+public:
+    DisjointSet(int n) {
+        rank.resize(n, 0);
+        parent.resize(n);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // Path compression
+    }
+
+    void unionByRank(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return;
+
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } 
+        else if (rank[rootV] < rank[rootU]) {
+            parent[rootV] = rootU;
+        } 
+        else {
+            parent[rootV] = rootU;
+            rank[rootU]++;
+        }
+    }
+};
+
+vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+   int n=accounts.size();
+   DisjointSet ds(n);
+   unordered_map<string,int> mapMailNode;
+   for(int i=0;i<n;i++){
+    for(int j=1;j<accounts[i].size();j++){
+        string mail=accounts[i][j];
+        if(mapMailNode.find(mail)==mapMailNode.end()){
+            mapMailNode[mail]=i;
+        }
+        else{
+            ds.unionByRank(i,mapMailNode[mail]);
+        }
+    }
+   }
+   vector<string> mergedMail[n];
+   for(auto it:mapMailNode){
+    string mail=it.first;
+    int node=ds.findParent(it.second);
+    mergedMail[node].push_back(mail);
+   }
+   vector<vector<string>> ans;
+   for(int i=0;i<n;i++){
+    if(mergedMail[i].size()==0) continue;
+    sort(mergedMail[i].begin(),mergedMail[i].end());
+    vector<string> temp;
+    temp.push_back(accounts[i][0]);
+    for(auto it:mergedMail[i]){
+        temp.push_back(it);
+    }
+    ans.push_back(temp);
+   }
+   return ans;
+}
+
+int main() {
+    vector<vector<string>> accounts = {
+        {"John", "johnsmith@mail.com", "john_newyork@mail.com"},
+        {"John", "johnsmith@mail.com", "john00@mail.com"},
+        {"Mary", "mary@mail.com"},
+        {"John", "johnnybravo@mail.com"}
+    };
+    
+    vector<vector<string>> result = accountsMerge(accounts);
+    
+    cout << "Merged Accounts:" << endl;
+    for (auto& acc : result) {
+        cout << acc[0] << ": ";
+        for (size_t i = 1; i < acc.size(); i++) {
+            cout << acc[i] << " ";
+        }
+        cout << endl;
+    }
+    
+    return 0;
+}
+    */
