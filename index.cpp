@@ -15957,8 +15957,8 @@ int main() {
     */
 /*
 Account merge problem
-TC-O()
-SC-O()
+TC-O(N*Klog(N*K))
+SC-O(N+V)
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -16051,6 +16051,289 @@ int main() {
         }
         cout << endl;
     }
+    
+    return 0;
+}
+    */
+/*
+number of Islands 2
+TC-O(K*alpha(m*n))
+SC-O(m*n)
+#include <bits/stdc++.h>
+using namespace std;
+
+class DisjointSet {
+    vector<int> rank, parent;
+public:
+    DisjointSet(int n) {
+        rank.resize(n, 0);
+        parent.resize(n);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // Path compression
+    }
+
+    void unionByRank(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return;
+
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } 
+        else if (rank[rootV] < rank[rootU]) {
+            parent[rootV] = rootU;
+        } 
+        else {
+            parent[rootV] = rootU;
+            rank[rootU]++;
+        }
+    }
+};
+
+vector<int> numIslands2(int m, int n, vector<vector<int>>& positions) {
+    // Total cells = m rows * n columns
+    DisjointSet ds(m * n);
+    
+    // Visited matrix sized by rows (m) and columns (n)
+    vector<vector<int>> vis(m, vector<int>(n, 0));
+    
+    int cnt = 0;
+    vector<int> ans;
+    int dr[] = {-1, 0, 1, 0};
+    int dc[] = {0, 1, 0, -1};
+
+    for (auto it : positions) {
+        int row = it[0];
+        int col = it[1];
+        
+        // If this position is already land, just push the current count
+        if (vis[row][col] == 1) {
+            ans.push_back(cnt);
+            continue;
+        }
+        
+        vis[row][col] = 1;
+        cnt++; // New land opens up a new island
+        
+        int nodeNum = row * n + col; // Flattening using columns (n)
+        
+        for (int i = 0; i < 4; i++) {
+            int nrow = row + dr[i];
+            int ncol = col + dc[i];
+            
+            // Correct boundary check: 0 <= nrow < m and 0 <= ncol < n
+            if (nrow >= 0 && nrow < m && ncol >= 0 && ncol < n && vis[nrow][ncol] == 1) {
+                int adjNodeNum = nrow * n + ncol;
+                
+                // If they belong to different components, merge them and reduce island count
+                if (ds.findParent(nodeNum) != ds.findParent(adjNodeNum)) {
+                    cnt--;
+                    ds.unionByRank(nodeNum, adjNodeNum);
+                }
+            }
+        }
+        ans.push_back(cnt);
+    }
+    return ans;
+}
+
+int main() {
+    int m = 4, n = 5; // m = 4 rows, n = 5 columns
+    vector<vector<int>> positions = {{1, 1}, {0, 1}, {3, 3}, {3, 4}};
+    
+    vector<int> result = numIslands2(m, n, positions);
+    
+    cout << "Islands after each operation: ";
+    for (int cnt : result) {
+        cout << cnt << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}
+    */
+/*
+making largest island
+TC-O(N*N)
+SC-O(N)
+#include <bits/stdc++.h>
+using namespace std;
+class DisjointSet {
+public:
+    vector<int> size, parent;
+    DisjointSet(int n) {
+        size.resize(n, 1);
+        parent.resize(n);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // Path compression
+    }
+
+    void unionBySize(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return;
+
+        if (size[rootU] < size[rootV]) {
+            parent[rootU] = rootV;
+            size[rootV] += size[rootU];
+        } 
+        else {
+            parent[rootV] = rootU;
+            size[rootU] += size[rootV];
+        }
+    }
+};
+
+int largestIsland(vector<vector<int>>& grid) {
+      int n=grid.size();
+      DisjointSet ds(n*n);
+      int dr[]={-1,0,1,0};
+      int dc[]={0,-1,0,1};
+      for(int row=0;row<n;row++){
+        for(int col=0;col<n;col++){
+            if(grid[row][col]==0) continue;
+            int nodeNum=row*n+col;
+            for(int idx=0;idx<4;idx++){
+                int nrow=row+dr[idx];
+                int ncol=col+dc[idx];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<n && grid[nrow][ncol]==1){
+                    int adjNodenum=nrow*n+ncol;
+                       ds.unionBySize(nodeNum,adjNodenum);
+                }
+            }
+        }
+      }
+      int maxi=0;
+      for(int row=0;row<n;row++){
+        for(int col=0;col<n;col++){
+            if(grid[row][col]==1) continue;
+            unordered_set<int>st;
+            for(int idx=0;idx<4;idx++){
+                int nrow=row+dr[idx];
+                int ncol=col+dc[idx];
+               if(nrow>=0 && nrow<n && ncol>=0 && ncol<n && grid[nrow][ncol]==1){
+                st.insert(ds.findParent(nrow*n+ncol));
+               }
+            }
+            int curr=1;
+            for(auto it:st){
+            curr+=ds.size[it];
+            }
+
+            maxi=max(maxi,curr);
+        }
+      }
+      for(int i=0;i<n*n;i++){
+        maxi=max(maxi,ds.size[ds.findParent(i)]);
+      }
+      return maxi;
+}
+
+int main() {
+    vector<vector<int>> grid = {
+        {1, 0},
+        {0, 1}
+    };
+    
+    int result = largestIsland(grid);
+    
+    cout << "Largest Island Size: " << result << endl; // Expected: 3
+    
+    return 0;
+}
+    */
+/*
+Most Stones Removed with Same Row or Column
+TC-O(N*alpha(maxrow+maxcol))
+SC-O(maxRow+maxCol+N)
+#include <bits/stdc++.h>
+using namespace std;
+class DisjointSet {
+    vector<int> rank, parent;
+public:
+    DisjointSet(int n) {
+        rank.resize(n, 0);
+        parent.resize(n);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int findParent(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findParent(parent[node]); // Path compression
+    }
+
+    void unionByRank(int u, int v) {
+        int rootU = findParent(u);
+        int rootV = findParent(v);
+        
+        if (rootU == rootV) return;
+
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } 
+        else if (rank[rootV] < rank[rootU]) {
+            parent[rootV] = rootU;
+        } 
+        else {
+            parent[rootV] = rootU;
+            rank[rootU]++;
+        }
+    }
+};
+
+int removeStones(vector<vector<int>>& stones) {
+    int n=stones.size();
+    int maxRow=0;
+    int maxCol=0;
+    for(auto it:stones){
+        maxRow=max(maxRow,it[0]);
+        maxCol=max(maxCol,it[1]);
+    }
+    DisjointSet ds(maxRow+maxCol+2);
+    unordered_map<int,int> stoneNodes;
+    for(auto it:stones){
+        int nodeRow=it[0];
+        int nodeCol=it[1]+maxRow+1;
+        ds.unionByRank(nodeRow,nodeCol);
+        stoneNodes[nodeRow]=1; 
+        stoneNodes[nodeCol]=1; 
+    }
+    int cnt=0;
+    for(auto it:stoneNodes){
+        if(ds.findParent(it.first)==it.first){
+            cnt++;
+        }
+    }
+    return n-cnt;
+}
+
+int main() {
+    vector<vector<int>> stones = {
+        {0, 0}, {0, 1}, {1, 0}, {1, 2}, {2, 1}, {2, 2}
+    };
+    
+    int result = removeStones(stones);
+    
+    cout << "Max stones removed: " << result << endl; // Expected: 5
     
     return 0;
 }
