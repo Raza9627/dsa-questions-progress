@@ -16406,3 +16406,141 @@ int main() {
     return 0;
 }
     */
+/*
+bridges in a graph
+TC-O(V+2E)
+SC-O(V+2E)+O(3N)
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+    private:
+    int timer=1;
+private:
+    void dfs(int node, int parent, vector<int>& vis, vector<int> adj[], int tin[],int low[], vector<vector<int>>& bridges) {
+        vis[node]=1;
+        tin[node]=low[node]=timer;
+        timer++;
+        for(auto it:adj[node]){
+            if(it==parent) continue;
+            if(vis[it]==0){
+            dfs(it,node,vis,adj,tin,low,bridges);
+            low[node]=min(low[node],low[it]);
+            if(low[it]>tin[node]){
+                bridges.push_back({it,node});
+            }
+            }
+            else {
+                low[node]=min(low[node],low[it]);
+            }
+        }
+    }
+
+public:
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+       vector<int> adj[n];
+       for(auto it:connections){
+        adj[it[0]].push_back(it[1]);
+        adj[it[1]].push_back(it[0]);
+       }
+       vector<int> vis(n,0);
+       int tin[n];
+       int low[n];
+       vector<vector<int>> bridges;
+    dfs(0,-1,vis,adj,tin,low,bridges);
+    return bridges;
+    }
+};
+
+int main() {
+    int n = 4;
+    vector<vector<int>> connections = {{0, 1}, {1, 2}, {2, 0}, {1, 3}};
+    
+    Solution obj;
+    vector<vector<int>> result = obj.criticalConnections(n, connections);
+    
+    cout << "Bridges (Critical Connections):" << endl;
+    for (auto& edge : result) {
+        cout << "[" << edge[0] << ", " << edge[1] << "] " << endl;
+    }
+    
+    return 0;
+}
+    */
+/*
+articulation point in the graph
+TC-O(V+2E)
+SC-O(V+2E)+O(4N)
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+    private:
+    int timer=0;
+private:
+    void dfs(int node, int parent, vector<int>& vis, int tin[], int low[], vector<int>& mark, vector<vector<int>>& adj) {
+       vis[node]=1;
+       low[node]=tin[node]=timer;
+       timer++;
+       int child=0;
+       for(auto it:adj[node]){
+        if(it==parent) continue;
+        if(!vis[it]){
+            dfs(it,node,vis,tin,low,mark,adj);
+            low[node]=min(low[node],low[it]);
+            if(low[it]>=tin[node] && parent!=-1){
+                mark[node]=1;
+            }
+            child++;
+        }
+        else{
+            low[node]=min(low[node],tin[it]);
+        }
+       }
+       if(child>1 && parent==-1) mark[node]=1;
+    }
+
+public:
+    vector<int> articulationPoints(int V, vector<vector<int>>& adj) {
+    vector<int> vis(V,0);
+    int tin[V];
+    int low[V];
+    vector<int> mark(V,0);
+    for(int i=0;i<V;i++){
+        if(!vis[i]){
+            dfs(i,-1,vis,tin,low,mark,adj);
+        }
+    } 
+    vector<int> ans;
+    for(int i=0;i<V;i++){
+        if(mark[i]==1){
+            ans.push_back(i);
+        }
+    }
+    if(ans.size()==0) return {-1};
+    return ans;
+    }
+};
+
+int main() {
+    int V = 5;
+    vector<vector<int>> adj = {
+        {1, 3},
+        {0, 2},
+        {1, 3},
+        {0, 2, 4},
+        {3}
+    };
+    
+    Solution obj;
+    vector<int> result = obj.articulationPoints(V, adj);
+    
+    cout << "Articulation Points: ";
+    for (int node : result) {
+        cout << node << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}
+    */
