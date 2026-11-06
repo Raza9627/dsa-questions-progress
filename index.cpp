@@ -16338,3 +16338,71 @@ int main() {
     return 0;
 }
     */
+/*
+Strongly connected components
+TC-O(V+E)
+SC-O(V+E)
+#include <bits/stdc++.h>
+using namespace std;
+void dfs(int node,vector<int> &vis,vector<vector<int>> &adj,stack<int> &st){
+    vis[node]=1;
+    for(auto it:adj[node]){
+        if(!vis[it]){
+            dfs(it,vis,adj,st);
+        }
+    }
+    
+    st.push(node);
+}
+void dfs2(int node,vector<int> &vis,vector<int> adj2[]){
+       vis[node]=1;
+    for(auto it:adj2[node]){
+        if(!vis[it]){
+            dfs2(it,vis,adj2);
+        }
+    }
+}
+int countSCCs(int V, vector<vector<int>>& adj) {
+    stack<int> st;
+    vector<int> vis(V,0);
+    for(int i=0;i<V;i++){
+       if(!vis[i]){
+        dfs(i,vis,adj,st);
+       }
+    }
+   vector<int> adj2[V];
+   for(int i=0;i<V;i++){
+    vis[i]=0;
+      for(auto it:adj[i]){
+        adj2[it].push_back(i);
+      }
+   }
+   int scc=0;
+   while(!st.empty()){
+    int node=st.top();
+    st.pop();
+    if(!vis[node]){
+        scc++;
+        dfs2(node,vis,adj2);
+    }
+   }
+   return scc;
+}
+
+int main() {
+    int V = 5;
+    vector<vector<int>> adj = {
+        {1},
+        {2},
+        {0, 3},
+        {4},
+        {}
+    };
+    
+    int result = countSCCs(V, adj);
+    
+    cout << "Number of Strongly Connected Components: " << result << endl;
+    
+    return 0;
+}
+    */
