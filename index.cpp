@@ -16224,6 +16224,8 @@ int largestIsland(vector<vector<int>>& grid) {
         for(int col=0;col<n;col++){
             if(grid[row][col]==1) continue;
             unordered_set<int>st;
+
+
             for(int idx=0;idx<4;idx++){
                 int nrow=row+dr[idx];
                 int ncol=col+dc[idx];
@@ -16329,7 +16331,7 @@ int removeStones(vector<vector<int>>& stones) {
 int main() {
     vector<vector<int>> stones = {
         {0, 0}, {0, 1}, {1, 0}, {1, 2}, {2, 1}, {2, 2}
-    };
+    };D
     
     int result = removeStones(stones);
     
@@ -16544,3 +16546,38 @@ int main() {
     return 0;
 }
     */
+//DP 7/11/2026
+/*
+Climb stairs
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    int climbStairs(int n) {
+        if (n <= 1) return 1;
+        
+        int prev2 = 1; // ways to reach step n-2
+        int prev1 = 1; // ways to reach step n-1
+        int current = 0;
+        
+        for (int i = 2; i <= n; i++) {
+            current = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = current;
+        }
+        
+        return prev1;
+    }
+};
+
+int main() {
+    int n = 5;
+    Solution obj;
+    int result = obj.climbStairs(n);
+    
+    cout << "Number of distinct ways: " << result << endl; // Expected for n=5: 8
+    
+    return 0;
+}
+*/
