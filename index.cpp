@@ -16572,7 +16572,7 @@ public:
 };
 
 int main() {
-    int n = 5;
+    int n = 4;
     Solution obj;
     int result = obj.climbStairs(n);
     
@@ -16581,3 +16581,64 @@ int main() {
     return 0;
 }
 */
+/*
+Frog jumps Dp Memoization
+TC-O(N)
+SC-O(N)
+
+#include <bits/stdc++.h>
+using namespace std;
+    int recurse(vector<int>&heights,int n,vector<int>&dp){
+        if(n==0) return 0;
+        if(dp[n]!=-1) return dp[n];
+        int left=recurse(heights,n-1,dp)+ abs(heights[n]-heights[n-1]);
+        int right=INT_MAX;
+        if(n>1){
+         right=recurse(heights,n-2,dp)+ abs(heights[n]-heights[n-2]);
+        }
+        return dp[n]=min(left,right);
+    }
+    int frogJump(vector<int>& heights) {
+        int n=heights.size();
+        vector<int> dp(n,-1);
+        return recurse(heights,n-1,dp);
+    }
+int main() {
+    // Example 1 input
+    vector<int> heights = {2, 1, 3, 5, 4};
+
+    cout <<frogJump(heights) << endl;
+
+    return 0;
+}
+    */
+   /*
+frog jumps dp tabulation
+TC-O(n)
+SC-O(1)
+   
+#include <bits/stdc++.h>
+using namespace std;
+    int frogJump(vector<int>& heights) {
+        int n=heights.size();
+        vector<int> dp(n,0);
+        dp[0]=0;
+        for(int i=1;i<n;i++){
+        int fs=dp[i-1]+abs(heights[i]-heights[i-1]);
+        int ls=INT_MAX;
+        if(i>1){
+       ls=dp[i-2]+abs(heights[i]-heights[i-2]);
+        }
+        dp[i]=min(fs,ls);
+        }
+        return dp[n-1];
+    }
+int main() {
+    // Example 1 input
+    vector<int> heights = {2, 1, 3, 5, 4};
+
+    cout <<frogJump(heights) << endl;
+
+    return 0;
+}
+    */
